@@ -1,0 +1,36 @@
+@use '../../../../../../assets/css/base/colors';
+@use '../../../../../../assets/css/components/form-field';
+
+.border-radius-card {
+  border-top: 6px solid colors.$securian-brand-leaf;
+}
+
+.paper-card {
+  padding: 14px;
+  box-shadow: 1px 1px 5px 2px #D3D3D3;
+}
+
+.paperwork-frame {
+  padding: 5px 10px;
+
+  &-border-frame {
+    border-radius: 4px;
+    border: 2px solid colors.$securian-brand-stone;
+  }
+}
+
+.pdf-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  align-self: center;
+  background: url('../../../../../../assets/img/icons/PDF_file_icon_1.png') no-repeat;
+}
+
+.insurance-paperwork {
+  width: fit-content;
+}
+
+.valeyo-color {
+  color: colors.$securian-brand-water;
+}

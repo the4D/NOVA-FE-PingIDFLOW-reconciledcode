@@ -1,0 +1,45 @@
+@use './colors' as color;
+// @use '../abstracts/index' as color;
+
+$valeyo-primary-palette: (
+  100: color.$valeyo-green-100,
+  200: color.$valeyo-green-200,
+  300: color.$valeyo-green-300,
+  400: color.$valeyo-green-400,
+  500: color.$valeyo-green-500,
+  600: color.$valeyo-green-600,
+  700: color.$valeyo-green-700,
+  800: color.$securian-brand-leaf,
+  900: color.$securian-brand-pine,
+  contrast: (100: color.$valeyo-grey-100,
+    200: color.$valeyo-grey-200,
+    300: color.$valeyo-grey-300,
+    400: color.$valeyo-grey-400,
+    500: color.$valeyo-grey-500,
+    600: color.$valeyo-grey-600,
+    700: color.$valeyo-grey-700,
+    800: color.$valeyo-grey-800,
+  ),
+);
+
+$valeyo-accent-palette: (
+  100: color.$valeyo-blue-100,
+  200: color.$valeyo-blue-200,
+  300: color.$valeyo-blue-300,
+  400: color.$valeyo-blue-400,
+  500: color.$valeyo-blue-500,
+  600: color.$valeyo-blue-600,
+  700: color.$valeyo-blue-700,
+  800: color.$securian-brand-sky,
+  contrast: (100: color.$valeyo-grey-100,
+    200: color.$valeyo-grey-200,
+    300: color.$valeyo-grey-300,
+    400: color.$valeyo-grey-400,
+    500: color.$valeyo-grey-500,
+    600: color.$valeyo-grey-600,
+    700: color.$valeyo-grey-700,
+    800: color.$valeyo-grey-800,
+  ),
+);
+
+// Valeyo Warn Palette

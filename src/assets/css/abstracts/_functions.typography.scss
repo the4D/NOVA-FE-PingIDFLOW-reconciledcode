@@ -1,0 +1,114 @@
+@use "sass:map" as map;
+
+@function get-type-value($config, $level, $name) {
+  @return map.get(map.get($config, $level), $name);
+}
+
+@function font-family($config, $level) {
+  @return get-type-value($config, $level, font-family);
+}
+
+@function font-size($config, $level) {
+  @return get-type-value($config, $level, font-size);
+}
+
+@function font-stretch($config, $level) {
+  @return get-type-value($config, $level, font-stretch);
+}
+
+@function font-style($config, $level) {
+  @return get-type-value($config, $level, font-style);
+}
+
+@function font-variant($config, $level) {
+  @return get-type-value($config, $level, font-variant);
+}
+
+@function font-weight($config, $level) {
+  @return get-type-value($config, $level, font-weight);
+}
+
+@function line-height($config, $level) {
+  @return get-type-value($config, $level, line-height);
+}
+
+@function font-color($config, $level) {
+  @return get-type-value($config, $level, font-color);
+}
+
+@function letter-spacing($config, $level) {
+  @return get-type-value($config, $level, letter-spacing);
+}
+
+@function define-typography-level(
+  $font-family,
+  $font-size,
+  $font-stretch,
+  $font-style,
+  $font-variant,
+  $font-weight,
+  $line-height,
+  $font-color,
+  $letter-spacing
+) {
+  @return (
+    font-family: $font-family,
+    font-size: $font-size,
+    font-stretch: $font-stretch,
+    font-style: $font-style,
+    font-variant: $font-variant,
+    font-weight: $font-weight,
+    line-height: $line-height,
+    font-color: $font-color,
+    letter-spacing: $letter-spacing
+  );
+}
+
+@function define-typography-config(
+  $heading-1,
+  $heading-2,
+  $heading-3,
+  $heading-4,
+  $heading-5,
+  $overline-medium,
+  $overlay-small,
+  $large-body-1,
+  $large-body-2,
+  $medium-body-1,
+  $medium-body-2,
+  $small-body-1,
+  $small-body-2,
+  $xsmall-body-1,
+  $xsmall-body-2
+) {
+  $config: (
+    heading-1: $heading-1,
+    heading-2: $heading-2,
+    heading-3: $heading-3,
+    heading-4: $heading-4,
+    heading-5: $heading-5,
+    overline-medium: $overline-medium,
+    overline-small: $overline-small,
+    large-body-regular: $large-body-1,
+    large-body-bold: $large-body-2,
+    medium-body-regular: $medium-body-1,
+    medium-body-bold: $medium-body-2,
+    small-body-regular: $small-body-1,
+    small-body-small: $small-body-2,
+    xsmall-body-regular: $xsmall-body-1,
+    xsmall-body-small: $xsmall-body-2,
+  );
+  @return $config;
+}
+
+@mixin emit-typography-level($config, $level) {
+  font-family: font-family($config, $level);
+  font-size: font-size($config, $level);
+  font-stretch: font-stretch($config, $level);
+  font-style: font-style($config, $level);
+  font-variant: font-variant($config, $level);
+  font-weight: font-weight($config, $level);
+  line-height: line-height($config, $level);
+  color: font-color($config, $level);
+  letter-spacing: letter-spacing($config, $level);
+}

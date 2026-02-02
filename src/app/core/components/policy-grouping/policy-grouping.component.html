@@ -1,0 +1,95 @@
+<div class="form-section">
+  <div class="section-wrapper">
+    <div class="section-title">
+      <h4>{{ title }}</h4>
+    </div>
+    <div class="body-medium-regular">
+      {{description}}
+    </div>
+  </div>
+  <br />
+    <div class="form-table pt-3">
+      @let insuranceTypeLocal = insuranceType();
+      <div class="d-flex flex-column mt-2">
+        @if (quoteInsuranceTypeResponseData$ | async; as response) {
+        <div class="d-flex flex-row justify-content-between border-bottom-grey">
+          <p class="body-medium-bold securian-pine-text-color mw-180 mb-3">Applicant</p>
+          <p class="body-medium-bold securian-pine-text-color mw-120">Birth Date</p>
+          <p class="body-medium-bold securian-pine-text-color mw-120 text-center">Smoking?</p>
+          <p class="body-medium-bold securian-pine-text-color mw-170 text-center">Eligible Disability?</p>
+          <p class="body-medium-bold securian-pine-text-color mw-140 text-center">Self-employed?</p>
+            @if (insuranceTypeLocal && insuranceTypeLocal !== 'SP' && 
+                  (applications.length > 1 || (applications[0] && applications[0].applicants.length > 1) || (applications[1] && applications[1].applicants.length > 1))
+                ) {
+            <p class="body-medium-bold securian-pine-text-color mw-180 text-center">Join With</p>
+          }
+        </div>
+          @for (application of response.applications; track application.id) {
+            @for (applicant of application.applicants; track applicant.applicantIdentifier) {
+              <div
+                [ngClass]="{ 'min-padding-bottom': insuranceTypeLocal === 'SP' || response.applications.length <= 1 }"
+                class="d-flex flex-row justify-content-between mt-1 border-bottom-grey">
+                <div class="body-medium-bold translate-y-25 mw-180">
+                  {{ applicant.firstName }} {{ applicant.lastName }}
+                </div>
+                <div class="body-medium-regular translate-y-25 mw-120">
+                  {{ applicant.birthDate | date: 'dd/MM/yyyy' }}
+                </div>
+                <div
+                  class="body-medium-bold translate-y-25 mw-120 text-center"
+                  [ngClass]="applicant.isSmoker ? 'text-green' : 'text-red'">
+                  {{ applicant.isSmoker ? 'Yes' : 'No' }}
+                </div>
+                <div
+                  class="body-medium-bold translate-y-25 mw-170 text-center"
+                  [ngClass]="applicant.workHours === 0 ? 'text-red' : 'text-green'">
+                  {{ applicant.workHours === 0 ? 'No' : 'Yes' }}
+                </div>
+                <div
+                  class="body-medium-bold translate-y-25 mw-140 text-center"
+                  [ngClass]="applicant.selfEmployed ? 'text-green' : 'text-red'">
+                  {{ applicant.selfEmployed ? 'Yes' : 'No' }}
+                </div>
+                @if (
+                  insuranceTypeLocal &&
+                  insuranceTypeLocal !== 'SP' &&
+                  (applications.length > 1 || application.applicants.length > 1)
+                ) {
+                  @let applicationId = application.id !== undefined ? application.id : -1;
+                  <div [formGroup]="joinApplicantForm" class="body-medium-regular personalized mw-190 text-center">
+                    @if (isContentReady) {
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-select
+                          color="primary"
+                          (selectionChange)="joinApplicantSelectionChanged($event)"
+                          formControlName="joinDropDown{{ applicant.applicantIdentifier }}-{{ application.id }}">
+                          @for (
+                            joinApplicant of getApplicantsToJoin(applicant.applicantIdentifier, applicationId);
+                            track joinApplicant.trackValue;
+                            let indexKey = $index
+                          ) {
+                            <mat-option value="{{ joinApplicant.key }}">
+                              {{ joinApplicant.value }}
+                            </mat-option>
+                          } @empty {
+                            <mat-option disabled> Applicant list not available </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    } @else {
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-select color="primary" value="N/A">
+                          <mat-option selected value="N/A"> N/A </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          }
+        }
+      </div>
+    </div>
+
+</div>

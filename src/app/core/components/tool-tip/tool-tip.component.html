@@ -1,0 +1,13 @@
+@if (tooltip !== '') {
+  <div
+    class="tooltip"
+    [ngClass]="['tooltip--' + position + ' tooltip--' + style]"
+    [style.left]="left + 'px'"
+    [style.top]="top + 'px'">
+    <div class="tooltip-container">
+      <div class="d-flex align-items-center justify-content-start">
+        <span class="body-medium-regular px-2">{{ tooltip }}</span>
+      </div>
+    </div>
+  </div>
+}

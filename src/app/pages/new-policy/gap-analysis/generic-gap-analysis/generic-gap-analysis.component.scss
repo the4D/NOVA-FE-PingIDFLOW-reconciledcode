@@ -1,0 +1,23 @@
+@use '/src/assets/css/base/colors';
+@use '../.././../../../assets/css/components/form-field';
+
+:host {
+	display: block;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 30px;
+}
+
+::ng-deep {
+	.mat-step-header {
+		pointer-events: none !important;
+	}
+}
+
+::ng-deep {
+	.mat-horizontal-stepper-header-container {
+		border-top: solid 1px colors.$valeyo-grey-300 !important;
+		border-bottom: solid 1px colors.$valeyo-grey-300 !important;
+		background-color: colors.$valeyo-grey-100 !important;
+	}
+}

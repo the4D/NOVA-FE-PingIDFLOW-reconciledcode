@@ -1,0 +1,25 @@
+<div class="section-wrapper">
+  <div class="d-flex justify-content-start">
+    <div class="section-title pe-3">
+      <h5>
+        {{ insuranceTitle() }}
+      </h5>
+    </div>
+    <div>
+      <div
+        class="info-color"
+        appTooltip
+        [tooltip]="{
+          tooltip: 'If you want to change coverage selections, please navigate back to Pricing and Coverages.',
+          position: 'top',
+          style: 'info',
+        }"
+        aria-label="details">
+        <mat-icon>help</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="body-medium-regular pt-2 pb-2">
+    {{ insuranceDescription() }}
+  </div>
+</div>

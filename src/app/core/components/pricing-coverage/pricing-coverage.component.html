@@ -1,0 +1,81 @@
+
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h5>Pricing & Coverages</h5>
+        </div>
+        <div class="body-medium-regular">Details of Pricing and Coverage types to insure the applicant's loan</div>
+      </div>
+        <br />
+        <div class="form-table pt-3">
+          <mat-tab-group
+            #tabPrices
+            mat-align-tabs="start"
+            (selectedIndexChange)="onClickTab($event)"
+            aria-disabled="false"
+            [selectedIndex]="selectedIndexValue()">
+            @let response = quoteInsuranceTypeResponseData$ | async;
+            @if (
+              response && response.loanId !== '' && response.applications !== null && response.applications.length > 0
+            ) {
+              @let applications = response.applications;
+              @let quoteType = response.insuranceType;
+              @let applicantLength = response.applications[applicationIndex].applicants.length;
+              @for (type of carrierInsuranceTypeList; track type.type; let i = $index) {
+                <mat-tab
+                  #tab
+                  label="{{ type.description }}"
+                  [disabled]="isInterestOnlyPaymentType ? !tab.isActive : false">
+                  @if (isListReady(applications)) {
+                    <div class="coverage-card p-2">
+                      @if (quoteType === 'SP') {
+                        <div class="my-3" style="margin-left: 1.9rem; margin-right: 1.8rem">
+                          <stepper-message></stepper-message>
+                        </div>
+                      }
+
+                      @if (applications.length > 1 && quoteType !== 'SP') {
+                        <div class="d-flex flex-row my-3">
+                          @for (application of response.applications; track application; let i = $index) {
+                            <div id="buttonContainer">
+                              <button
+                                [ngClass]="
+                                  isApplicationButtonSelected(i, application.id, response.applications[0].id)
+                                    ? 'button-primary-level'
+                                    : 'button-secondary-level'
+                                "
+                                (click)="changeApplicationSelected(i + 1, i, application)">
+                                {{ application.applicants.length > 0 ? application.applicants[0].firstName : '' }}
+                                {{ application.applicants.length > 0 ? application.applicants[0].lastName : '' }}
+
+                                {{
+                                  application.applicants.length > 1 ? ' & ' + application.applicants[1].firstName : ''
+                                }}
+                                {{ application.applicants.length > 1 ? application.applicants[1].lastName : '' }}
+                              </button>
+                            </div>
+                          }
+                        </div>
+                        <div class="my-3">
+                          <stepper-message></stepper-message>
+                        </div>
+                      }
+
+                      <coverage-taken
+                        [applications]="applications"
+                        [applicationIndex]="applicationIndex"
+                        [applicantLength]="applicantLength"
+                        [insuranceType]="insuranceType"
+                        [quoteType]="quoteType"
+                        [matTabGroupSelected]="matTabIndexSelected"
+                        [isQuickQuote]="true">
+                      </coverage-taken>
+                    </div>
+                  }
+                </mat-tab>
+              }
+            }
+          </mat-tab-group>
+        </div>
+     
+    </div>

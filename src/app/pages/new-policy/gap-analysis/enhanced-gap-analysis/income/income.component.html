@@ -1,0 +1,247 @@
+<div class="form">
+  <div>
+    <div class="section-title pb-3 ">
+      <h4>{{ 'income.title' | translate }}</h4>
+    </div>
+    <p class="body-medium-regular pt-2">{{ 'income.subTitle' | translate }}</p>
+  </div>
+  <div class="row-1">
+    <div class="row-1-column-1">
+      <form [formGroup]="newIncomeForm">
+        <div class="borrower-one pb-3">
+          <h5 class="pb-4">
+            {{ 'meeting.borrowerOne' | translate }}
+          </h5>
+          <div class="row custom-row">
+            <div class="custom-col">
+              <span class="body-medium-bold">{{ 'income.baseAnnual' | translate }}</span>
+              <div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    matInput
+                    currencyMask
+                    appCurrencyOptions
+                    [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }"
+                    type="text"
+                    placeholder="{{ 'income.baseAnnual' | translate }}"
+                    formControlName="B1_GrossMonthlyBaseSalary" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="custom-col">
+              <span class="body-medium-bold">{{ 'income.province' | translate }}</span>
+              <div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    matInput
+                    placeholder="{{ 'income.province' | translate }}"
+                    formControlName="B1_ProvinceOrTerritory"
+                    (selectionChange)="onProvinceChange($event, 'primary')">
+                    @for (province of provinceList; track province.id) {
+                    <mat-option [value]="province.abbreviation">
+                      {{ province.description }}
+                    </mat-option>
+                    } @empty {
+                    <mat-option disabled> Province list not loaded </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row  custom-row">
+            <div class="custom-col">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'income.bonuses' | translate }}</span>
+                <div class="d-flex ms-1" appTooltip
+                  [tooltip]="{ tooltip: 'income.bonusesTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask appCurrencyOptions
+                  [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }" type="text"
+                  placeholder="{{ 'income.bonuses' | translate }}" formControlName="B1_GrossMonthlyBonuses" />
+              </mat-form-field>
+            </div>
+            <div class="custom-col">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'income.rentals' | translate }}</span>
+                <div class="d-flex ms-1" appTooltip
+                  [tooltip]="{ tooltip: 'income.rentalTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask appCurrencyOptions
+                  [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }" type="text"
+                  placeholder="{{ 'income.rentals' | translate }}" formControlName="B1_GrossMonthlyRentals" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="securian-card d-flex flex-column px-3 py-3 gap-3 bg-light total">
+            <div class="d-flex flex-row justify-content-between w-100">
+              <div class="body-medium-bold">
+                {{ 'income.estimatedAnnual' | translate }}
+              </div>
+              <div class="body-medium-bold">
+                {{ getAnnualIncomeVariation('primary') | currencyOption: 'USD' : 'symbol' : '2.0' }}
+              </div>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between w-100">
+              <div class="body-medium-bold">
+                {{ 'income.estimatedMonthly' | translate }}
+              </div>
+              <div class="body-medium-bold">
+                {{ getMonthlyIncome('primary') | currencyOption: 'USD' : 'symbol' : '2.0' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @if (this.gapAnalysisForm.meetingDetailForm?.IsSecondaryApplicant) {
+          
+        <div class="borrower-two pt-1 pb-4">
+          <h5 class="pb-4">
+            {{ 'meeting.borrowerTwo' | translate }}
+          </h5>
+          <div class="row">
+            <div class="col-6">
+              <span class="body-medium-bold">{{ 'income.baseAnnual' | translate }}</span>
+              <div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput currencyMask appCurrencyOptions
+                    [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }" type="text"
+                    placeholder="{{ 'income.baseAnnual' | translate }}" formControlName="B2_GrossMonthlyBaseSalary" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <span class="body-medium-bold">{{ 'income.province' | translate }}</span>
+              <div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select matInput placeholder="{{ 'income.province' | translate }}"
+                    formControlName="B2_ProvinceOrTerritory" (selectionChange)="onProvinceChange($event, '`primiary')">
+                    @for (province of provinceList; track province.id) {
+                    <mat-option [value]="province.abbreviation">
+                      {{ province.description }}
+                    </mat-option>
+                    } @empty {
+                    <mat-option disabled> Province list not loaded </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'income.bonuses' | translate }}</span>
+                <div class="ms-1" appTooltip
+                  [tooltip]="{ tooltip: 'income.bonusesTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask appCurrencyOptions
+                  [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }" type="text"
+                  placeholder="{{ 'income.bonuses' | translate }}" formControlName="B2_GrossMonthlyBonuses" />
+              </mat-form-field>
+            </div>
+
+            <div class="col-6">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'income.rentals' | translate }}</span>
+                <div class="d-flex ms-1" appTooltip
+                  [tooltip]="{ tooltip: 'income.rentalTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask appCurrencyOptions
+                  [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }" type="text"
+                  placeholder="{{ 'income.rentals' | translate }}" formControlName="B2_GrossMonthlyRentals" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="securian-card-lighter d-flex flex-column px-3 py-3 gap-3 bg-light total">
+            <div class="d-flex flex-row justify-content-between w-100">
+              <div class="body-medium-bold">
+                {{ 'income.estimatedAnnual' | translate }}
+              </div>
+              <div class="body-medium-bold">
+                {{ getAnnualIncomeVariation('secondary') | currencyOption: 'USD' : 'symbol' : '2.0' }}
+              </div>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between w-100">
+              <div class="body-medium-bold">
+                {{ 'income.estimatedMonthly' | translate }}
+              </div>
+              <div class="body-medium-bold">
+                {{ getMonthlyIncome('secondary') | currencyOption: 'USD' : 'symbol' : '2.0' }}
+              </div>
+            </div>
+          </div>
+
+          <mat-divider class="mt-4 mb-3"></mat-divider>
+
+          <div class="securian-card d-flex flex-column px-3 py-3 gap-3 total">
+            <div class="d-flex flex-row justify-content-between w-100">
+              <div class="body-medium-bold">
+                {{ 'income.combinedAnnual' | translate }}
+              </div>
+              <div class="body-medium-bold">
+                {{ getCombinedAnnualIncome() | currencyOption: 'USD' : 'symbol' : '2.0' }}
+              </div>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between w-100">
+              <div class="body-medium-bold">
+                {{ 'income.combinedMonthly' | translate }}
+              </div>
+              <div class="body-medium-bold">
+                {{ getCombinedMonthlyIncome() | currencyOption: 'USD' : 'symbol' : '2.0' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+        <div class="d-flex pt-3">
+          <p class="body-medium-regular">
+            {{ 'income.lastText' | translate }}
+          </p>
+        </div>
+        <div class="text-end pt-5">
+          <div class="d-flex flex-column align-items-end">
+            <div>
+              <button class="button-secondary me-4" matStepperPrevious>
+                {{ 'income.backButton' | translate }}
+              </button>
+              <button class="button-primary" matStepperNext (click)="setGapAnalysisData()">
+                {{ 'income.nextButton' | translate }}
+              </button>
+              @if (isFormInvalid()) {
+              <div class="text-center">
+                <errorMessage message="{{ 'general.missingMessage' | translate }}"></errorMessage>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row-1-column-2"></div>
+  </div>
+</div>

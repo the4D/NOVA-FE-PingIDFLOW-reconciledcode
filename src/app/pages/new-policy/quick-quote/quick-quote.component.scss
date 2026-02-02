@@ -1,0 +1,12 @@
+@use '/src/assets/css/base/colors';
+
+.quick-quote {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+#printOnly {
+  display: none;
+  position: absolute;
+}

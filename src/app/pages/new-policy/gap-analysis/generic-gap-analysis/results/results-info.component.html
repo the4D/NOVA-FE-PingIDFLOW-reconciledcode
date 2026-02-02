@@ -1,0 +1,90 @@
+<div class="results-info">
+  <div class="form">
+    <lender-info
+      (isFormValidEvent)="lenderValidationForm($event)"
+      (lenderFormInfoEvent)="getLenderInfoForm($event)"
+      [extraInfo]="true"></lender-info>
+  </div>
+
+  <div class="form mt-3">
+    <div class="form-section">
+      <div class="section-wrapper"></div>
+      <div class="form-table">
+        <div class="securian-card securian-card-lighter">
+          <div class="py-3 px-3">
+            <h5>Coverage Gap Analysis</h5>
+            <p class="body-medium-regular pt-2">
+              Creditor insurance is an optional financial coverage that helps to pay or reduce a member's insured debt
+              if faced with critical illness, disability, job loss or death.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form">
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Life</h4>
+        </div>
+        <div class="body-medium-regular">
+          Indicates a member's ability to pay off their debts with existing assets in the event of death.
+        </div>
+      </div>
+      <div class="form-table">
+        <app-gap-chart
+          [type]="insuranceTypeLife"
+          [existingCov]="0 + totalCoverage"
+          [unprotected]="totalDebts > totalCoverage ? totalDebts - totalCoverage : 0"
+          [totalReq]="totalDebts"></app-gap-chart>
+        <div class="total my-3">
+          <div class="total-row">
+            <div class="body-medium-bold">Coverage Gap:</div>
+            <div class="body-medium-bold">
+              {{ (totalDebts > totalCoverage ? totalDebts - totalCoverage : 0) | currency: 'USD' : 'symbol' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form">
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Disability</h4>
+        </div>
+        <div class="body-medium-regular">
+          Indicates a member's ability to pay their monthly expenses in the event of income loss due to disability.
+        </div>
+      </div>
+      <div class="form-table">
+        <app-gap-chart
+          [type]="insuranceTypeDisability"
+          [existingCov]="(storeFacade.gapAnalysisBlobSelector() | async)!.resultsDisabilityExistingCoverageInt"
+          [unprotected]="(storeFacade.gapAnalysisBlobSelector() | async)!.resultsDisabilityMonthlyIncomeGapInt"
+          [totalReq]="additionalExpenses + baseExpenses"></app-gap-chart>
+        <div class="total my-3">
+          <div class="total-row">
+            <div class="body-medium-bold">Monthly Income Gap:</div>
+            <div class="body-medium-bold">
+              {{
+                (storeFacade.gapAnalysisBlobSelector() | async)?.resultsDisabilityMonthlyIncomeGapInt
+                  | currency: 'USD' : 'symbol'
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form">
+    <div class="form-buttons">
+      <button class="button-secondary" (click)="back()">Back: Coverage</button>
+      <button class="button-primary" (click)="goToQQ()">Proceed to Quick Quote</button>
+      <button class="button-primary" (click)="downloadReport()">Download Report</button>
+    </div>
+  </div>
+</div>

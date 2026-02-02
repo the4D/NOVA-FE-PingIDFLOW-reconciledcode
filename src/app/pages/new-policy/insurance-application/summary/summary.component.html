@@ -1,0 +1,258 @@
+<div class="d-flex mt-5 mb-3">
+  <section class="col-4">
+    <div class="section-wrapper">
+      <div class="section-title">
+        <h5>Pricing & Coverages</h5>
+      </div>
+      <div class="body-medium-regular pt-3 pe-4">
+        These are the details of pricing and coverage types to insure the applicant's loan
+      </div>
+    </div>
+  </section>
+  <section class="col-8 pe-1">
+    @if (quoteResponseData$ | async; as response) {
+      @let applications = response.applications;
+      <div class="securian-card px-3 py-3 mt-1 mb-3">
+        <div class="row body-medium-bold grid pb-3">
+          <div class="col-6">Loan Amount</div>
+          <div class="col-4 text-end">${{ loan.loanAmount | number: '1.2' }}</div>
+        </div>
+        <div class="row body-medium-bold grid pb-3">
+          <div class="col-6">Loan Payment Amount</div>
+          <div class="col-4 text-end">${{ loan.paymentAmount | number: '1.2' }} {{ paymentFrequency }}</div>
+        </div>
+        <div class="row body-medium-bold grid pb-3">
+          <div class="col-6">
+            Insured Loan Amount
+            <span class="text-black-50">
+              ({{
+                getPercentageCoverageType(applications, ['LIFE']) % 10 === 0
+                  ? (getPercentageCoverageType(applications, ['LIFE']) | number: '1.0')
+                  : (getPercentageCoverageType(applications, ['LIFE']) | number: '1.2-2')
+              }}%)</span
+            >
+          </div>
+          <div class="col-4 text-end">
+            ${{
+              applications && applications.length > 0 && applications[applicationIndex].loanAmountCovered !== undefined
+                ? (applications[applicationIndex].loanAmountCovered | number: '1.2')
+                : 0
+            }}
+          </div>
+        </div>
+        <div class="row body-medium-bold grid pb-3">
+          <div class="col-6">
+            Insured Payment Amount
+            <span class="text-black-50">
+              ({{
+                getPercentageCoverageType(response.applications, disParams) % 10 === 0
+                  ? (getPercentageCoverageType(applications, disParams) | number: '1.0')
+                  : (getPercentageCoverageType(applications, disParams) | number: '1.2-2')
+              }}%)</span
+            >
+          </div>
+          <div class="col-4 text-end">
+            ${{
+              applications && applications.length > 0
+                ? (applications[applicationIndex].loanPaymentAmountCovered | number: '1.2')
+                : 0
+            }}
+            Monthly
+          </div>
+        </div>
+      </div>
+
+      <div class="securian-card px-3 py-3 mt-1 mb-3">
+        @if (insuranceType !== 'Single Premium') {
+          <div class="form-table">
+            <app-summary-titles
+              [insuranceTitle]="getLoanTypeDescription(response.insuranceType)"
+              [insuranceDescription]="getLoanTypeDescription(response.insuranceType, true)" />
+
+            <mat-tab-group #coverTabs mat-align-tabs="start" (selectedIndexChange)="onClickTab($event)">
+              @for (application of response.applications; track application.id; let index = $index) {
+                @let applicants = application.applicants;
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <span class="mat-tab-label">
+                      {{ applicants[0].firstName }} {{ applicants[0].lastName }}
+                      {{ applicants.length > 1 ? ' & ' + applicants[1].firstName : '' }}
+                      {{ applicants.length > 1 ? applicants[1].lastName : '' }}
+                    </span>
+                  </ng-template>
+
+                  @let monthlyPremium = getTotalMonthlyPremiumWithTaxIncluded(response.applications[index]);
+                  <app-summary-coverages
+                    [applicationIndex]="index"
+                    [insuranceTitle]="getLoanTypeDescription(response.insuranceType)"
+                    [insuranceDescription]="getLoanTypeDescription(response.insuranceType, true)"
+                    [insuranceTypeAbbreviation]="response.insuranceType"
+                    [totalMonthlyPremiumWithTaxIncluded]="monthlyPremium" />
+                </mat-tab>
+              }
+            </mat-tab-group>
+          </div>
+        }
+
+        @if (insuranceType === 'Single Premium') {
+          @for (application of response.applications; track application.id; let index = $index) {
+            @let monthlyPremium = getTotalMonthlyPremiumWithTaxIncluded(response.applications[index]);
+            <app-summary-coverages
+              [applicationIndex]="index"
+              [insuranceTitle]="getLoanTypeDescription(response.insuranceType)"
+              [insuranceDescription]="getLoanTypeDescription(response.insuranceType, true)"
+              [insuranceTypeAbbreviation]="response.insuranceType"
+              [totalMonthlyPremiumWithTaxIncluded]="monthlyPremium" />
+          }
+        }
+      </div>
+    }
+  </section>
+</div>
+
+@if (insuranceType !== 'Single Premium') {
+<mat-divider></mat-divider>
+
+<div class="d-flex form">
+  <div class="form-section gap-1">
+    <section class="col-4">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h5>Insurance Cancellation</h5>
+        </div>
+        <div class="body-medium-regular pe-4">
+          Does the applicant currently have existing insurance to be canceled with Canadian Premier Life? <br>You must enter <strong>at least one</strong> Certificate number if you are cancelling insurance.
+        </div>
+      </div>
+    </section>
+
+    <section class="col-8 pe-2">
+      <div class="form-field">
+        <span class="body-medium-bold"> Do the Applicant(s) have existing coverage with Canadian Premier Life </span>
+        <div class="pt-2 body-small-bold mb-2" [formGroup]="applicationForm">
+          <mat-radio-group formControlName="existingCoverages" (change)="onRadioExistingCoverageValueChanged($event)" [disabled]="applicationStatus === 'SUBMITTED'">
+            <mat-radio-button [value]="true" class="me-3 body-medium-bold">Yes</mat-radio-button>
+            <mat-radio-button [value]="false" class="body-medium-bold">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        @if (isHavingCoverages) {
+        <span class="body-medium-bold mt-3"> Do the Applicant(s) authorize cancellation? <br>
+          Required if applicant(s) have existing coverage with Canadian Premier Life </span>
+        <div class="pt-2 body-small-bold" [formGroup]="applicationForm">
+          <mat-radio-group formControlName="insuranceCancellation" [disabled]="applicationStatus === 'SUBMITTED'"
+            (change)="onRadioValueChanged($event)">
+            <mat-radio-button [value]="true" class="me-3 body-medium-bold">Yes</mat-radio-button>
+            <mat-radio-button [value]="false" class="body-medium-bold">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        @if (isInsuranceCancellation) {
+        <div class="d-flex flex-row flex-wrap justify-content-between mt-4">
+
+
+          @if (quoteResponseData$ | async; as response) {
+          @for (application of response.applications; track application.id; let index = $index) {
+          @let applicationIndex = index;
+
+          <div class="pb-3">
+            <app-insurance-cancellation [insuranceType]="insuranceType"
+              [isInsuranceCancellation]="isInsuranceCancellation" [application]="application"
+              (certificateNumber)="updateCertificateNumber($event)" />
+          </div>
+
+          }
+          }
+        </div>
+
+        <div class="d-flex flex-row justify-content-end my-3">
+          <button class="button-primary custom-save-button-cls" [disabled]="applicationStatus === 'SUBMITTED'" (click)="onSaveFileNUmbers()">
+            Save
+          </button>
+        </div>
+        }
+        }
+      </div>
+
+    </section>
+  </div>
+</div>
+}
+<mat-divider></mat-divider>
+
+<div class="d-flex form">
+  <div class="form-section gap-1">
+    <section class="col-4">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h5>Review Application</h5>
+        </div>
+        <div class="body-medium-regular pe-4">
+          Outlines the Insurance application paperwork the applicants are required to complete
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="numberOfApplications === 3 ? 'col-10 pe-2' : 'col-8 pe-2'"> -->
+    <section class="col-8 pe-2">
+      <div class="d-flex flex-row flex-wrap justify-content-between">
+        @if (quoteResponseData$ | async; as response) {
+          @for (application of response.applications; track application.id; let index = $index) {
+            @let applicationIndex = index;
+            @if (loan$ | async; as loanResponse) {
+              @let applicationSignedDate =
+                loanResponse.applications && loanResponse.applications[applicationIndex] !== undefined
+                  ? loanResponse.applications[applicationIndex].formSigningDate
+                  : '';
+
+              <div class="pb-3">
+                <app-submission-card
+                  [insuranceType]="insuranceType"
+                  [isReadOnly]="isReadOnly"
+                  [enableDownloadFile]="enableDownloadFile(application.id ? application.id.toString() : '0', index)"
+                  [showSupportingPaperwork]="showSupportingPaperwork[index]"
+                  [applicationIndex]="applicationIndex"
+                  [application]="application"
+                  [applicationStatus]="
+                    this.loan.applications !== undefined ? this.loan.applications[index].applicationStatus : 'Draft'
+                  "
+                  [formSignedDate]="applicationSignedDate"
+                  (signatureDate)="updateFormsSignDate($event)"
+                  (fileToDownload)="downloadFile2($event)" />
+              </div>
+            }
+          }
+        }
+      </div>
+    </section>
+  </div>
+</div>
+
+@if (showKnowledgeCheck) {
+  <div class="d-flex mt-3 mb-3" [formGroup]="applicationForm">
+    <section class="col-4"></section>
+    <section>
+      <div class="d-flex flex-row">
+        <mat-checkbox
+          class="body-medium-regular summary-disclaimer-only"
+          formControlName="acknowledge"
+          labelPosition="after"
+          (change)="onCheckboxChange($event.checked)">
+          I have acknowledged that the insurance application has been reviewed with the applicant(s). I have confirmed
+          all required applications or waivers and related signatures have been obtained.
+        </mat-checkbox>
+      </div>
+    </section>
+  </div>
+}
+
+<div class="form-buttons text-end pt-3">
+  <button class="button-secondary" style="margin-right: 24px" (click)="back()">Back</button>
+  @if (!isReadOnly) {
+    <button class="button-primary" (click)="commitInsurance()" [disabled]="isAcknowledgeChecked()">
+      {{ buttonLabel }}
+    </button>
+  } @else {
+    <button class="button-primary" (click)="onBackToDashboard()">
+      {{ returnLabel }}
+    </button>
+  }
+</div>

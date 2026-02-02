@@ -1,0 +1,35 @@
+<div class="gap-analysis">
+  <mat-stepper class="valeyo-stepper" labelPosition="bottom" orientation="horizontal"
+    (selectionChange)="stepClicked($event)">
+    <mat-step [label]="'stepper.meeting' | translate" [completed]="false" [state]="'true'">
+      <ng-template matStepContent>
+        <app-meeting-details></app-meeting-details>
+      </ng-template>
+    </mat-step>
+    <mat-step [label]="'stepper.income' | translate" [completed]="false">
+      <ng-template matStepContent>
+        <app-income></app-income>
+      </ng-template>
+    </mat-step>
+    <mat-step [label]="'stepper.assets' | translate" [completed]="false">
+      <ng-template matStepContent>
+        <app-assets-liabilities (recalculate)="onComingBackAgain()"></app-assets-liabilities>
+      </ng-template>
+    </mat-step>
+    <mat-step [label]="'stepper.monthly' | translate" [completed]="false">
+      <ng-template matStepContent>
+        <app-monthly-expenses *appReloadComponent="reloadComponentBack"></app-monthly-expenses>
+      </ng-template>
+    </mat-step>
+    <mat-step [label]="'stepper.coverages' | translate" [completed]="false">
+      <ng-template matStepContent>
+        <app-existing-coverages></app-existing-coverages>
+      </ng-template>
+    </mat-step>
+    <mat-step [label]="'stepper.results' | translate" [completed]="false">
+      <ng-template matStepContent>
+        <app-results></app-results>
+      </ng-template>
+    </mat-step>
+  </mat-stepper>
+</div>

@@ -1,0 +1,375 @@
+<button class="button-primary" (click)="downloadPDF()">Download Report</button>
+
+<div id="page1">
+  <div class="header">
+    <div>
+      <div class="logo">
+        <img src="../../../../assets/img/logo.svg" alt="logo" />
+      </div>
+      <div class="title">
+        <div>Gap Analysis</div>
+      </div>
+      <div class="date">
+        {{ date | date: 'yyyy-MM-dd' }}
+      </div>
+    </div>
+
+    <table class="address-list">
+      <tr>
+        <td>Agent:</td>
+        <td>{{ portalUser?.firstName }} {{ portalUser?.lastName }}</td>
+      </tr>
+      <tr>
+        <td>Branch:</td>
+        <td>{{ branchName }}</td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>{{ portalUser?.email }}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>555-555-5555</td>
+      </tr>
+    </table>
+  </div>
+  <div class="body">
+    <section>
+      <h2>Income Information</h2>
+      @let income = incomeInput();
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Employment Type</div>
+          <div class="items-value">
+            {{ income?.['employmentType'] === 'annual' ? 'Annual Salary' : 'Hourly Pay' }}
+          </div>
+        </div>
+        <div class="item">
+          <div class="items-label">Gross Annual Income</div>
+          <div class="items-value">
+            {{ income?.['annualIncome'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+
+        @if (income?.['employmentType'] === 'hourly') {
+          <div class="item">
+            <div class="items-label">Hourly Pay</div>
+            <div class="items-value">
+              {{ income?.['hourlyPay'] | currency: 'USD' : 'symbol' }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="items-label">Average work hours per week</div>
+            <div class="items-value">{{ income?.['workHours'] }}</div>
+          </div>
+        }
+        <div class="item">
+          <div class="items-label">Additional Annual Income (Optional)</div>
+          <div class="items-value">
+            {{ income?.['additionalIncome'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Assets</h2>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Real Estate</div>
+          <div class="items-value">{{ assets()?.['realEstate'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Investments</div>
+          <div class="items-value">{{ assets()?.['investments'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Savings</div>
+          <div class="items-value">{{ assets()?.['savings'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Other Assets</div>
+          <div class="items-value">{{ assets()?.['others'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Total Assets</div>
+          <div class="items-value">{{ totalAssets() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Liabilities</h2>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Mortgage</div>
+          <div class="items-value">{{ liabilities()?.['mortgage'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Line of Credit</div>
+          <div class="items-value">{{ liabilities()?.['lineOfCredit'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Loans</div>
+          <div class="items-value">{{ liabilities()?.['loans'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Credit Cards</div>
+          <div class="items-value">{{ liabilities()?.['creditCards'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">New Debt</div>
+          <div class="items-value">{{ liabilities()?.['newLoan'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+      <!-- totalLiabilities -->
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Total Liabilities</div>
+          <div class="items-value">{{ totalLiabilities() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div id="page2">
+  <div class="header">
+    <div>
+      <div class="logo">
+        <img src="../../../../assets/img/logo.svg" alt="logo" />
+      </div>
+      <div class="title">
+        <div>Quick Quote Results</div>
+      </div>
+      <div class="date">
+        {{ date | date: 'yyyy-MM-dd' }}
+      </div>
+    </div>
+
+    <table class="address-list">
+      <tr>
+        <td>Agent:</td>
+        <td>{{ portalUser?.firstName }} {{ portalUser?.lastName }}</td>
+      </tr>
+      <tr>
+        <td>Branch:</td>
+        <td>{{ branchName }}</td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>{{ portalUser?.email }}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>555-555-5555</td>
+      </tr>
+    </table>
+  </div>
+  <div class="body">
+    <section>
+      <h2>Monthly Expenses</h2>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Housing</div>
+          <div class="items-value">{{ expenses()?.['housing'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Property Taxes</div>
+          <div class="items-value">{{ expenses()?.['propertyTaxes'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Utilities</div>
+          <div class="items-value">{{ expenses()?.['utilities'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Childcare & Education</div>
+          <div class="items-value">{{ expenses()?.['children'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Transportation</div>
+          <div class="items-value">{{ expenses()?.['transportation'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Groceries</div>
+          <div class="items-value">{{ expenses()?.['groceries'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">House Insurance</div>
+          <div class="items-value">{{ expenses()?.['houseInsurance'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Other Expenses</div>
+          <div class="items-value">{{ expenses()?.['otherExpenses'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Loans</div>
+          <div class="items-value">{{ additionalExpenses()?.['loans'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Credit Cards</div>
+          <div class="items-value">
+            {{ additionalExpenses()?.['creditCards'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Line of Credit</div>
+          <div class="items-value">
+            {{ additionalExpenses()?.['lineOfCredit'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="items-label">New Debt</div>
+          <div class="items-value">
+            {{ additionalExpenses()?.['newDebt'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Coverages</h2>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Life Insurance</div>
+          <div class="items-value">{{ coverages()?.['lifeInsurance'] | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Group Life Insurance</div>
+          <div class="items-value">
+            {{ coverages()?.['groupLifeInsurance'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Credit Protection</div>
+          <div class="items-value">
+            {{ coverages()?.['creditProtection'] | currency: 'USD' : 'symbol' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Income Replacement Coverage</div>
+          <div class="items-value">
+            {{ coverages()?.['incomeReplacementCoverage'] == 'true' ? 'Yes' : 'No' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Coverage Percentage</div>
+          <div class="items-value">{{ coverages()?.['coverageAmount'] | number: '2' }}%</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Results</h2>
+      <h3>Life</h3>
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Total Requirement</div>
+          <div class="items-value">{{ totalRequirement() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Existing Coverage</div>
+          <div class="items-value">{{ existingCoverage() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Unprotected Coverage</div>
+          <div class="items-value">{{ unprotectedCoverage() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <h3>Disablility</h3>
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Current Monthly Obligation</div>
+          <div class="items-value">{{ monthlyObligation() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Existing Coverage</div>
+          <div class="items-value">{{ monthlyExistingCoverage() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="item">
+          <div class="items-label">Monthly Income Gap</div>
+          <div class="items-value">{{ monthlyGap() | currency: 'USD' : 'symbol' }}</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

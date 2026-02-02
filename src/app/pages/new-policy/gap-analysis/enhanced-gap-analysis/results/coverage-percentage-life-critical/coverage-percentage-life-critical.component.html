@@ -1,0 +1,38 @@
+<div class="w-100">
+  <div class="card-container mt-3">
+    <p class="body-medium-bold">
+      {{ cardTitle() }}
+    </p>
+  </div>
+
+  <div class="card-content-percentage pt-4 w-100">
+    <div class="d-flex flex-column justify-content-between">
+      <div class="content-inside success">
+        @if (!incomeCard()) {
+          <div class="d-flex justify-content-between">
+            <a
+              class="w-100 body-medium-bold no-decoration black black d-flex justify-content-between align-items-center"
+              data-bs-toggle="collapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample">
+              <div>Monthly Income</div>
+              <div>
+                <mat-icon aria-label="details" class="text-end d-flex align-items-center">
+                  keyboard_arrow_down
+                </mat-icon>
+              </div>
+            </a>
+          </div>
+          <p class="body-large-bold">
+            @if (languageService.languageSelected$ | async; as language) {
+              $0
+            }
+          </p>
+        } @else {
+          <p class="body-medium-bold">Existing Life Insurance</p>
+        }
+      </div>
+    </div>
+  </div>
+</div>

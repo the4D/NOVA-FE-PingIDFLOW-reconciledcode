@@ -1,0 +1,348 @@
+@use "../base/colors";
+@use "../abstracts/functions.typography" as fun;
+@use "../base/typography/typography.level" as level;
+$selector: '.valeyo';
+
+
+// Button Primary
+#{$selector} button.button-primary {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-xsmall-bold);
+    color: colors.$valeyo-white-0;
+    width: auto;
+    height: 35px;
+    padding: .59375rem 1rem;
+    text-align: center;
+    background-color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+    border-radius: .1875rem;
+    border: 0;
+    border-style: solid;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+#{$selector} button:hover.button-primary {
+    background-color: colors.$securian-brand-water;
+    border-color: colors.$securian-brand-water;
+}
+
+#{$selector} button:active.button-primary {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+#{$selector} button:visited.button-primary {
+    background-color: colors.$valeyo-blue-500;
+    border-color: colors.$valeyo-blue-500;
+}
+
+#{$selector} button:disabled.button-primary {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+// Button Primary Level
+#{$selector} button.button-primary-level {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-xsmall-bold);
+    color: colors.$valeyo-white-0;
+    width: auto;
+    height: 35px;
+    padding: .59375rem 1rem;
+    text-align: center;
+    background-color: colors.$securian-brand-slate;
+    border-color: colors.$securian-brand-slate;
+    // border-radius: .1875rem;
+    border: 0;
+    border-style: solid;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+#{$selector} button:hover.button-primary-level {
+    background-color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+}
+
+#{$selector} button:active.button-primary-level {
+    background-color: colors.$securian-brand-slate;
+    border-color: colors.$securian-brand-slate;
+}
+
+#{$selector} button:visited.button-primary-level {
+    background-color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+}
+
+#{$selector} button:disabled.button-primary-level {
+    background-color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+}
+
+// Secondary Button
+#{$selector} button.button-secondary {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-medium-bold);
+    color: colors.$securian-brand-sky;
+    width: auto;
+    min-width: 120px;
+    height: 35px;
+    padding: .4rem 1rem;
+    text-align: center;
+    background-color: colors.$valeyo-white-0;
+    border-color: colors.$securian-brand-sky;
+    border-radius: .1875rem;
+    border-style: solid;
+    display: inline-block;
+    line-height: 1;
+}
+
+#{$selector} button:hover.button-secondary {
+    // color: colors.$securian-brand-water;
+    color: colors.$valeyo-white-0;
+    background-color: colors.$securian-brand-water;
+    border-color: colors.$securian-brand-water;
+}
+
+#{$selector} button:active.button-secondary {
+    color: colors.$valeyo-white-0;
+    background-color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+}
+
+#{$selector} button:visited.button-secondary {
+    color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+}
+
+#{$selector} button:disabled.button-secondary {
+    color: colors.$valeyo-blue-500;
+    background-color: colors.$valeyo-blue-200;
+    border-color: colors.$valeyo-blue-500;
+    opacity: 0.5;
+}
+
+// Secondary Button Level
+#{$selector} button.button-secondary-level {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-medium-bold);
+    color: colors.$securian-brand-slate;
+    width: auto;
+    min-width: 120px;
+    height: 35px;
+    padding: .4rem 1rem;
+    text-align: center;
+    background-color: colors.$valeyo-white-0;
+    border-color: colors.$securian-brand-slate;
+    // border-radius: .1875rem;
+    border-style: solid;
+    display: inline-block;
+    line-height: 1;
+}
+
+#{$selector} button:hover.button-secondary-level {
+    // color: colors.$securian-brand-water;
+    color: colors.$securian-brand-snow;
+    background-color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+}
+
+#{$selector} button:active.button-secondary-level {
+    color: colors.$securian-brand-snow;
+    background-color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+}
+
+#{$selector} button:visited.button-secondary-level {
+    color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+}
+
+#{$selector} button:disabled.button-secondary-level {
+    color: colors.$securian-brand-snow;
+    background-color: colors.$securian-brand-steel;
+    border-color: colors.$securian-brand-steel;
+    opacity: 0.5;
+}
+
+// Button Primary Medium
+#{$selector} button.button-primary-medium {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-xsmall-bold);
+    color: colors.$valeyo-white-0;
+    width: 164px;
+    height: 48px;
+    padding: 12px 24px 12px 24px;
+    text-align: center;
+    background-color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+    border-radius: 4px;
+    border-style: solid;
+}
+
+#{$selector} button:hover.button-primary-medium {
+    background-color: colors.$securian-brand-water;
+    border-color: colors.$securian-brand-water;
+}
+
+#{$selector} button:active.button-primary-medium {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+#{$selector} button:visited.button-primary-medium {
+    background-color: colors.$valeyo-blue-500;
+    border-color: colors.$valeyo-blue-500;
+}
+
+#{$selector} button:disabled.button-primary-medium {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+// Button Primary Large
+#{$selector} button.button-primary-large {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-medium-bold);
+    color: colors.$valeyo-white-0;
+    width: auto;
+    height: 48px;
+    padding: 12px 16px 12px 16px;
+    text-align: center;
+    background-color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+    border-radius: 4px;
+    border-style: solid;
+}
+
+#{$selector} button:hover.button-primary-large {
+    background-color: colors.$securian-brand-water;
+    border-color: colors.$securian-brand-water;
+}
+
+#{$selector} button:active.button-primary-large {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+#{$selector} button:visited.button-primary-large {
+    background-color: colors.$valeyo-blue-500;
+    border-color: colors.$valeyo-blue-500;
+}
+
+#{$selector} button:disabled.button-primary-large {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+#{$selector} button.button-primary-extra-large {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-medium-bold);
+    color: colors.$valeyo-white-0;
+    width: 384px;
+    height: 48px;
+    padding: 12px 24px 12px 24px;
+    text-align: center;
+    background-color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+    border-radius: 4px;
+    border-style: solid;
+}
+
+#{$selector} button:hover.button-primary-extra-large {
+    background-color: colors.$securian-brand-water;
+    border-color: colors.$securian-brand-water;
+}
+
+#{$selector} button:active.button-primary-extra-large {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+#{$selector} button:visited.button-primary-extra-large {
+    background-color: colors.$valeyo-blue-500;
+    border-color: colors.$valeyo-blue-500;
+}
+
+#{$selector} button:disabled.button-primary-extra-large {
+    background-color: colors.$valeyo-blue-700;
+    border-color: colors.$valeyo-blue-700;
+}
+
+
+#{$selector} button.button-secondary-small {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-xsmall-bold);
+    color: colors.$securian-brand-sky;
+    width: 100px;
+    height: 40px;
+    padding: 8px 12px 8px 12px;
+    text-align: center;
+    background-color: colors.$valeyo-white-0;
+    border-radius: 4px;
+    border: solid 1.5px colors.$securian-brand-sky;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#{$selector} button.button-secondary-medium {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-medium-bold);
+    color: colors.$securian-brand-sky;
+    width: 164px;
+    height: 48px;
+    padding: 12px 24px 12px 24px;
+    text-align: center;
+    background-color: colors.$valeyo-white-0;
+    border-radius: 4px;
+    border: solid 1.5px colors.$securian-brand-sky;
+}
+
+#{$selector} button:hover.button-secondary-medium {
+    color: colors.$securian-brand-water;
+    border-color: colors.$securian-brand-water;
+}
+
+#{$selector} button:active.button-secondary-medium {
+    color: colors.$securian-brand-sky;
+    background-color: colors.$valeyo-blue-200;
+    border-color: colors.$securian-brand-sky;
+}
+
+#{$selector} button:visited.button-secondary-medium {
+    color: colors.$securian-brand-sky;
+    border-color: colors.$securian-brand-sky;
+}
+
+#{$selector} button:disabled.button-secondary-medium {
+    color: colors.$valeyo-blue-500;
+    background-color: colors.$valeyo-blue-200;
+    border-color: colors.$valeyo-blue-500;
+    opacity: 0.5;
+}
+
+#{$selector} button.button-secondary-extra-large {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-medium-bold);
+    color: colors.$securian-brand-sky;
+    width: 384px;
+    height: 48px;
+    padding: 12px 24px 12px 24px;
+    text-align: center;
+    background-color: colors.$valeyo-white-0;
+    border-color: colors.$securian-brand-sky;
+    border: solid 1.5px colors.$securian-brand-sky;
+    border-radius: 4px;
+    border-style: solid;
+}
+
+#{$selector} button.button-primary-medium-link {
+    @include fun.emit-typography-level(level.$valeyo-typography, body-small-bold);
+    background-color: colors.$valeyo-white-0;
+    border: none;
+    color: colors.$securian-brand-sky;
+
+    &:hover {
+        text-underline-offset: 0.2em;
+        text-decoration: underline;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+}

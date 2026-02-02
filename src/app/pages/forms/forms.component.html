@@ -1,0 +1,69 @@
+<div class="page-container">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <div class="header-wrapper securian-brand-navy-text-color">
+        <div class="title-wrapper">
+          <h3 class="header-title mt-4">Forms</h3>
+        </div>
+        <div class="description-wrapper">
+          <span class="body-medium-regular">
+            Please click on one of the following links to open a pdf file in a new window
+          </span>
+        </div>
+      </div>
+    </div>
+
+  <div class="forms-container">
+    @if (loading) {
+      <div class="loading-container">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    } @else if (forms.length === 0) {
+      <div class="empty-state">
+        <div class="empty-message body-medium-regular">
+          No forms are currently available. Please try again later.
+        </div>
+        <button class="btn-primary" (click)="loadForms()">Refresh</button>
+      </div>    } @else {
+      
+      <div class="forms-table">
+        <div class="table-header">
+          <div class="col-form-id">Form ID</div>
+          <div class="col-form-name">Form Name</div>
+          <div class="col-description">Description</div>
+          <div class="col-select"></div>
+        </div>
+        
+        <div class="table-body">
+          @for (form of forms; track form.id) {
+            <div class="form-row">
+              <div class="col-form-id body-medium-regular">
+                {{ form.formIdentifier }}
+              </div>
+              <div class="col-form-name body-medium-bold securian-brand-navy-blue-color">
+                <a class="form-name-link" (click)="downloadForm(form, $event)">{{ form.formName }}</a>
+              </div>
+              <div class="col-description body-medium-regular">
+                {{ form.description }}
+              </div>
+              <div class="col-select">
+                <mat-checkbox [(ngModel)]="form.selected" color="primary"></mat-checkbox>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="forms-header">
+        <div class="download-selected">
+          <button 
+            class="btn-primary" 
+            [ngClass]="{'btn-disabled': !isAnyFormSelected}" 
+            [disabled]="!isAnyFormSelected"
+            (click)="downloadSelected()">
+            Download Selected
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

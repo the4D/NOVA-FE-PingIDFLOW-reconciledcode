@@ -1,0 +1,64 @@
+<div class="applicant-info">
+  <div class="form">
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>{{ title }}</h4>
+        </div>
+        <div class="body-medium-regular">{{ description }}</div>
+      </div>
+      <div class="applicant-form-table">
+        <mat-tab-group #tabs mat-align-tabs="start" (selectedIndexChange)="onClickTab($event)">
+          @for (tab of tabList; track $index; let tabIndex = $index) {
+            <mat-tab class="form-fields">
+              <ng-template class="form-field" mat-tab-label>
+                <span class="mat-tab-label minmax-width-cls" [ngClass]="{ error: !tab.valid && showTabErrors }">
+                  {{ tab.title }}
+                </span>
+                <div class="custom-close-icon">
+                  @if (tabList.length > 1 && !applicantFormComponent?.isReadOnly && disableAddRemoveApplicant()) {
+                    <img
+                      class="custom-icon"
+                      (click)="removeApplicant(tabIndex)"
+                      alt="Remove Applicant"
+                      src="../../../../assets/img/cross-icon.svg" />
+                  }
+                </div>
+              </ng-template>
+
+              <app-applicant-form
+                class="form-field"
+                #applicantForm
+                [index]="tabIndex"
+                (formValidEvent)="onFormValid($event, tabIndex)"
+                (sendApplicantEvent)="onSendApplicant($event)"
+                (nameChangedEvent)="onNameChanged($event, tabIndex)"
+                (applicationTypeEvent)="onApplicationTypeChange($event, tabIndex)"
+                [stepper]="stepper()"
+                [applicantRemoved]="wasApplicantRemoved"
+                [applicantAdded]="applicantAdded">
+              </app-applicant-form>
+            </mat-tab>
+          }
+          @if (canAddMoreApplicants()) {
+            <mat-tab>
+              <ng-template mat-tab-label>
+                @if (disableAddRemoveApplicant()) {
+                  <button mat-flat-button (click)="!applicantFormComponent?.isReadOnly ? addTab() : null" class="p-0">
+                    <span class="body-medium-bold securian-brand-sky-text-color"> + Add Applicant </span>
+                  </button>
+                }
+              </ng-template>
+            </mat-tab>
+          }
+        </mat-tab-group>
+      </div>
+    </div>
+    <div class="form-buttons">
+      <button class="button-secondary" (click)="back()">Back</button>
+      <button class="button-primary" [disabled]="isButtonDisabled()" (click)="saveApplicantInfo()">
+        Next: {{ nextButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

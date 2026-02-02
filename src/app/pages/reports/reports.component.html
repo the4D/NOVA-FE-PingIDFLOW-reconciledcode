@@ -1,0 +1,36 @@
+<div class="reports">
+  <div class="grand-menu">
+    <div class="pt-3 pb-5">
+      <h5 class="grand-menu-date">Select a report you would like to run.</h5>
+    </div>
+    <div class="grand-menu-container-row">
+      <card
+        class="menu-item"
+        title="Eligible Live Participation"
+        (redirectToEvent)="selectReport(0)"
+        cardImage="../../../../assets/img/icons/svg/clipboard.svg"
+        cardBody=""
+        link=""
+        color="light">
+      </card>
+      <card
+        class="menu-item"
+        title="Eligible Loan Participation"
+        (redirectToEvent)="selectReport(1)"
+        cardImage="../../../../assets/img/icons/svg/clipboard.svg"
+        cardBody=""
+        link=""
+        color="light">
+      </card>
+      <card
+        class="menu-item"
+        title="Eligible Loan Penetration"
+        (redirectToEvent)="selectReport(2)"
+        cardImage="../../../../assets/img/icons/svg/clipboard.svg"
+        cardBody=""
+        link=""
+        color="light">
+      </card>
+    </div>
+  </div>
+</div>

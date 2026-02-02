@@ -1,0 +1,16 @@
+<div class="content-fluid">
+  <div class="row justify-content-center">
+    <div class="icon"></div>
+  </div>
+
+  <div class="text-center">
+    <span>{{ data.type | translate }} !</span>
+    <div class="my-3">{{ data.message | translate }}</div>
+  </div>
+
+  <div class="row justify-content-center mt-2">
+    <button class="button-primary-popup col-6" mat-dialog-close (click)="onClose()">
+      Return to Dashboard
+    </button>
+  </div>
+</div>

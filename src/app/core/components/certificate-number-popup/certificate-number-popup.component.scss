@@ -1,0 +1,107 @@
+// Forcefully remove any border, outline, border-radius, or background from the close icon image, even if inherited from global styles
+::ng-deep .certificate-popup-close img,
+.certificate-popup-close img,
+.certificate-popup-close>img {
+    border: none !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block;
+}
+
+// Remove any border/background from all possible Angular Material dialog containers and overlays
+.certificate-popup-panel .mat-mdc-dialog-container,
+.certificate-popup-panel .mat-mdc-dialog-container::before,
+.certificate-popup-panel .mat-mdc-dialog-container::after,
+.certificate-popup-panel .mat-dialog-container,
+.certificate-popup-panel .mat-dialog-container::before,
+.certificate-popup-panel .mat-dialog-container::after,
+.certificate-popup-panel .cdk-overlay-pane,
+.certificate-popup-panel .cdk-overlay-pane::before,
+.certificate-popup-panel .cdk-overlay-pane::after {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+// Remove any green border from Angular Material dialog container (including pseudo-elements)
+::ng-deep .certificate-popup-panel .mat-mdc-dialog-container,
+.certificate-popup-panel .mat-mdc-dialog-container::before,
+.certificate-popup-panel .mat-mdc-dialog-container::after {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+// Custom dialog panel class to override global or theme borders/backgrounds
+::ng-deep .certificate-popup-panel .mat-mdc-dialog-container {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+::ng-deep .certificate-popup-container {
+    position: relative;
+    border: 6px solid #E57D26;
+
+    background: #fff;
+    padding: 8px 28px 20px 28px;
+    min-width: 550px;
+    max-width: 550px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    margin: 0;
+}
+
+
+.certificate-popup-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: none;
+    border: none !important;
+    cursor: pointer;
+    padding: 0;
+    z-index: 2;
+
+    mat-icon {
+        color: #888888;
+        /* grey */
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+.certificate-popup-title {
+    font-size: 25px;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 5px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    letter-spacing: 0.01em;
+}
+
+.certificate-popup-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.certificate-popup-icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.certificate-popup-message {
+    font-size: 1rem;
+    color: black;
+    margin-top: 6px;
+    line-height: 1.5;
+}

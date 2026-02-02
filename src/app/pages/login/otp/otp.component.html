@@ -1,0 +1,55 @@
+<div class="page">
+ 
+  <app-header></app-header>
+  
+  <div class="otp-content">
+    <main class="otp-container" role="main" aria-labelledby="otpTitle">
+      
+      <h1 id="otpTitle" class="main-title">Verify your email address</h1>
+      
+      <p class="subtitle">For security, you need to verify your identity with a verification code (One-Time Passcode) to complete your registration and activate your Securian Canada ID online account. Check your email and enter the verification code below</p>
+      
+      <!--
+      @if (errorMessage) {
+        <div class="helper error-message">
+          <strong>Error: {{ errorMessage }}</strong>
+        </div>
+      }
+        -->
+
+      <div class="otp-wrap">
+        <div class="otp-boxes">
+          <input type="text" maxlength="1" class="otp-digit" #digit1 inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
+            (input)="onDigitInput($event, 0)" (keydown)="onKeyDown($event, 0)" (paste)="onPaste($event)" />
+          <input type="text" maxlength="1" class="otp-digit" #digit2 inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
+            (input)="onDigitInput($event, 1)" (keydown)="onKeyDown($event, 1)" />
+          <input type="text" maxlength="1" class="otp-digit" #digit3 inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
+            (input)="onDigitInput($event, 2)" (keydown)="onKeyDown($event, 2)" />
+          <span class="otp-separator">-</span>
+          <input type="text" maxlength="1" class="otp-digit" #digit4 inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
+            (input)="onDigitInput($event, 3)" (keydown)="onKeyDown($event, 3)" />
+          <input type="text" maxlength="1" class="otp-digit" #digit5 inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
+            (input)="onDigitInput($event, 4)" (keydown)="onKeyDown($event, 4)" />
+          <input type="text" maxlength="1" class="otp-digit" #digit6 inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
+            (input)="onDigitInput($event, 5)" (keydown)="onKeyDown($event, 5)" (blur)="onLastDigitBlur()" />
+        </div>
+
+        @if (otpVerificationError) {
+          <p class="otp-error-message">Verification unsuccessful. Please try again.</p>
+        }
+
+        <p class="spam-notice">Can't find your code? Check your spam folder.</p>
+        
+        <div class="resend-links">
+          <a href="#" (click)="onResendClick($event)" class="resend-link">{{ resendLinkText }}</a>
+          <a routerLink="/login" class="return-link">Return to login page</a>
+        </div>
+
+        <p class="tfa-notice">Protect your account and personal information by setting up two-factor authentication (2FA). 2FA adds an extra layer of security by sending a unique code to your email or mobile device where you sign in. This helps ensure that only you can access your account, even if your password is compromised.</p>
+      </div>
+    </main>
+  </div>
+
+
+  <app-footer></app-footer>
+</div>

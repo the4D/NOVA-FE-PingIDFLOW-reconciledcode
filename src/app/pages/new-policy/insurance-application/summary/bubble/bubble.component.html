@@ -1,0 +1,10 @@
+<div class="text-center min-w78">
+  <div
+    [ngClass]="{
+      'securian-brand-orange-background': style() === 'waived',
+      'securian-brand-leaf-background': style() === 'taken',
+    }"
+    style="padding: 10px; border-radius: 20px 20px">
+    <p class="body-small-bold waive-forecolor">{{ description() }}</p>
+  </div>
+</div>

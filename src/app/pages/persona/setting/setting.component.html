@@ -1,0 +1,15 @@
+<div class="d-flex flex-column justify-content-between">
+  <div>
+    <p class="body-medium-regular me-3">
+      You can invite a new users to access your Nova account. Only give access to people you trust,
+      since users can see your transaction and other business information.
+    </p>
+  </div>
+  <div class="mw-142Pixels mt-4">
+    <button class="button-primary" (click)="showForm()">Add User</button>
+  </div>
+</div>
+<div class="admin">
+  <app-account-table (editUserEvent)="showForm($event)"
+    (deleteUserEvent)="toggleDeleteUserMsg($event)"></app-account-table>
+</div>

@@ -1,0 +1,50 @@
+@use '/src/assets/css/base/colors';
+
+.icon-applicants {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	color: colors.$securian-brand-grass !important;
+}
+
+.search {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	color: colors.$securian-brand-snow !important;
+}
+
+.icon-person {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	color: colors.$securian-brand-sky !important;
+}
+
+.icon-settings {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	color: colors.$securian-brand-sky !important;
+}
+
+.icon-logout {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	color: colors.$securian-brand-sky !important;
+}
+
+.mat-step-icon-content .mat-icon {
+	color: colors.$valeyo-white-0;
+}
+
+.mat-icon {
+	color: colors.$securian-brand-sky;
+	height: 24px;
+	flex-shrink: 0;
+}
+
+.dynamic-table-row .mat-icon {
+	color: colors.$securian-brand-grass;
+}

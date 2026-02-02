@@ -1,0 +1,29 @@
+<div class="form-section">
+  <div class="section-wrapper">
+    <div class="section-title">
+      <h4>Loan Information</h4>
+    </div>
+  </div>
+      <div class="form-table d-flex gap-6 mt-4">
+        <div>
+          <div class="body-medium-bold">Loan Number</div>
+          <div class="body-medium-regular">
+            <div>{{ loan.loanIdentifier }}</div>
+          </div>
+        </div>
+        <div>
+          <div class="body-medium-bold">Loan Amount</div>
+          <div class="body-medium-regular">
+            <div>${{ loan.loanAmount | number : '1.2' }}</div>
+          </div>
+        </div>
+        <div>
+          <div class="body-medium-bold">Loan Payment Amount</div>
+          <div class="body-medium-regular">
+            <div>${{ loan.paymentAmount | number : '1.2' }} {{ frequency }}</div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  

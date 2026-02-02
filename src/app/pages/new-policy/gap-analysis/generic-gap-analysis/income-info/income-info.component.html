@@ -1,0 +1,124 @@
+<div class="income-info" #loanContainer>
+  <div class="form">
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Income Information</h4>
+        </div>
+        <div class="body-medium-regular">
+          Enter the details of the member's income. This includes the member's income and any other annual income.
+        </div>
+      </div>
+      <div class="form-table">
+        <form class="form-gapanalysis-fields" [formGroup]="incomeForm">
+          <div>
+            <span class="body-medium-bold">Employment Type</span>
+            <div>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-select
+                  placeholder="Select Employment"
+                  panelClass="custom-dropdown"
+                  disableOptionCentering
+                  formControlName="employmentType">
+                  <mat-option class="hidden"> Select Employment type</mat-option>
+                  @for (option of employmentList; track option.value) {
+                    <mat-option [value]="option.value">
+                      {{ option.description }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option disabled> Employment list not loaded </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          @if (incomeForm.value.employmentType === 'annual') {
+            <div>
+              <div class="form-gapanalysis-field">
+                <span class="body-medium-bold">Gross Annual Income</span>
+                <div>
+                  <mat-form-field class="w-100" appearance="outline">
+                    <input
+                      matInput
+                      currencyMask
+                      [options]="{ prefix: '' }"
+                      type="text"
+                      placeholder="Enter Annual Income"
+                      formControlName="annualIncome" />
+                    <span matPrefix>$ </span>
+                    <span matSuffix>&nbsp; </span>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (incomeForm.value.employmentType === 'hourly') {
+            <div>
+              <div class="form-gapanalysis-field">
+                <span class="body-medium-bold">Average Hours Per Week</span>
+                <div>
+                  <mat-form-field class="w-100" appearance="outline">
+                    <input matInput type="number" placeholder="Work Hours" formControlName="workHours" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-gapanalysis-field">
+                <span class="body-medium-bold">Hourly Pay</span>
+                <div>
+                  <mat-form-field class="w-100" appearance="outline">
+                    <input
+                      matInput
+                      currencyMask
+                      [options]="{ prefix: '' }"
+                      type="text"
+                      placeholder="Enter Hourly Pay Before Tax"
+                      formControlName="hourlyPay" />
+                    <span matPrefix class="ffix-space">$ </span>
+                    <span matSuffix>&nbsp; </span>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="form-gapanalysis-field">
+            <span class="body-medium-bold">Additional Annual Income (If Applicable)</span>
+            <div>
+              <mat-form-field class="w-100" appearance="outline">
+                <input
+                  matInput
+                  currencyMask
+                  [options]="{ prefix: '' }"
+                  type="text"
+                  placeholder="Enter Annual Income"
+                  formControlName="additionalIncome" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="total">
+          <div class="total-row">
+            <div class="body-medium-bold">Estimated Monthly Income:</div>
+            <div class="body-medium-bold">
+              {{ monthlyIncome | currency: 'USD' : 'symbol' }}
+            </div>
+          </div>
+          <div class="total-row">
+            <div class="body-medium-bold">Estimated Annual Income:</div>
+            <div class="body-medium-bold">
+              {{ annualIncome | currency: 'USD' : 'symbol' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-buttons">
+      <button class="button-primary" (click)="createApplication()" [disabled]="disableButton(incomeForm)">
+        Next: {{ nextButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

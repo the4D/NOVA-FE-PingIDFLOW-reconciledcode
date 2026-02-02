@@ -1,0 +1,33 @@
+@use '/src/assets/css/components/form-field';
+
+
+/* TODO(mdc-migration): The following rule targets internal classes of radio that may no longer apply for the MDC version.*/
+::ng-deep .mat-mdc-radio-group.ng-invalid.ng-touched .mat-radio-outer-circle {
+  border-color: red;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
+::ng-deep .mat-mdc-checkbox.ng-invalid.ng-touched span.mat-checkbox-frame {
+  border-color: red !important;
+}
+
+// ::ng-deep .mat-tab-body.mat-tab-body-active {
+//   z-index: 1;
+// }
+
+::ng-deep {
+  /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
+  .mat-checkbox-inner-container {
+    margin: 0% !important;
+    margin-right: 5px !important;
+    margin-top: 1px !important;
+    margin-bottom: initial;
+    transform: translateY(2px);
+  }
+  /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
+  .mat-checkbox-label {
+    margin-left: 5px !important;
+    white-space: normal;
+    line-height: normal !important;
+  }
+}

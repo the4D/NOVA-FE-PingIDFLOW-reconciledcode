@@ -1,0 +1,93 @@
+<div class="pt-2 pb-3 px-2">
+  @if (insuranceTypeAbbreviation() === 'SP') {
+    <app-summary-titles [insuranceTitle]="insuranceTitle()" [insuranceDescription]="insuranceDescription()" />
+  }
+
+  @if (quoteResponseData$ | async; as quoteResponse) {
+    <div class="d-flex justify-content-between border-bottom-grey pt-3">
+      <div class="ps-5 names-wmm"></div>
+      <div class="d-flex justify-content-between w-100">
+        @if (quoteResponse.applications[applicationIndex()].applicants) {
+          @for (
+            coverage of quoteResponse.applications[applicationIndex()].coverages;
+            track coverage.coverageType;
+            let coverageIndex = $index
+          ) {
+            <div>
+              <div class="text-center min-w78">
+                <p class="body-medium-bold securian-pine-text-color align-items-center">
+                  {{ coverage.coverageType }}
+                </p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    @for (
+      applicant of quoteResponse.applications[applicationIndex()].applicants;
+      track applicant.applicantIdentifier;
+      let applicantIndex = $index
+    ) {
+      <div class="d-flex align-items-center pb-3 border-bottom-grey">
+        <div class="pt-3 names-wmm">
+          <p class="body-medium-bold">{{ applicant.firstName }} {{ applicant.lastName }}</p>
+        </div>
+
+        <div class="d-flex justify-content-between w-100">
+          @for (coverage of applicant.applicantCoverages; track coverage.coverageType; let coverageIndex = $index) {
+            @let style = getReasonStatus(coverage.coverageCode) === 'Insured' ? 'taken' : 'waived';
+            @let description =
+              getReasonStatus(coverage.coverageCode) === 'Insured' ? 'Taken' : getReasonStatus(coverage.coverageCode);
+            <div class="pt-2">
+              <app-bubble [description]="description" [style]="style" />
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="d-flex justify-content-between pt-3">
+      <div class="pe-3 names-wmm">
+        <p class="body-medium-bold">Premium</p>
+      </div>
+      <div class="d-flex justify-content-between w-100">
+        @if (quoteResponse.applications[applicationIndex()].applicants) {
+          @for (
+            coverage of quoteResponse.applications[applicationIndex()].coverages;
+            track coverage.coverageType;
+            let coverageIndex = $index
+          ) {
+            <div class="text-center min-w78">
+              <p class="body-medium-regular">
+                ${{ coverage.premiumAmount + coverage.premiumTaxAmount | number: '1.2' }}
+              </p>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+    <div class="d-flex flex-column pb-1 gap-3">
+      <div class="d-flex justify-content-between pe-2">
+        <div class="body-medium-bold">
+          {{ quoteResponse.insuranceType === 'SP' ? 'Premium Total' : 'Monthly Premium Total' }}
+        </div>
+        <div class="body-medium-bold text-end">${{ totalMonthlyPremiumWithTaxIncluded() | number: '1.2' }}</div>
+      </div>
+
+      @if (quoteResponse.loanId) {
+        @if (quoteResponse.insuranceType === 'SP') {
+          <div class="d-flex justify-content-between pe-2">
+            <div class="body-medium-bold">Amortization</div>
+            <div class="body-medium-bold text-end">
+              {{ quoteResponse.applications[applicationIndex()].amortization }} Months
+            </div>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

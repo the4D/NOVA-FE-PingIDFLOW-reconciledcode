@@ -1,0 +1,265 @@
+@if (isSinglePremium()) {
+  <app-noInfoRequired
+    [title]="'Additional information is not required based on coverage selection.'"
+    [message]="''"></app-noInfoRequired>
+
+  <app-info-buttons
+    [disabledNextButton]="disableNextButton()"
+    [buttonLabel]="buttonLabel"
+    (backAction)="back()"
+    (requestSubmissionAction)="requestSubmission()" />
+} @else {
+  @if (!coveragesTaken()) {
+    <app-noInfoRequired
+      [title]="'Additional information is not required based on coverage selection.'"
+      [message]="''"></app-noInfoRequired>
+
+    <app-info-buttons
+      [disabledNextButton]="disableNextButton()"
+      [buttonLabel]="buttonLabel"
+      (backAction)="back()"
+      (requestSubmissionAction)="requestSubmission()" />
+  } @else {
+    <div class="form">
+      <!-- Pre-Authorized Debit -->
+      <div class="form-section pb-4">
+        <div class="section-wrapper">
+          <div class="section-title">
+            <h5>Pre-authorized Debit</h5>
+          </div>
+          <div class="body-medium-regular">
+            If the applicant would like to set up a pre-authorized debit plan, they must provide their banking details
+          </div>
+        </div>
+
+        <!-- New Implementation -->
+        <div class="form-table">
+          @if (quoteTypeResponse$ | async; as response) {
+            <mat-tab-group
+              #infoTabs
+              [disablePagination]="true"
+              mat-align-tabs="start"
+              (selectedIndexChange)="onClickTab($event)">
+              @for (application of response.applications; track application.id; let applicationIndex = $index) {
+                @let applicants = application.applicants;
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <span class="mat-tab-label">
+                      {{ applicants[0].firstName }} {{ applicants[0].lastName }}
+                      {{ applicants.length > 1 ? ' & ' + applicants[1].firstName + ' ' + applicants[1].lastName : '' }}
+                    </span>
+                  </ng-template>
+                  @if (isCoveragesTaken(application.id)) {
+                    <div class="form-table mt-4" [formGroup]="premiumCollectionForm">
+                      @if (!isFirstApplicationHaveNoCoverage() && applicationIndex !== 0) {
+                        <mat-checkbox
+                          formControlName="addressPad_{{ application.id }}"
+                          (change)="onSaveAddressChange($event)"
+                          class="body-small-bold mb-3"
+                          labelPosition="after">
+                          The pre-authorized debit account is the same as in the 1st application
+                        </mat-checkbox>
+                      }
+                      <form [formGroup]="premiumCollectionForm" class="form-fields mt-3">
+                        <div class="form-field">
+                          <span class="body-medium-bold">Institution Number</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                maxlength="3"
+                                placeholder="Enter institution number"
+                                formControlName="institutionNumber_{{ application.id }}"
+                                required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-field">
+                          <span class="body-medium-bold">Institution Name</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                placeholder="Enter institution name"
+                                maxlength="127"
+                                formControlName="institutionName_{{ application.id }}"
+                                required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-field">
+                          <span class="body-medium-bold">Transit Number</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                maxlength="5"
+                                placeholder="Enter branch"
+                                formControlName="transitNumber_{{ application.id }}"
+                                required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="form-field">
+                          <span class="body-medium-bold">Account Number</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                maxlength="17"
+                                placeholder="Enter account number"
+                                formControlName="accountNumber_{{ application.id }}" />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        @if (loanTypes.includes(loan.loanType)) {
+                          <div class="form-field">
+                            <span class="body-medium-bold d-flex"
+                              >Withdrawal Date &nbsp;
+                              <div
+                                class="info-color"
+                                appTooltip
+                                [tooltip]="{ tooltip: withdrawalTooltip, position: 'top', style: 'info' }"
+                                aria-label="details">
+                                <mat-icon>help</mat-icon>
+                              </div>
+                            </span>
+                            <div>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-select
+                                  placeholder="Select withdrawal date"
+                                  formControlName="withdrawal_{{ application.id }}"
+                                  panelClass="panel-dropdown">
+                                  @for (item of withdrawalList; track item.id) {
+                                    <mat-option [value]="item.id">
+                                      {{ item.description }}
+                                    </mat-option>
+                                  } @empty {
+                                    <mat-option disabled>Withdrawal list not loaded</mat-option>
+                                  }
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        }
+                      </form>
+
+                      <form class="row" [formGroup]="premiumCollectionForm">
+                        <div class="col-4">
+                          <span class="body-medium-bold">Institution Street Number</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                placeholder="Enter street number"
+                                maxlength="15"
+                                formControlName="streetNumber_{{ application.id }}" />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <span class="body-medium-bold">Institution Address</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                maxlength="35"
+                                placeholder="Enter address"
+                                formControlName="institutionAddress_{{ application.id }}"
+                                required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </form>
+
+                      <form class="form-fields" [formGroup]="premiumCollectionForm">
+                        <div class="form-field">
+                          <span class="body-medium-bold">Institution Unit Number (Optional)</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                placeholder="Enter unit number"
+                                formControlName="institutionUnit_{{ application.id }}"
+                                maxlength="15" />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-field">
+                          <span class="body-medium-bold">Institution City</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                type="text"
+                                maxlength="20"
+                                placeholder="Enter city"
+                                formControlName="institutionCity_{{ application.id }}"
+                                required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-field">
+                          <span class="body-medium-bold">Institution Province</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-select
+                                placeholder="Select province"
+                                formControlName="institutionProvince_{{ application.id }}"
+                                panelClass="panel-dropdown">
+                                @for (province of provinceList; track province.id) {
+                                  <mat-option [value]="province.abbreviation">
+                                    {{ province.description }}
+                                  </mat-option>
+                                } @empty {
+                                  <mat-option disabled>Province list not loaded</mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-field">
+                          <span class="body-medium-bold">Institution Postal Code</span>
+                          <div>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input
+                                matInput
+                                allCaps
+                               
+                                type="text"
+                                placeholder="Enter postal code"
+                                formControlName="institutionPostalCode_{{ application.id }}"
+                                required
+                                maxlength="7" />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  } @else {
+                    <app-noInfoRequired
+                      [title]="'Additional information is not required based on coverage selection.'"
+                      [message]="''"></app-noInfoRequired>
+                  }
+                </mat-tab>
+              }
+            </mat-tab-group>
+          }
+          <app-info-buttons
+            [disabledNextButton]="disableNextButton()"
+            [buttonLabel]="buttonLabel"
+            (backAction)="back()"
+            (requestSubmissionAction)="requestSubmission()" />
+        </div>
+      </div>
+    </div>
+  }
+}

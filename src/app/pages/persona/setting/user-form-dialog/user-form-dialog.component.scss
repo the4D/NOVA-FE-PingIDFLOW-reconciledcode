@@ -1,0 +1,37 @@
+@use '../../.././../../assets/css/components/form-field';
+
+.panel {
+  padding: 20px;
+  z-index: 1000;
+  height: 824;
+  width: 100%;
+}
+
+.input-wide {
+  grid-column: span 2;
+}
+
+mat-icon {
+  margin-bottom: 10px;
+  cursor: pointer;
+  float: right;
+}
+
+.separator {
+  padding-bottom: 30px;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+}
+
+.no-overflow {
+  overflow: hidden;
+}
+
+.fwidth {
+  max-width: 500px;
+  min-width: 500px;
+}

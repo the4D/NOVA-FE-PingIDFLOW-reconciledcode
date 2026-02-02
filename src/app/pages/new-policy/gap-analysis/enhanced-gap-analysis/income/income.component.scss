@@ -1,0 +1,25 @@
+.custom-row {
+  display: grid;
+  grid-template-columns: 51% 49%;
+  justify-content: center;
+  column-gap: 0px;
+}
+
+.custom-col {
+  min-width: 440px !important;
+}
+
+.row-1 {
+  display: flex;
+  column-gap: 24px;
+
+  .row-1-column-1 {
+    flex-grow: 2;
+    flex-basis: 70%;
+  }
+
+  .row-1-column-2 {
+    flex-grow: 1;
+    flex-basis: 30%;
+  }
+}

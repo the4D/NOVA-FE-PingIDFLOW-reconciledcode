@@ -1,0 +1,37 @@
+@use '/src/assets/css/base/colors';
+
+.gap-analysis-intro-page {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+
+  .info-boxes {
+    column-gap: 26px;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .info-box {
+      flex: 1 1 50%;
+      height: auto;
+      min-width: 350px;
+      max-width: 1fr !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      gap: 20px !important;
+      padding: 30px;
+      border-top: 8px solid colors.$securian-brand-grass;
+      box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
+      background-color: colors.$securian-brand-snow;
+    }
+  }
+
+  .custom-class-button {
+    position: relative;
+    top: 30px !important;
+  }
+}

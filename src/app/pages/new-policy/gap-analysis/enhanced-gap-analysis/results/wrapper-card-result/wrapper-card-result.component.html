@@ -1,0 +1,16 @@
+<div class="card-container w-100">
+  <ng-content select=[title]></ng-content>
+</div>
+<mat-divider class="mt-3"></mat-divider>
+<div class="pt-4 card-content w-100">
+  <ng-content select=[user]></ng-content>
+
+  <div class="coverage-container">
+    <ng-content select="[new-space]"></ng-content>
+  </div>
+
+  <div class="mt-3 bag-light-color bottom-space">
+    <ng-content select="[footer]"></ng-content>
+  </div>
+
+</div>

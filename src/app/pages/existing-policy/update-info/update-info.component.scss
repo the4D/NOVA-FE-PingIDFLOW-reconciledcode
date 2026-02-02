@@ -1,0 +1,86 @@
+@use '/src/assets/css/base/colors';
+@use '/src/assets/css/components/form-field';
+
+:host {
+	display: block;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 30px;
+}
+
+mat-divider {
+	margin-bottom: 2rem;
+	color: colors.$valeyo-grey-300;
+}
+
+.mat-mdc-form-field {
+	display: block;
+}
+
+.upload-form {
+	display: block;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 100%;
+
+	.button-upload {
+		cursor: pointer;
+		border: 1px dashed #ccc;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 0;
+		margin-bottom: 1rem;
+		color: var(--green400);
+		background-color: var(--green800);
+	}
+
+	input[type='file'] {
+		display: none;
+	}
+}
+
+.file-collection {
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+	padding: 5px 20px;
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.form-icon {
+		width: 1.5rem;
+		height: 1.8rem;
+		align-self: center;
+		margin: 0.5rem 1rem 0.5rem 0rem;
+		background: url('../../../../assets/img/icons/FZip_AS3_1.png') no-repeat;
+	}
+
+	.pdf-icon {
+		width: 1.5rem;
+		height: 1.8rem;
+		align-self: center;
+		margin: 0.5rem 1rem 0.5rem 0rem;
+		background: url('../../../../assets/img/icons/PDF_file_icon_1.png') no-repeat;
+	}
+
+	a {
+		text-decoration: none;
+		color: var(--green200);
+		font-weight: 600;
+	}
+}
+
+.section {
+	padding: 0px 0px 20px 0px;
+}
+
+.section.open {}
+
+
+.success-wrapper,
+.error-wrapper {
+	margin-top: 250px;
+	text-align: center;
+}

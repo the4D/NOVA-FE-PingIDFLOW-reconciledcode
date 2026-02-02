@@ -1,0 +1,68 @@
+@use '/src/assets/css/base/colors';
+
+.gap-analysis-intro-page {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+
+  .info-boxes {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 24px;
+    height: auto;
+
+    .info-box {
+      flex: 1 1 50%;
+      height: auto;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      column-gap: 10px;
+      padding: 16px;
+      border: 3px solid colors.$securian-brand-sky;
+      box-shadow: 0px 4px 12px rgba(91, 91, 91, 0.08);
+
+      .number-circle {
+        min-width: 34px;
+        height: 34px;
+        color: colors.$securian-brand-sky;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  button {
+    align-self: flex-end;
+  }
+}
+
+.override-color {
+  color: colors.$securian-brand-onyx;
+}
+
+.bg-bmo-blue {
+  background-color: colors.$valeyo-green-700;
+}
+
+.file-name-info {
+  background-color: #ced4da;
+  border-radius: 6px;
+  padding: 8px 8px;
+}
+
+.row-1 {
+  display: flex;
+  column-gap: 40px;
+
+  .row-1-column-1 {
+    flex-grow: 2;
+    flex-basis: 70%;
+  }
+
+  .row-1-column-2 {
+    flex-grow: 1;
+    flex-basis: 30%;
+  }
+}
+

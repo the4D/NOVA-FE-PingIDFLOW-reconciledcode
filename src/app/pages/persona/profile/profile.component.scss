@@ -1,0 +1,15 @@
+@use '../../../../assets/css/components/form-field';
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.profile-form {
+  width: 70%;
+  max-width: 1700px;
+}

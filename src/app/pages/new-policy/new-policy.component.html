@@ -1,0 +1,78 @@
+<div class="new-policy">
+  <div class="grand-menu">
+    <div>
+      <h1 class="grand-menu-welcome-message">Hello {{ userName }}, let's get started</h1>
+    </div>
+    <div class="pt-3 pb-5">
+      <h5 class="grand-menu-date">{{ today }}</h5>
+    </div>
+    <div class="grand-menu-container-row">
+      <card
+        class="menu-item"
+        title="Gap Analysis"
+        cardImage="../../../../assets/img/icons/svg/computer.svg"
+        cardBody="Identify insurance coverage needs"
+        link="new-policy/gap-analysis"
+        color="light"></card>
+      <card
+        class="menu-item"
+        title="Quick Quote"
+        cardImage="../../../../assets/img/icons/svg/rocket.svg"
+        cardBody="Estimate credit protection costs"
+        link="new-policy/quick-quote"
+        color="semi"></card>
+      <card
+        class="menu-item"
+        title="Insurance Application"
+        cardImage="../../../../assets/img/icons/svg/clipboard.svg"
+        cardBody="Apply for credit protection insurance"
+        link="new-policy/insurance-application"
+        color="hard"></card>
+    </div>
+  </div>
+
+  <div class="applications-dashboard">
+    <h3 class="securian-leaf-text-color">Applications</h3>
+    <div class="select-and-search">
+      <div class="select-field">
+        <mat-form-field appearance="outline">
+          <mat-select
+            placeholder="Search By"
+            (selectionChange)="onFilterByChanged()"
+            [formControl]="filterBy"
+            panelClass="panel-dropdown">
+            <mat-option class="hidden" [disabled]="true">Search By</mat-option>
+            @for (filter of filterByOptionList; track filter.id) {
+              <mat-option [value]="filter.id">
+                {{ filter.description }}
+              </mat-option>
+            } @empty {
+              <mat-option [disabled]="true"> No filter options available </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="search-field">
+        <div>
+          <mat-form-field appearance="outline">
+            <input placeholder="Search text" matInput type="text" [formControl]="searchBy" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <app-dynamic-table
+      (clickAction)="onSelectApplication($event)"
+      dataSourceType="applications"
+      buttonMsg="Start New Application"
+      emptyMsg="You will see a list of recent applications here when you add them."
+      [seeMoreMsg]="seeMoreMsg"
+      (clickMorePages)="seeMoreApplications()"
+      title=""
+      [data]="dataSource"
+      [columnTitles]="columnTitles"
+      [columns]="columns">
+    </app-dynamic-table>
+  </div>
+</div>

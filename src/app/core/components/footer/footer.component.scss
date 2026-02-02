@@ -1,0 +1,37 @@
+@use '../../../../assets/css/base/colors';
+
+.bg-fog {
+  background-color: colors.$securian-brand-fog;
+}
+
+.bg-pine {
+  background-color: colors.$securian-brand-pine;
+}
+
+.bg-steel {
+  background-color: colors.$securian-brand-steel;
+}
+
+.pl-130 {
+  padding-left: 130px;
+}
+
+.color-leaf {
+  color: colors.$securian-brand-leaf;
+}
+
+.logo-reserved {
+  height: 51px;
+  width: 220px;
+}
+
+.footer-disclosures {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.footer-nav-links a {
+  color: #000;
+  line-height: 1.3em;
+  text-decoration: none
+}

@@ -1,0 +1,189 @@
+<div class="form">
+  <div class="row-1">
+    <div class="row-1-column-1">
+      <div class="wd-60">
+        <div class="section-title pb-3">
+          <h4>{{ 'coverages.title' | translate }}</h4>
+        </div>
+        <p class="body-medium-regular pt-2">
+          {{ 'coverages.subTitle' | translate }}
+        </p>
+      </div>
+
+      <form [formGroup]="existingCoveragesForm">
+        <div class="borrower-one">
+          <h5 class="pb-4">
+            {{ 'meeting.borrowerOne' | translate }}
+          </h5>
+          <div class="row">
+            <div class="col-6">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'coverages.life' | translate }}</span>
+                <div
+                  class="d-flex ms-1"
+                  appTooltip
+                  [tooltip]="{ tooltip: 'coverages.lifeTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  currencyMask
+                  appCurrencyOptions
+                  [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }"
+                  type="text"
+                  placeholder="{{ 'coverages.life' | translate }}"
+                  formControlName="B1_ExistingLifeInsurance" />
+              </mat-form-field>
+            </div>
+            <div class="col-6 form-field">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'coverages.disability' | translate }}</span>
+                <div
+                  class="d-flex ms-1"
+                  appTooltip
+                  [tooltip]="{ tooltip: 'coverages.disabilityTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  suffix="%"
+                  mask="percent"
+                  type="text"
+                  placeholder="{{ 'coverages.disability' | translate }}"
+                  formControlName="B1_DisabilityInsuranceInPercentage" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="body-medium-bold">{{ 'coverages.critical' | translate }}</span>
+                <div
+                  class="d-flex ms-1"
+                  appTooltip
+                  [tooltip]="{ tooltip: 'coverages.lifeTooltip' | translate, position: 'top', style: 'info' }"
+                  aria-label="details">
+                  <mat-icon>error_outline</mat-icon>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  currencyMask
+                  appCurrencyOptions
+                  type="text"
+                  [options]="{ isPercentage: false, precision: '0', thousands: '', prefix: '', align: 'left' }"
+                  placeholder="{{ 'coverages.critical' | translate }}"
+                  formControlName="B1_ExistingCriticalIllnessInsurance" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        @if (this.gapAnalysisForm.meetingDetailForm?.IsSecondaryApplicant) {
+          <div class="borrower-two mt-4">
+            <h5 class="pb-4">
+              {{ 'meeting.borrowerTwo' | translate }}
+            </h5>
+            <div class="row">
+              <div class="col-6">
+                <div class="d-flex justify-content-start align-items-center">
+                  <span class="body-medium-bold">{{ 'coverages.life' | translate }}</span>
+                  <div
+                    class="ms-1"
+                    appTooltip
+                    [tooltip]="{ tooltip: 'coverages.lifeTooltip' | translate, position: 'top', style: 'info' }"
+                    aria-label="details">
+                    <mat-icon>error_outline</mat-icon>
+                  </div>
+                </div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    matInput
+                    currencyMask
+                    appCurrencyOptions
+                    [options]="{ precision: 0, thousands: '', prefix: '', align: 'left' }"
+                    type="text"
+                    placeholder="{{ 'coverages.life' | translate }}"
+                    formControlName="B2_ExistingLifeInsurance" />
+                </mat-form-field>
+              </div>
+              <div class="col-6 form-field">
+                <div class="d-flex justify-content-start align-items-center">
+                  <span class="body-medium-bold">{{ 'coverages.disability' | translate }}</span>
+                  <div
+                    class="ms-1"
+                    appTooltip
+                    [tooltip]="{ tooltip: 'coverages.disabilityTooltip' | translate, position: 'top', style: 'info' }"
+                    aria-label="details">
+                    <mat-icon>error_outline</mat-icon>
+                  </div>
+                </div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    matInput
+                    suffix="%"
+                    mask="percent"
+                    type="text"
+                    placeholder="{{ 'coverages.disability' | translate }}"
+                    formControlName="B2_DisabilityInsuranceInPercentage" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="d-flex justify-content-start align-items-center">
+                  <span class="body-medium-bold">{{ 'coverages.critical' | translate }}</span>
+                  <div
+                    class="ms-1"
+                    appTooltip
+                    [tooltip]="{ tooltip: 'coverages.lifeTooltip' | translate, position: 'top', style: 'info' }"
+                    aria-label="details">
+                    <mat-icon>error_outline</mat-icon>
+                  </div>
+                </div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    matInput
+                    currencyMask
+                    appCurrencyOptions
+                    type="text"
+                    [options]="{ isPercentage: false, precision: '0', thousands: '', prefix: '', align: 'left' }"
+                    placeholder="{{ 'coverages.critical' | translate }}"
+                    formControlName="B2_ExistingCriticalIllnessInsurance" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="text-end pt-5">
+          <div class="button-row">
+            <button class="button-secondary" matStepperPrevious>
+              {{ 'coverages.back' | translate }}
+            </button>
+            <button class="button-primary" matStepperNext (click)="setGapAnalysisData()">
+              {{ 'coverages.next' | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row-1-column-2 me-2">
+      <div class="securian-card securian-card-lighter car-bgcolor">
+        <div class="ms-3 mb-3">
+          <app-info-box
+            title="{{ 'coverages.infoBoxTitle' | translate }}"
+            content="{{ 'coverages.infoBoxContent' | translate }}"></app-info-box>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

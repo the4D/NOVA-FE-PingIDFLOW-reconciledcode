@@ -1,0 +1,393 @@
+<div>
+   @if(!isApplicantDataPresent && !dontShowNewApplicantButton){
+    <div class="applicant-search-container">
+      <label class="search-label">Search by applicant name or member ID</label>
+      <div class="search-row">
+        <input type="text" [(ngModel)]="searchText" placeholder="Type applicant name or member ID" (keyup)="onSearchChange()" class="search-input" />
+        @if (searchText) {
+          <button type="button" aria-label="Clear" (click)="searchText=''" class="clear-btn">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+        <button type="button" aria-label="Search" class="search-btn">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+       @if(!dontShowNewApplicantButton) {
+      <div class="add-applicant-btn-row">
+        <button type="button" class="add-applicant-btn" (click)="onAddNewApplicant()">
+          New Applicant
+        </button>
+      </div>
+    }
+        @if (!showForm && !dontShowNewApplicantButton) {
+          <div class="applicant-results">
+            @if (applicantResults && applicantResults.length > 0) {
+              <table class="applicant-results-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Applicant ID</th>
+                    <th>Date of Birth</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for(applicant of applicantResults; track applicant.applicantIdentifier) {
+                  
+                        @if(
+                          !searchText ||
+                          (applicant.name && applicant.name.toLowerCase().includes((searchText || '').toLowerCase())) ||
+                          (applicant.applicantIdentifier && applicant.applicantIdentifier.toLowerCase().includes((searchText || '').toLowerCase()))
+                        ) {
+                          <tr>
+                            <td>{{ applicant.name }}</td>
+                            <td>{{ applicant.applicantIdentifier }}</td>
+                            <td>{{ applicant.formattedBirthDate }}</td>
+                            <td>{{ applicant.applicantAddresses[0]?.street }}</td>
+                            <td>{{ applicant.applicantAddresses[0]?.city }}</td>
+                            <td><a class="applicant-select-link" (click)="onSelectApplicant(applicant)">Select</a></td>
+                          </tr>
+                        }
+                    
+                
+                  }
+                </tbody>
+              </table>
+            }
+          </div>
+        }
+   
+    </div>
+  }
+  @if(showForm || isApplicantDataPresent) {
+  <form  [formGroup]="applicantForm">
+    <div formGroupName="personalInfoForm">
+      <div class="row pt-4">
+        <div class="col-6">
+          <span class="body-medium-bold">First Name</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="30" placeholder="Enter first name" formControlName="firstName" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <span class="body-medium-bold">Middle Name</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="30" placeholder="Enter middle name" formControlName="middleName" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">Last Name</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="30" placeholder="Enter last name" formControlName="lastName" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <span class="body-medium-bold">Member ID</span>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="text"
+              maxlength="10"
+              placeholder="Enter member ID"
+              formControlName="applicantIdentifier" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <ng-container formGroupName="homePhoneForm">
+        <div class="col-6">
+          <span class="body-medium-bold">Home Phone</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                mask="(000) 000-0000"
+                matInput
+                type="text"
+                placeholder="Enter home phone number"
+                formControlName="number" />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container formGroupName="workPhoneForm">
+        <div class="col-6">
+          <span class="body-medium-bold">Work Phone (Optional)</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                mask="(000) 000-0000"
+                matInput
+                type="text"
+                placeholder="Enter work phone number"
+                formControlName="number" />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row">
+      <ng-container formGroupName="personalInfoForm">
+        <div class="col-6">
+          <span class="body-medium-bold">Place of Birth</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select
+                placeholder="Select place of birth"
+                panelClass="panel-dropdown"
+                formControlName="placeOfBirth">
+                @for (placeOfBirth of placeOfBirthList; track placeOfBirth.abbreviation) {
+                  <mat-option [value]="placeOfBirth.abbreviation">
+                    {{ placeOfBirth.abbreviation }} - {{ placeOfBirth.description }}
+                  </mat-option>
+                } @empty {
+                  <mat-option> Place of birth not loaded </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <span class="body-medium-bold">Date of Birth (dd/mm/yyyy)</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                matInput
+                type="text"
+                placeholder="Enter date of birth"
+                formControlName="birthDate"
+                [matDatepicker]="pickerBirthDate"
+                [max]="maxDate" />
+              <mat-datepicker-toggle matSuffix [for]="pickerBirthDate"> </mat-datepicker-toggle>
+              <mat-datepicker #pickerBirthDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <ng-container formGroupName="personalInfoForm">
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">Occupation</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="30" placeholder="Enter occupation" formControlName="occupation" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <span class="body-medium-bold">Are you a smoker?</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select placeholder="Are you a smoker?" formControlName="isSmoker" panelClass="panel-dropdown">
+                @for (smokerType of smokerTypeList; track smokerType.id) {
+                  <mat-option [value]="smokerType.id">
+                    {{ smokerType.description }}
+                  </mat-option>
+                } @empty {
+                  <mat-option> Smoke type not loaded </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <ng-container formGroupName="personalInfoForm">
+        <div class="col-6">
+          <span class="body-medium-bold">Gender</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select placeholder="Select gender" formControlName="gender" panelClass="panel-dropdown">
+                @for (gender of genderList; track gender.abbreviation) {
+                  <mat-option [value]="gender.abbreviation">
+                    {{ gender.description }}
+                  </mat-option>
+                } @empty {
+                  <mat-option> Gender list not loaded </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container formGroupName="emailForm">
+        <div class="col-6">
+          <span class="body-medium-bold">Email</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="87" placeholder="Enter email" formControlName="emailAddress" />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-container formGroupName="personalInfoForm">
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">Are you self-employed?</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select
+                placeholder="Are you self-employed?"
+                formControlName="selfEmployed"
+                panelClass="panel-dropdown">
+                @for (selfEmployedType of selfEmployedTypeList; track selfEmployedType.id) {
+                  <mat-option [value]="selfEmployedType.id">
+                    {{ selfEmployedType.description }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <span class="d-flex align-items-center body-medium-bold">
+            Working less than {{ workHour }} hours a week? &nbsp;
+            <div
+              class="icon-div"
+              appTooltip
+              [tooltip]="{ tooltip: workHourTooltip, position: 'left', style: 'info' }"
+              aria-label="details">
+              <mat-icon>help</mat-icon>
+            </div>
+          </span>
+          <div class="body-medium-bold">
+            <mat-radio-group formControlName="workHours">
+              <mat-radio-button [value]="true" class="me-3 body-medium-bold">Yes</mat-radio-button>
+              <mat-radio-button [value]="false" class="body-medium-bold">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    @if (index() > 0) {
+      <ng-container>
+        <div class="mt-1 mb-3">
+          <mat-checkbox
+            formControlName="sameAddressBox_{{ index() }}"
+            class="body-small-bold"
+            labelPosition="after"
+            (change)="onSameAddressChange()">
+            Address is the same from the 1st applicant
+          </mat-checkbox>
+        </div>
+      </ng-container>
+    }
+
+    <ng-container formGroupName="addressForm">
+      <div class="row">
+        <div class="col-3">
+          <span class="body-medium-bold">Street Number</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <!-- (keyup)="unCheckAddress()" -->
+              <input matInput type="text" placeholder="Enter street number" formControlName="streetNumber" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-9">
+          <span class="body-medium-bold">Address</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="35" placeholder="Enter address" formControlName="street" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">Unit Number (Optional)</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" placeholder="Enter unit number" formControlName="unitNumber" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <span class="body-medium-bold">City</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" maxlength="20" placeholder="Enter city" formControlName="city" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">Province</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select placeholder="Select province" formControlName="province" panelClass="panel-dropdown">
+                @for (province of provinceList; track province.abbreviation) {
+                  <mat-option [value]="province.abbreviation">
+                    {{ province.description }}
+                  </mat-option>
+                } @empty {
+                  <mat-option> Provinces not loaded </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <span class="body-medium-bold">Postal Code</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                matInput
+                allCaps                
+                type="text"
+                placeholder="Enter postal code"
+                formControlName="postalCode" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="row justify-content-end my-4">
+      <section class="col-12">
+        <h5>Marketing Consent</h5>
+        <div class="mt-2" formGroupName="consentForm">
+          <p class="body-small-regular">
+            Do you consent to the personal information that you have provided in this service (including, for example,
+            information regarding the type and amount of loan or insurance applied for) being shared with our insurance
+            affiliates, your financial institution, service providers, and entities with whom your financial institution
+            has contracted, in order to recommend different products and services to you, or to provide customer
+            satisfaction services including surveys?
+          </p>
+          <div class="pt-3">
+            <mat-radio-group formControlName="hasConsented" required>
+              <mat-radio-button [value]="true" class="me-3 body-medium-bold">Yes</mat-radio-button>
+              <mat-radio-button [value]="false" class="body-medium-bold">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </section>
+    </div>
+  </form>
+}
+</div>

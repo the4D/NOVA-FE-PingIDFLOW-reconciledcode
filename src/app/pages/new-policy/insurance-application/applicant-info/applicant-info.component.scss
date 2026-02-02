@@ -1,0 +1,61 @@
+@use '/src/assets/css/components/form-field';
+
+// ::ng-deep .mat-tab-label.mat-tab-label-active {
+//   opacity: 1;
+// }
+
+// ::ng-deep .mat-tab-header {
+//   display: block !important;
+//   margin-bottom: 10px;
+
+//   .mat-tab-label {
+//     opacity: 1 !important;
+//     width: 50%;
+//   }
+
+//   .mat-tab-label.mat-tab-label-active {
+//     background-color: #f2f8f7;
+
+//     span {
+//       color: #018374 !important;
+//     }
+//   }
+
+//   .error {
+//     color: #f44336 !important;
+//   }
+
+//   .mat-tab-label-container {
+//     display: block;
+//     overflow: hidden;
+
+//     .mat-tab-labels {
+//       display: flex;
+//       flex-wrap: wrap;
+//     }
+//   }
+// }
+
+// ::ng-deep .mat-ink-bar {
+//   display: none;
+// }
+
+// ::ng-deep .mat-tab-body.mat-tab-body-active {
+//   z-index: 0 !important;
+// }
+
+.custom-icon {
+    margin-top: 0px;
+    margin-left: 20px !important;
+    height: 70%;
+}
+
+.minmax-width-cls {
+    min-width: 150px !important;
+    max-width: 150px !important;
+}
+
+.applicant-form-table {
+    flex: 1 1 60%;
+    min-width: 70%;
+}

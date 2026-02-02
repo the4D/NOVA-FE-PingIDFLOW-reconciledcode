@@ -1,0 +1,50 @@
+{
+    "msal": {
+        "auth": {
+            "clientId": "{{azureB2CClientId}}",
+            "authority": "{{azureB2CAuthority}}",
+            "knownAuthorities": ["{{azureB2CDomain}}"],
+            "redirectUri": "/"
+        },
+        "cache": {
+            "cacheLocation": "sessionStorage",
+            "storeAuthStateInCookie": false
+        }
+    },
+    "guard": {
+        "interactionType": "redirect",
+        "authRequest": {
+            "scopes": ["{{insuranceScope}} {{borrowerScope}} {{tenantScope}} {{servicesScope}}"]
+        }
+    },
+    "interceptor": {
+        "interactionType": "redirect",
+        "protectedResourceMap": [
+            ["INSURANCE_API/*", ["{{insuranceScope}}"]],
+            ["BORROWER_API/*", ["{{borrowerScope}}"]],
+            ["TENANT_API/*", ["{{tenantScope}}"]]
+        ]
+    },
+    "apis": {
+        "insuranceApi": {
+            "url": "{{insuranceApiUrl}}/api/v1/",
+            "scope": "{{insuranceScope}}"
+        },
+        "borrowerApi": {
+            "url": "{{borrowerApiUrl}}/api/v1/",
+            "scope": "{{borrowerScope}}"
+        },
+        "tenantApi": {
+            "url": "{{tenantApiUrl}}/api/",
+            "scope": "{{tenantScope}}"
+        },
+        "formMakerServiceApi": {
+            "url": "{{formMakerServiceApi}}/api/",
+            "scope": "{{formMakerScope}}"
+        },
+        "reportingApi": {
+            "url": "{{reportingApiUrl}}/",
+            "scope": "{{reportingScope}}"
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.invite-form {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 40px 80px 40px 80px;
+  height: max-content;
+  z-index: 1000;
+  background: #ffffff;
+
+  width: 50%;
+  // style="width: 840px; height: 817px;"
+}
+
+.invite-success-msg-wrapper {
+  position: absolute;
+  background: #fbfbfb;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+
+  width: 380px;
+  height: 300px;
+  padding: 62px 79px 62px 79px;
+  z-index: 101;
+  top: 33%;
+  left: 30%;
+}
+
+.invite-success-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: baseline;
+}
+
+
+.admin {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.admin-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 10px;
+  padding: 0px;
+}
+
+app-account-table {
+  margin-top: 40px;
+}

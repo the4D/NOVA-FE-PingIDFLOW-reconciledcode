@@ -1,0 +1,40 @@
+@use '../../../../assets/css/base/colors';
+@use '/src/assets/css/components/form-field';
+
+.text-green {
+  color: colors.$securian-brand-pine;
+}
+
+.text-red {
+  color: colors.$error-red-800;
+}
+
+.translate-y-25 {
+  transform: translateY(25%);
+}
+
+.mw- {
+  &120 {
+    min-width: 120px;
+  }
+
+  &140 {
+    min-width: 140px;
+  }
+
+  &170 {
+    min-width: 170px;
+  }
+
+  &180 {
+    min-width: 180px;
+  }
+
+  &190 {
+    min-width: 190px;
+  }
+}
+
+.min-padding-bottom {
+  padding-bottom: 16px;
+}

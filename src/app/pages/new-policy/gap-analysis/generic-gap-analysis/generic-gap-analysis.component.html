@@ -1,0 +1,32 @@
+<mat-horizontal-stepper
+  class="valeyo-stepper"
+  labelPosition="bottom"
+  #mainStepper
+  orientation="horizontal"
+  class="valeyo-stepper">
+  <mat-step [label]="stepListArr[0].title">
+    <ng-template matStepContent>
+      <app-income-info [stepper]="mainStepper" [stepList]="stepListArr"></app-income-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepListArr[1].title">
+    <ng-template matStepContent>
+      <app-assetLiability-info [stepper]="mainStepper" [stepList]="stepListArr"> </app-assetLiability-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepListArr[2].title">
+    <ng-template matStepContent>
+      <app-expenses-info [stepper]="mainStepper" [stepList]="stepListArr"></app-expenses-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepListArr[3].title">
+    <ng-template matStepContent>
+      <app-coverages-info [stepper]="mainStepper" [stepList]="stepListArr"></app-coverages-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepListArr[4].title">
+    <ng-template matStepContent>
+      <app-results #summary [stepper]="mainStepper"></app-results>
+    </ng-template>
+  </mat-step>
+</mat-horizontal-stepper>

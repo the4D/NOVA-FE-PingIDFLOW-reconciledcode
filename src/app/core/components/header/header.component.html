@@ -1,0 +1,30 @@
+<div class="valeyo">
+  <div class="header">
+    <div class="left">
+      <div class="d-flex align-items-center">
+        <div class="hamburger">
+          <span class="material-symbols-outlined" (click)="toggleNavBar()">menu</span>
+        </div>
+        <img class="logo" alt="Securian Canada" src="../../../../assets/img/securian-logo.svg" />
+      </div>
+    </div>
+    <div class="right">
+      <button class="profile" [matMenuTriggerFor]="menu" aria-label="menu trigger" #menuTrigger tabindex="0">
+        <div class="account-circle-container">
+          <mat-icon aria-label="menu icon" class="account-circle">perm_identity</mat-icon>
+        </div>
+        <mat-icon class="arrow-down">keyboard_arrow_down</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="profile()"><mat-icon class="icon-person">person</mat-icon>Profile</button>
+        @if (isSettingsVisible) {
+          <button mat-menu-item (click)="settings()">
+            <mat-icon class="icon-settings">settings</mat-icon>Settings
+          </button>
+        }
+        <button mat-menu-item (click)="logout()"><mat-icon class="icon-logout">logout</mat-icon>Sign out</button>
+      </mat-menu>
+    </div>
+  </div>
+</div>

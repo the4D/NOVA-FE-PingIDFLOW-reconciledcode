@@ -1,0 +1,149 @@
+<div class="form">
+  <div class="row-1" [formGroup]="meetingDetailsForm">
+    <div class="row-1-column-1">
+      <div class="pb-3">
+        <h4>{{ 'meeting.title' | translate }}</h4>
+      </div>
+      <div class="pb-3">
+        <h5 class="override-color">{{ 'meeting.subTitle' | translate }}</h5>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">{{ 'meeting.name' | translate }}</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" placeholder="{{ 'meeting.name' | translate }}" formControlName="Name" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <span class="body-medium-bold">{{ 'meeting.email' | translate }}</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="{{ 'meeting.email' | translate }}" formControlName="Email" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <span class="body-medium-bold">{{ 'meeting.phone' | translate }}</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                mask="(000) 000-0000"
+                matInput
+                type="text"
+                placeholder="{{ 'meeting.phone' | translate }}"
+                formControlName="Phone" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <span class="body-medium-bold">{{ 'meeting.date' | translate }} (dd/mm/yyyy)</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                matInput
+                type="text"
+                placeholder="{{ 'meeting.date' | translate }}"
+                [matDatepicker]="pickerBirthDate"
+                formControlName="MeetingDate" />
+              <mat-datepicker-toggle matSuffix [for]="pickerBirthDate"> </mat-datepicker-toggle>
+              <mat-datepicker #pickerBirthDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="d-flex pt-3">
+        <mat-checkbox
+          formControlName="IsSecondaryApplicant"
+          class="body-medium-regular"
+          labelPosition="after"
+          (change)="onJointApplicationChanged($event)"
+          [checked]="jointApplicationChecked">
+          {{ 'meeting.borrower' | translate }}
+        </mat-checkbox>
+        <div
+          class="ms-1"
+          appTooltip
+          [tooltip]="{ tooltip: 'meeting.borrowerTooltip' | translate, position: 'top', style: 'info' }"
+          aria-label="details">
+          <mat-icon>error_outline</mat-icon>
+        </div>
+      </div>
+
+      <h5 class="pt-4 override-color">{{ 'meeting.details' | translate }}</h5>
+
+      <div class="gap-analysis-intro-page pt-4">
+        <div class="body-medium-regular">
+          {{ 'meeting.gapAnalysisText' | translate }}
+        </div>
+        <h5 class="override-color">
+          {{ 'meeting.note' | translate }}
+        </h5>
+        <div class="body-medium-regular">
+          <span [innerHTML]="'meeting.noteThatText' | translate"></span>
+        </div>
+        <div class="info-boxes">
+          <div class="info-box align-items-start">
+            <div class="number-circle" aria-label="details">
+              <mat-icon>error_outline</mat-icon>
+            </div>
+            <div class="body-medium-regular">
+              <div class="body-medium-bold pb-2">
+                {{ 'meeting.allFields' | translate }}
+              </div>
+              {{ 'meeting.allFieldsText' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end pt-5">
+        <div class="d-flex flex-column align-items-end">
+          <div>
+            <button class="button-primary" matStepperNext (click)="loadMeetingDetailForm()">
+              {{ 'meeting.nextButton' | translate }}
+            </button>
+            @if (isFormInvalid()) {
+              <div class="text-center">
+                <errorMessage message="{{ 'general.missingMessage' | translate }}"></errorMessage>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-1-column-2">
+      <div class="securian-card securian-card-lighter car-bgcolor me-2 body-small-regular">
+        <div class="ps-4 ms-2 pe-4 py-4 mt-1 mb-4 me-2">
+          <h5>
+            {{ 'meeting.pre-existing' | translate }}
+          </h5>
+          <div class="body-medium-regular pt-3">
+            <span [innerHTML]="'meeting.pre-existingText' | translate"></span>
+          </div>
+          <div class="body-medium-regular pt-3">
+            <button (click)="fileUpload.click()" class="button-secondary">
+              {{ 'meeting.uploadButton' | translate }}
+            </button>
+            <input type="file" class="file-input" (change)="onFileSelected($event)" [hidden]="true" #fileUpload />
+          </div>
+          @if (fileName) {
+            <div class="file-name-info mt-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="body-xsmall-bold">{{ fileName }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

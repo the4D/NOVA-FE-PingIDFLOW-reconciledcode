@@ -1,0 +1,32 @@
+@use '/src/assets/css/base/colors';
+@use '/src/assets/css/base/fonts';
+
+.icon {
+  width: 5rem;
+  height: 5rem;
+  align-self: center;
+  margin: 1rem 0rem 3rem 0rem;
+  background: url('../../../../assets/img/icons/check.png') no-repeat;
+}
+
+label {
+  font-weight: 600;
+}
+
+.button-primary-popup {
+  font-family: fonts.$font-family-semi;
+  color: colors.$valeyo-white-0;
+  width: auto;
+  height: 35px;
+  padding: .59375rem 1rem;
+  text-align: center;
+  background-color: colors.$securian-brand-sky;
+  border-color: colors.$securian-brand-sky;
+  border-radius: .1875rem;
+  border: 0;
+  border-style: solid;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}

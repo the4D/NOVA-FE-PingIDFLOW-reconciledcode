@@ -1,0 +1,82 @@
+@use "/src/assets/css/base/colors";
+@use "/src/assets/css/components/icons";
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+  background-color: colors.$securian-brand-snow;
+  align-items: stretch;
+  height: 88px;
+}
+
+.left {
+  display: flex;
+  background-color: colors.$securian-brand-snow;
+  grid-area: 1/1/2/9;
+  justify-self: start;
+
+  .back-button {
+    order: 1;
+    margin-right: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .title {
+    order: 2;
+    align-items: flex-start;
+    margin: auto;
+    background-color: colors.$securian-brand-snow;
+  }
+}
+
+
+.right {
+  grid-area: 1/9/2/13;
+  justify-self: end;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  background-color: colors.$securian-brand-snow;
+
+
+  .profile {
+    height: 40px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    background-color: colors.$securian-brand-snow;
+    border: none 0px colors.$securian-brand-snow;
+
+
+    .account-circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: colors.$success-green-200;
+      color: colors.$securian-brand-leaf;
+      margin-right: 8px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+
+    }
+
+    .arrow-down {
+      color: colors.$securian-brand-sky;
+    }
+  }
+}
+
+.logo {
+  margin-top: 0px;
+  margin-left: 20px;
+  height: 58px;
+  width: 250px;
+}
+
+.hamburger {
+  cursor: pointer;
+  color: colors.$securian-brand-sky;
+}

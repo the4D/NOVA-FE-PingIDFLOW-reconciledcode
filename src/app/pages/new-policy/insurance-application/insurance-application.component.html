@@ -1,0 +1,33 @@
+<mat-stepper labelPosition="bottom" #stepper class="insurance-application-stepper">
+  <mat-step [label]="stepList[0].title">
+    <ng-template matStepContent>
+      <app-loan-info [stepper]="stepper" [stepList]="stepList"></app-loan-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepList[1].title">
+    <ng-template matStepContent>
+      <app-applicant-info [stepper]="stepper" [stepList]="stepList"> </app-applicant-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepList[2].title">
+    <ng-template matStepContent>
+      <app-pricing-coverage [stepper]="stepper" [stepList]="stepList"></app-pricing-coverage>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepList[3].title">
+    <stepper-message></stepper-message>
+    <ng-template matStepContent>
+      <app-applicant-question [stepper]="stepper" [stepList]="stepList"></app-applicant-question>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepList[4].title">
+    <ng-template matStepContent>
+      <app-additional-info #summary [stepper]="stepper"></app-additional-info>
+    </ng-template>
+  </mat-step>
+  <mat-step [label]="stepList[5].title">
+    <ng-template matStepContent>
+      <app-summary [stepper]="stepper"></app-summary>
+    </ng-template>
+  </mat-step>
+</mat-stepper>

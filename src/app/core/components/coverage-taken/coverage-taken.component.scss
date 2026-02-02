@@ -1,0 +1,19 @@
+.left-details-content {
+  flex-grow: 4;
+  padding: 25px;
+}
+
+
+
+::ng-deep .mat-form-field-appearance-outline .mdc-text-field--outlined {
+  background-color: white !important;
+}
+
+.right-details-content {
+  flex-grow: 1;
+}
+
+.right-details-content-vertical {
+  flex-grow: 1;
+  padding: 16px 30px !important;
+}

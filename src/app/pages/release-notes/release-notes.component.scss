@@ -1,0 +1,150 @@
+@use '/src/assets/css/base/colors';
+
+:host {
+  display: block;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+
+
+::ng-deep .mat-expansion-indicator::after,
+.mat-expansion-panel-header-description {
+  color: colors.$securian-brand-air;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  padding-left: -20px !important
+}
+
+::ng-deep {
+  mat-expansion-panel {
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+  }
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding-left: 85px !important;
+}
+
+.year-value {
+  color: colors.$securian-brand-water;
+}
+
+::ng-deep .mat-expansion-indicator {
+  position: relative;
+  color: colors.$securian-brand-air;
+}
+
+.circleBase {
+  border-radius: 50%;
+}
+
+.green-dot {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  background: colors.$securian-brand-grass;
+  border: none;
+  margin-left: 10px !important;
+  z-index: 1000;
+}
+
+ul.nested-ui {
+  list-style-type: disc;
+}
+
+.bar {
+  list-style: none;
+}
+
+.bar>li {
+  position: relative;
+  margin-right: 20px;
+}
+
+.bar>li:before {
+  position: absolute;
+  content: '\25CF';
+  color: #56C4EB;
+  margin-right: 20px;
+  font-size: 20px;
+  width: 10px;
+  height: 10px;
+  z-index: 1000;
+}
+
+.bar>li:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  border-left: 1px solid #e5e5e5;
+  margin-left: 5px;
+  height: 140%;
+}
+
+
+.header-overview {
+  display: grid;
+  justify-content: left;
+  gap: 5px;
+}
+
+.bar>li:first-of-type:after {
+  top: 40%;
+}
+
+.bar>li:last-of-type:after {
+  top: -25%;
+}
+
+.extra-margin {
+  margin-left: 20px;
+}
+
+.custom-accordian {
+  margin-top: 20px;
+  margin-left: -10px;
+}
+
+.month-details-extra-class {
+  position: relative;
+  color: colors.$securian-brand-sky;
+  margin-top: 10px !important;
+}
+
+.month-value-extra-class {
+  display: flex;
+  margin-left: -40px !important;
+  margin-bottom: -22px !important;
+}
+
+.top-text {
+  margin-bottom: 20px;
+  max-width: 1000px !important;
+  overflow-wrap: break-word;
+  line-break: auto;
+}
+
+.extra-cls-overview {
+  margin-left: 21px;
+  max-width: 800px !important;
+  overflow-wrap: break-word;
+  line-break: auto;
+}
+
+.feature {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  max-width: 300px !important;
+  overflow-wrap: break-word;
+  line-break: auto;
+}
+
+.extra-cls-header {
+  margin-left: 21px;
+}

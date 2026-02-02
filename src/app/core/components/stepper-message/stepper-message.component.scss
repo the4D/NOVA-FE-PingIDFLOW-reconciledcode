@@ -1,0 +1,9 @@
+@use "/src/assets/css/base/colors";
+
+.warning-background {
+  background-color: colors.$warning-orange-200;
+}
+
+.info-icon {
+  color: colors.$warning-orange-600;
+}

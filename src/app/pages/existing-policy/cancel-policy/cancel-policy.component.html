@@ -1,0 +1,128 @@
+<div>
+  @if (!submitted) {
+    <form [formGroup]="claimCancelFormGroup"></form>
+    <div class="form">
+      <div class="form-section">
+        <div class="section-wrapper">
+          <div class="section-title">
+            <h5>Coverage Details</h5>
+          </div>
+          <div class="body-medium-regular">
+            Enter the name of the individual and certificate ID associated with this request.
+          </div>
+        </div>
+        <div class="form-table">
+          <form class="form-fields" [formGroup]="claimCancelFormGroup">
+            <div class="form-field">
+              <span class="body-medium-bold">Name of Insured</span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="text" placeholder="Enter Name of Insured" formControlName="nameOfInsured" />
+              </mat-form-field>
+            </div>
+            <div class="form-field">
+              <div class="body-medium-bold" style="display: flex">
+                Certificate ID &nbsp;
+                <mat-icon matTooltip="ID # of certificate associated with loan" matTooltipPosition="above"
+                  >help</mat-icon
+                >
+              </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Enter Certificate ID"
+                  formControlName="applicationIdentifier" />
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-wrapper">
+          <div class="section-title">
+            <h5>Banking Details</h5>
+          </div>
+          <div class="body-medium-regular">Enter the banking details for refund of premiums, if applicable.</div>
+        </div>
+        <div class="form-table">
+          <div class="my-4">
+            <mat-checkbox class="body-medium-regular" formControlName="directDebitInformation" labelPosition="after">
+              Check to use the direct debit information on record for the insured or provide new instructions below.
+            </mat-checkbox>
+          </div>
+          <div id="banking-detail-form" class="form-fields">
+            <div class="form-field">
+              <span class="body-medium-bold"> Institution Number </span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="text" placeholder="Enter Institution Number" formControlName="institutionNum" />
+              </mat-form-field>
+            </div>
+            <div class="form-field">
+              <span class="body-medium-bold"> Transit Number </span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="text" placeholder="Enter Transit Number" formControlName="transitNum" />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <span class="body-medium-bold"> Account Number </span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="text" placeholder="Enter account number" formControlName="accountNum" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-wrapper">
+          <div class="section-title">
+            <h5>Cancellation Details</h5>
+          </div>
+          <div class="body-medium-regular">Enter the effective date of cancellation and reason for cancellation.</div>
+        </div>
+        <div class="form-table">
+          <div class="form-fields">
+            <div class="form-field">
+              <span class="body-medium-bold"> Effective Date for Cancellation </span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="text" placeholder="Enter Transit Number" formControlName="cancellationDate" />
+              </mat-form-field>
+            </div>
+            <!-- <app-dynamic-form-input [form]="claimCancelFormGroup" [control]="claimCancellationForm.cancellationDate">
+            </app-dynamic-form-input>
+            <app-dynamic-form-input [form]="claimCancelFormGroup" [control]="claimCancellationForm.terminationReason">
+            </app-dynamic-form-input> -->
+          </div>
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button class="button-primary" (click)="onSubmit()" [disabled]="!claimCancelFormGroup.valid">
+          Initiate Cancellation
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (submitted && success) {
+    <div>
+      <div>
+        <success-page></success-page>
+      </div>
+    </div>
+    @if (error) {
+      <div class="error-wrapper">
+        <div class="d-flex">
+          <div class="col-100 me-2">
+            <h3>Error</h3>
+            <br />
+            <p>There was an error submitting your request.</p>
+            <br />
+            <button (click)="retry()" mat-stroked-button color="button-1" class="button" type="button">Retry</button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

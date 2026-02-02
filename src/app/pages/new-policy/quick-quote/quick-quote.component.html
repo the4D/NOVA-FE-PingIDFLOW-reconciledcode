@@ -1,0 +1,63 @@
+<div class="quick-quote">
+  <div class="form">
+    <lender-info
+      #lenderInfo
+      (isFormValidEvent)="lenderValidationForm($event)"
+      (lenderFormInfoEvent)="getLenderInfoForm($event)"
+      [extraInfo]="true"></lender-info>
+  </div>
+
+  <div class="form">
+    <loan-info
+      #loanInfo
+      [title]="'Loan Information'"
+      [description]="'Provide details of the loan'"
+      (isFormValidEvent)="loanValidationForm($event)"
+      (loanFormInfoEvent)="getLoanInfoForm($event)"
+      (isReQuoteRequiredEvent)="reQuote()"></loan-info>
+  </div>
+
+  <div class="form">
+    <applicant-info
+      #applicantInfo
+      [title]="'Applicant Information'"
+      [description]="'Provide member\'s personal information'"
+      (isFormValidEvent)="applicantValidationForm($event)"
+      (applicantFormInfoEvent)="getApplicantInfoForm($event)"
+      (applicantListLength)="setApplicantList($event)"
+      (isReQuoteRequiredEvent)="reQuote()"></applicant-info>
+  </div>
+
+  <div class="form">
+    <div class="form-buttons">
+      <button class="button-secondary" (click)="clearForm()">Clear Form</button>
+      <button class="button-primary" (click)="generateQuote()" [disabled]="formsValid()">Generate Quote</button>
+    </div>
+  </div>
+  @if (isQuoteInsuranceTypeResponseVisible) {
+    <div>
+      @if (quoteInsuranceTypeResponseData$ | async; as response) {
+        @if (response.applications.length > 0) {
+          <mat-divider class="my-4"></mat-divider>
+          <div class="form">
+            <policy-grouping insuranceType="{{ response.insuranceType }}" [isQuickQuote]="true"></policy-grouping>
+          </div>
+
+          <div class="form">
+            <pricing-coverage></pricing-coverage>
+          </div>
+
+          <div class="form">
+            <div #ending id="ending" class="form-buttons">
+              <button class="button-secondary" (click)="downloadPDF()" [disabled]="canPdfBeGenerated()">
+                Download Quick Quote
+              </button>
+              <button class="button-primary" (click)="toApplication()">Continue to Application</button>
+            </div>
+          </div>
+        }
+      }
+      <div #ending id="ending"></div>
+    </div>
+  }
+</div>

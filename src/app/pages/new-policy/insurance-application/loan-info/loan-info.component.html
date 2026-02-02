@@ -1,0 +1,291 @@
+<div class="loan-info" #loanContainer>
+  <div class="form">
+    <!-- <ng-container *ngIf="user && user.branchId !== ''">
+      <lender-info [userBranch]="user" [branchCode]="branchCode" disabled></lender-info>
+    </ng-container> -->
+
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Lender Information</h4>
+        </div>
+        <div class="body-medium-regular">Associated lender details</div>
+      </div>
+      <div class="form-table">
+        <form class="form-fields" [formGroup]="lenderForm">
+          <div>
+            <span class="body-medium-bold">Lending Officer</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  #lenderInput
+                  type="text"
+                  placeholder="Select Lending Officer"
+                  matInput
+                  formControlName="lender"
+                  [matAutocomplete]="auto"
+                  (keyup)="lenderFn()" />
+                <mat-icon matSuffix role="presentation">search</mat-icon>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+                  @for (user of filteredUserList$ | async; track user.id) {
+                    <mat-option (onSelectionChange)="userSelected($event)" [value]="user">
+                      {{ user.firstName }} {{ user.lastName }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option> User not found </mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <span class="body-medium-bold">Branch</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select 
+                placeholder="Select branch"
+                panelClass="panel-dropdown"
+                 formControlName="branch">
+                  @for (option of branchList; track option.id) {
+                    <mat-option [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option> Branches not loaded </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>{{ title }}</h4>
+        </div>
+        <div class="body-medium-regular">{{ description }}</div>
+      </div>
+      <div class="form-table">
+        <form class="form-fields" [formGroup]="loanForm">
+          <div class="form-field">
+            <span class="d-flex body-medium-bold"
+              >Loan Number&nbsp;
+              <div
+                class="info-color"
+                appTooltip
+                [tooltip]="{ tooltip: toolTip.LoanID, position: 'top', style: 'info' }"
+                aria-label="details">
+                <mat-icon>help</mat-icon>
+              </div>
+            </span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  maxlength="15"
+                  placeholder="Enter loan number"
+                  formControlName="loanIdentifier" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field aligned-horizontal">
+            <span class="body-medium-bold">Loan Type</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select
+                  placeholder="Select loan type"
+                  formControlName="loanType"
+                  panelClass="panel-dropdown"
+                  (selectionChange)="parseApplicationCreditType(true)">
+                  @for (loanType of loanTypeList; track loanType.value) {
+                    <mat-option [value]="loanType.value">
+                      {{ loanType.name }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option> Loan Type not loaded </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Loan Amount</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  currencyMask
+                  [options]="{ prefix: '' }"
+                  type="text"
+                  placeholder="Enter loan amount"
+                  formControlName="loanAmount"
+                  (keyup)="onChangeEvent($event)" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Loan Payment Amount</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  currencyMask
+                  [options]="{ prefix: '' }"
+                  matInput
+                  type="text"
+                  placeholder="Enter loan payment amount"
+                  formControlName="paymentAmount" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Payment Frequency</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Select payment frequency" panelClass="panel-dropdown" formControlName="paymentFrequency">
+                  @for (frequencyType of frequencyTypeList; track frequencyType.id) {
+                    <mat-option [value]="frequencyType.abbreviation">
+                      {{ frequencyType.description }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option> Frequency type not loaded </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Payment Type</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Select payment type"  panelClass="panel-dropdown" formControlName="paymentType">
+                  @for (paymentType of paymentTypeList; track paymentType.abbreviation) {
+                    <mat-option [value]="paymentType.abbreviation">
+                      {{ paymentType.description }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option> No payment type loaded </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="d-flex align-items-center body-medium-bold">
+              Funding Date (dd/mm/yyyy) &nbsp;
+              <div
+                class="info-color"
+                appTooltip
+                [tooltip]="{ tooltip: toolTip.FundingDate, position: 'top', style: 'info' }"
+                aria-label="details">
+                <mat-icon>help</mat-icon>
+              </div>
+            </span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Enter funding date"
+                  [matDatepicker]="pickerFundingDate"
+                  formControlName="fundingDate" />
+                <mat-datepicker-toggle matSuffix [for]="pickerFundingDate"> </mat-datepicker-toggle>
+                <mat-datepicker #pickerFundingDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="d-flex align-items-center body-medium-bold">
+              First Payment Date (dd/mm/yyyy) &nbsp;
+              <div
+                class="info-color"
+                appTooltip
+                [tooltip]="{ tooltip: toolTip.FirstPaymentDate, position: 'left', style: 'info' }"
+                aria-label="details">
+                <mat-icon>help</mat-icon>
+              </div>
+            </span>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                matInput
+                type="text"
+                placeholder="Enter first payment date"
+                [matDatepicker]="pickerFirstPaymentDate"
+                formControlName="firstPaymentDate"
+                [min]="minFundingDate" />
+              <mat-datepicker-toggle matSuffix [for]="pickerFirstPaymentDate"> </mat-datepicker-toggle>
+              <mat-datepicker #pickerFirstPaymentDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          @if (isLoanTermVisible) {
+            <div class="form-field pad-top-align">
+              <span class="body-medium-bold">Loan Term (Months)</span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  type="number"
+                  onlyInteger
+                  formControlName="loanTerm"
+                  placeholder="Enter loan term (months)" />
+              </mat-form-field>
+            </div>
+          }
+          @if (isAmortizationVisible) {
+            <div class="form-field pad-top-align">
+              <span class="body-medium-bold">Amortization (Months)</span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  onlyInteger
+                  formControlName="amortization"
+                  placeholder="Enter amortization (Months)" />
+              </mat-form-field>
+            </div>
+          }
+          <div class="form-field">
+            <span class="body-medium-bold">Interest Rate</span>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                matInput
+                type="text"
+                onlyDecimal
+                [maxValue]="100"
+                formControlName="interestRate"
+                placeholder="Enter interest rate" />
+              <span matSuffix class="ffix-space">%</span>
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Application Source</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Select Application Source"  panelClass="panel-dropdown" formControlName="channelType">
+                  @for (channelType of channelTypeList; track channelType.systemValue) {
+                    <mat-option [value]="channelType.abbreviation">
+                      {{ channelType.description }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option> No Application Source loaded </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="form-buttons">
+      <button class="button-primary" (click)="createApplication()" [disabled]="disableButton()">
+        Next: {{ nextButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

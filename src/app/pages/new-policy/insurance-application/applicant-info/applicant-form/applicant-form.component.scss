@@ -1,0 +1,248 @@
+@use '/src/assets/css/base/colors';
+@use '/src/assets/css/components/form-field';
+
+
+
+.applicant-results-table {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    background: white;
+    border-radius: 6px;
+    font-size: 15px;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.applicant-results-table th,
+.applicant-results-table td {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 1rem;
+    border-top: none;
+    background: white;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.applicant-results-table th {
+    border-bottom: 2px solid #000000;
+    color: #0C7B40;
+    font-weight: 600;
+}
+
+.applicant-results-table tr {
+    background: white;
+    border-bottom: 1px solid #C7C8C7;
+}
+
+/*
+.applicant-results-table tr:last-child {
+    border-bottom: none;
+}
+*/
+.applicant-select-link {
+    color: #E57D26;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+form {
+    overflow: hidden;
+}
+
+.icon-color {
+    color: colors.$warning-orange-600;
+}
+
+.icon-div {
+    height: 24px;
+}
+
+.bg-valeyo-warning {
+    background-color: colors.$warning-orange-200;
+}
+
+// Search field styles
+.applicant-search-container {
+    width: 100%;
+    margin: 30px 0 5px 0;
+}
+
+.search-label {
+    display: block;
+    color: #222;
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+}
+
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    max-width: 400px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: none;
+    font-size: 1rem;
+    color: #222;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: #003366;
+}
+
+.search-input::placeholder {
+    color: #888;
+    opacity: 1;
+    font-size: 1rem;
+}
+
+.search-btn {
+    background: #006DAF;
+    color: white;
+    border-radius: none;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: #002244;
+}
+
+.search-btn mat-icon {
+    color: #fff !important;
+}
+
+.clear-btn {
+    color: #888;
+    background: transparent;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.no-label-float .mat-form-field-label {
+    color: #222 !important;
+    font-weight: 600;
+    font-size: 1rem;
+    transform: none !important;
+    top: 22px !important;
+    left: 12px !important;
+    pointer-events: none;
+}
+
+.no-label-float .mat-form-field-should-float .mat-form-field-label {
+    transform: none !important;
+}
+
+.add-applicant-btn-row {
+    margin-top: 25px;
+}
+
+.add-applicant-btn {
+
+    display: inline-flex;
+    padding: 9.5px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border:none;
+    border-radius: 3px;
+    background: #006DAF;
+    color: #fff;
+}
+
+.add-applicant-btn mat-icon {
+    color: #fff !important;
+}
+
+.add-applicant-btn:hover {
+    background: #002244;
+}
+
+.applicant-results {
+    margin-top: 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 12px 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.applicant-result-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.applicant-result-row:last-child {
+    border-bottom: none;
+}
+
+.applicant-result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.applicant-result-name {
+    font-weight: 600;
+    color: #003366;
+    font-size: 1.08rem;
+}
+
+.applicant-result-id,
+.applicant-result-dob,
+.applicant-result-address {
+    color: #444;
+    font-size: 0.98rem;
+}
+
+.applicant-select-link {
+    color: #006DAF;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Hurme Geometric Sans 3';
+    text-decoration: underline;
+    margin-left: 18px;
+}

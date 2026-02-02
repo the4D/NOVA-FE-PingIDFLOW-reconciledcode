@@ -1,0 +1,75 @@
+<div class="form-section">
+  <div class="section-wrapper">
+    <div class="section-title">
+      <h4>Lender Information</h4>
+    </div>
+    <div class="body-medium-regular">Associated lender details</div>
+  </div>
+  <div class="form-table">
+    <form class="form-fields" [formGroup]="lenderForm">
+      <div>
+        <span class="body-medium-bold">Lending Officer</span>
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            class="form-field"
+            #lenderInput
+            type="text"
+            placeholder="Select Lending Officer"
+            matInput
+            formControlName="lender"
+            [matAutocomplete]="auto"
+            (keyup)="lenderFn()" />
+          <mat-icon matSuffix role="presentation">search</mat-icon>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+            @for (user of filteredUserList$ | async; track user.id) {
+              <mat-option (onSelectionChange)="userSelected($event)" [value]="user">
+                {{ user.firstName }} {{ user.lastName }}
+              </mat-option>
+            } @empty {
+              <mat-option disabled> User list not loaded </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div>
+        <span class="body-medium-bold">Branch</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select placeholder="Select branch" formControlName="branch">
+              @for (option of branchList; track option.id) {
+                <mat-option [value]="option.id">
+                  {{ option.name }}
+                </mat-option>
+              } @empty {
+                <mat-option disabled> Branch list not loaded </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      @if (extraInfo()) {
+        <div class="form-field">
+          <span class="body-medium-bold">User Email</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" placeholder="Enter user email" formControlName="userEmail" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-field">
+          <span class="body-medium-bold">Phone Number</span>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <input
+                mask="(000) 000-0000"
+                matInput
+                type="text"
+                placeholder="Enter phone number"
+                formControlName="phoneNumber" />
+            </mat-form-field>
+          </div>
+        </div>
+      }
+    </form>
+  </div>
+</div>

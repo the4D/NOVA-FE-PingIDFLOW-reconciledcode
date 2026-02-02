@@ -1,0 +1,136 @@
+@use "../../../../../assets/css/base/colors";
+@use '/src/assets/css/components/form-field';
+
+.flex-item-content {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+
+  .flex-item {
+    display: flex;
+    min-height: 46px;
+    align-content: center;
+    align-items: center;
+    margin-top: 2px;
+
+    &:not(:first-of-type) {
+      padding-top: 0.9rem;
+      align-items: center;
+      padding-bottom: 1.34375em;
+    }
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 10px 10px 0px;
+
+  &-variation {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px 30px 10px 30px;
+    gap: 12% !important;
+  }
+
+  .flex-item-content {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+
+    .flex-item {
+      display: flex;
+      min-height: 46px;
+      align-content: center;
+      margin-top: 2px;
+
+      &:not(:first-of-type) {
+        padding-top: 0.9rem;
+        align-items: center;
+        padding-bottom: 1.34375em;
+      }
+    }
+  }
+}
+
+.details-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-between !important;
+  padding: 10px 30px 10px 30px;
+  gap: 20px;
+  align-items: flex-start;
+
+  .left-details-content {
+    flex-grow: 4;
+    padding: 16px;
+  }
+
+  .right-details-content {
+    flex-grow: 1;
+    padding: 16px;
+  }
+
+  .button-section-details {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .details-item {
+    display: flex;
+    min-height: 30px;
+    align-content: center;
+    margin-top: 2px;
+
+    &:not(:first-of-type) {
+      padding-top: 0.3rem;
+      align-items: center;
+      padding-bottom: 1.6em;
+    }
+  }
+}
+
+.details-item {
+  display: flex;
+  min-height: 30px;
+  align-content: center;
+  margin-top: 2px;
+
+  &:not(:first-of-type) {
+    padding-top: 0.3rem;
+    align-items: center;
+    padding-bottom: 1.6em;
+  }
+}
+
+.detail-flex-grow {
+  &-1 {
+    flex-grow: 1;
+  }
+
+  &-2 {
+    flex-grow: 2;
+  }
+}
+
+.details-content-single {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-between !important;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 100%;
+
+  .single-width {
+    width: 40%;
+  }
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+::ng-deep .mat-tab-body-content {
+  overflow: inherit;
+}

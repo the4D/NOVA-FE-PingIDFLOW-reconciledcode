@@ -1,0 +1,128 @@
+<div class="expenses-info">
+  <div class="form">
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Coverages</h4>
+        </div>
+        <div class="body-medium-regular">
+          Confirm the member's total monthly expenses such as essential living expenditures and recurring bill payments.
+        </div>
+      </div>
+      <div class="form-table">
+        <form class="form-fields" [formGroup]="coveragesForm">
+          <div class="form-field">
+            <div class="label-with-icon">
+              <span class="body-medium-bold">Life Insurance</span
+              ><mat-icon [matTooltip]="toolTip.lifeInsurance" matTooltipPosition="right">help</mat-icon>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  currencyMask
+                  [options]="{ prefix: '' }"
+                  type="text"
+                  placeholder="Enter Amount"
+                  formControlName="lifeInsurance" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <div class="label-with-icon">
+              <span class="body-medium-bold">Group Life Insurance</span
+              ><mat-icon [matTooltip]="toolTip.groupLifeInsurance" matTooltipPosition="right">help</mat-icon>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  currencyMask
+                  [options]="{ prefix: '' }"
+                  type="text"
+                  placeholder="Enter Amount"
+                  formControlName="groupLifeInsurance" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <div class="label-with-icon">
+              <span class="body-medium-bold">Credit Protection</span
+              ><mat-icon [matTooltip]="toolTip.creditProtection" matTooltipPosition="right">help</mat-icon>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  currencyMask
+                  [options]="{ prefix: '' }"
+                  type="text"
+                  placeholder="Enter Amount"
+                  formControlName="creditProtection" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field"></div>
+        </form>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-wrapper"></div>
+      <div class="form-table">
+        <form [formGroup]="coveragesForm">
+          <div class="full-width-field">
+            <div class="label-with-icon">
+              <span class="body-medium-bold"
+                >Is the applicant’s income protected by an income replacement program through work?&nbsp; </span
+              ><mat-icon [matTooltip]="toolTip.incomeReplacementCoverage" matTooltipPosition="right">help</mat-icon>
+            </div>
+            <br />
+            <div class="radio-group-rows">
+              <mat-radio-group formControlName="incomeReplacementCoverage">
+                <mat-radio-button labelPosition="before" value="true">Yes</mat-radio-button>
+                <mat-radio-button labelPosition="before" value="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          @if (coveragesForm.value.incomeReplacementCoverage === 'true') {
+            <div class="full-width-field extra-margin-class">
+              <span class="body-medium-bold">Coverage Percentage</span>
+              <div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    matInput
+                    type="number"
+                    placeholder="Income Replacement Coverage in %"
+                    formControlName="coverageAmount"
+                    (keypress)="numericOnly($event)" />
+                </mat-form-field>
+              </div>
+            </div>
+          }
+        </form>
+        <div class="total mt-3">
+          <div class="total-row">
+            <div class="body-medium-bold">Total Coverage:</div>
+            <div class="body-medium-bold">
+              {{ totalCoverages | currency: 'USD' : 'symbol' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button class="button-secondary" (click)="back()">Back: Expenses</button>
+      <button class="button-primary" (click)="moveNextToResults()" [disabled]="disableButton(coveragesForm)">
+        Next: {{ nextButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

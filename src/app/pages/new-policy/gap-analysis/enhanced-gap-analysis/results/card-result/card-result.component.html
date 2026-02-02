@@ -1,0 +1,259 @@
+@let templateId = templateNumber();
+@let subTitle = subTitleInsurance();
+<div class="coverage-body">
+  <div class="card-coverage-header mt-3">
+    <div>
+      <h6>{{ title() }}</h6>
+      @if (templateId === 2 || templateId === 3) {
+        <p class="body-xsmall-regular">
+          {{ subTitle }}
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="card-content-percentage pt-4 w-100">
+    <div class="d-flex flex-column justify-content-between">
+      <div class="content-inside success">
+        @if (!incomeCard()) {
+          <div class="d-flex justify-content-between">
+            <a
+              class="w-100 body-medium-bold no-decoration black black d-flex justify-content-between align-items-center"
+              data-bs-toggle="collapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+              (click)="collapseContainer(templateId)"
+              (keydown.enter)="collapseContainer(templateId)"
+              (keydown.space)="collapseContainer(templateId)"
+              tabindex="0">
+              <div>
+                <h6 class="no-underlining-clss">
+                  {{ titleInsurance() }}
+                </h6>
+              </div>
+              <div>
+                <mat-icon aria-label="details" class="text-end d-flex align-items-center">
+                  {{ !isContainerCollapse() ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+                </mat-icon>
+              </div>
+            </a>
+          </div>
+          <p class="body-large-bold">
+            @if (languageService.languageSelected$ | async; as language) {
+              {{ insuranceValueMonthly() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+            }
+          </p>
+        } @else {
+          <h6 class="no-underlining-clss">
+            {{ titleInsurance() }}
+          </h6>
+        }
+
+        @if (incomeCard()) {
+          <p>this is the income card {{ incomeCard() }}</p>
+          <p class="body-large-bold">
+            @if (languageService.languageSelected$ | async; as language) {
+              {{ insuranceValue() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+            }
+          </p>
+        } @else {
+          @let primaryType = 'primary';
+          <app-monthly-income-applicant
+            [templateId]="templateId"
+            [isContainerCollapse]="isContainerCollapse()"
+            [applicantType]="primaryType"
+            [incomeBase]="getIncomeBase(primaryType, false, templateId)"
+            [incomeBonuses]="getIncomeBonuses(primaryType, templateId, false)"
+            [incomeInvestment]="getIncomeInvestment(primaryType)"
+            [taxValueByCheckedApplicant]="getTaxValueByCheckedApplicant(primaryType, templateId)"
+            [insuranceBenefit]="getInsuranceBenefit(primaryType, templateId)"
+            [insuranceBenefitReduced]="getInsuranceBenefitReduced(primaryType)"
+            [isIncomeReduce]="isIncomeReduce()" />
+
+          @if (isSecondaryApplicant()) {
+            @let secondaryType = 'secondary';
+            <app-monthly-income-applicant
+              [templateId]="templateId"
+              [isContainerCollapse]="isContainerCollapse()"
+              [applicantType]="secondaryType"
+              [incomeBase]="getIncomeBase(secondaryType, false, templateId)"
+              [incomeBonuses]="getIncomeBonuses(secondaryType, templateId, false)"
+              [incomeInvestment]="getIncomeInvestment(secondaryType)"
+              [taxValueByCheckedApplicant]="getTaxValueByCheckedApplicant(secondaryType, templateId)"
+              [insuranceBenefit]="getInsuranceBenefit(secondaryType, templateId)"
+              [insuranceBenefitReduced]="getInsuranceBenefitReduced(primaryType)"
+              [isIncomeReduce]="isIncomeReduce()" />
+          }
+        }
+      </div>
+
+      <div class="content-inside warning">
+        <div class="d-flex justify-content-between">
+          <a
+            class="w-100 body-medium-bold no-decoration black d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+            (click)="collapseContainer(templateId)"
+            (keydown.enter)="collapseContainer(templateId)"
+            (keydown.space)="collapseContainer(templateId)"
+            tabindex="0">
+            <div>
+              <h6 class="no-underlining-clss">
+                {{ titleLiabilities() }}
+              </h6>
+            </div>
+            <div>
+              <mat-icon aria-label="details" class="text-end d-flex align-items-center">
+                {{ !isContainerCollapse() ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+              </mat-icon>
+            </div>
+          </a>
+        </div>
+
+        @if (languageService.languageSelected$ | async; as language) {
+          @if (incomeCard()) {
+            <p class="body-large-bold">
+              {{
+                getTotalOutstandingLiabilitiesDebtBalanceValue() | currencyOption: 'USD' : 'symbol' : '2.0' : language
+              }}
+            </p>
+          } @else {
+            <p class="body-large-bold">
+              {{ getMonthlyExpensesTotal() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+            </p>
+          }
+        }
+
+        @if (!isContainerCollapse()) {
+          @if (languageService.languageSelected$ | async; as language) {
+            <div>
+              @if (incomeCard()) {
+                <div class="d-flex flex-column mt-2">
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="body-small-regular">{{ 'results.new' | translate }}</div>
+                    <div class="body-small-regular">
+                      {{ getNewMortgageLoanBalanceValue() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between mt-2">
+                    <div class="body-small-regular">{{ 'results.existing' | translate }}</div>
+                    <div class="body-small-regular">
+                      {{
+                        getExistingLiabilitiesDebtBalanceValue() | currencyOption: 'USD' : 'symbol' : '2.0' : language
+                      }}
+                    </div>
+                  </div>
+                </div>
+              } @else {
+                <div class="d-flex flex-column mt-2">
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="body-small-regular">
+                      <span [innerHTML]="'results.newDebt' | translate"></span>
+                    </div>
+                    <div class="body-small-regular">
+                      {{ getNewDebt() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between mt-2">
+                    <div class="body-small-regular">
+                      <span [innerHTML]="'results.repayments' | translate"></span>
+                    </div>
+                    <div class="body-small-regular">
+                      {{ getRepayments() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between mt-2">
+                    <div class="body-small-regular">{{ 'results.livingExpenses' | translate }}</div>
+                    <div class="body-small-regular">
+                      {{ getLivingExpenses() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+
+      <div class="content-inside info">
+        @if (languageService.languageSelected$ | async; as language) {
+          @if (incomeCard()) {
+            <h6 class="no-underlining-clss">
+              {{ titleCoverage() }}
+            </h6>
+
+            @if (templateId === 4) {
+              @let criticalIllness = getTotalCriticalIllness(contentNumber(), templateId);
+              <p
+              class="body-large-bold black-color">
+                {{
+                  (criticalIllness > 0 ? '+' : '') +
+                    (criticalIllness | currencyOption: 'USD' : 'symbol' : '2.0' : language)
+                }}
+              </p>
+            } @else {
+              @let totalCoverage = getTotalCoverage(contentNumber(), cardNumber());
+              <p
+                class="body-large-bold black-color"
+                
+                >
+                {{
+                  (totalCoverage > 0 ? '+' : '') + (totalCoverage | currencyOption: 'USD' : 'symbol' : '2.0' : language)
+                }}
+              </p>
+            }
+
+            <div class="d-flex">
+              <div class="body-small-regular">
+                {{ 'results.insuredAmount' | translate }}
+              </div>
+              <div class="body-small-regular">
+                {{
+                  +getInsuredAmount(templateId, contentNumber()) | currencyOption: 'USD' : 'symbol' : '2.0' : language
+                }}
+              </div>
+            </div>
+          } @else {
+            @let totalShortage = getTotalShortage(contentNumber(), templateId);
+            @if (totalShortage === 0) {
+              <h6>Result</h6>
+              <p class="body-large-bold black-color">
+                {{ totalShortage | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+              </p>
+            }
+
+            @if (totalShortage < 0) {
+              <p class="body-medium-bold">
+                {{ 'results.coverageTitle' | translate }}
+              </p>
+              <p class="body-large-bold black-color">
+                {{ totalShortage | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+              </p>
+            }
+
+            @if (totalShortage > 0) {
+              <p class="body-medium-bold">
+                {{ 'results.coverageTitle' | translate }}
+              </p>
+              <p class="body-large-bold black-color">
+                +{{ totalShortage | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+              </p>
+            }
+
+            <div class="d-flex flex-row justify-content-between">
+              <div class="body-small-regular">{{ 'results.insuredAmount' | translate }}</div>
+              <div class="body-small-regular">
+                {{
+                  +getInsuredAmount(templateId, contentNumber()) | currencyOption: 'USD' : 'symbol' : '2.0' : language
+                }}
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

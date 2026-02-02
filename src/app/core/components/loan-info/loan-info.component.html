@@ -1,0 +1,181 @@
+<div class="form-section">
+  <div class="section-wrapper">
+    <div class="section-title">
+      <h5>{{ title() }}</h5>
+    </div>
+    <div class="body-medium-regular">{{ description() }}</div>
+  </div>
+  <div class="form-table">
+    <form class="form-fields" [formGroup]="loanForm">
+      <div>
+        <span class="body-medium-bold">Loan Type</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select
+              placeholder="Select loan type"
+              formControlName="loanType"
+              panelClass="panel-dropdown"
+              (selectionChange)="setInsuranceType($event)">
+              @for (loanType of loanTypeList; track loanType.value) {
+                <mat-option [value]="loanType.value">
+                  {{ loanType.name }}
+                </mat-option>
+              } @empty {
+                <mat-option disabled> Loan type list not loaded </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="body-medium-bold">Loan Amount</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              currencyMask
+              [options]="{ prefix: '' }"
+              type="text"
+              placeholder="Enter loan amount"
+              formControlName="loanAmount"
+              (keyup)="onValueChanged($event)" />
+            <span matPrefix class="ffix-space">$ </span>
+            <span matSuffix>&nbsp; </span>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="body-medium-bold">Loan Payment Amount</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              currencyMask
+              [options]="{ prefix: '' }"
+              matInput
+              type="text"
+              placeholder="Enter loan payment amount"
+              formControlName="paymentAmount"
+              (keyup)="onValueChanged($event)" />
+            <span matPrefix class="ffix-space">$ </span>
+            <span matSuffix>&nbsp; </span>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="body-medium-bold">Payment Frequency</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select
+              placeholder="Select payment frequency"
+              formControlName="paymentFrequency"
+              panelClass="panel-dropdown"
+              (selectionChange)="onValueChanged($event)">
+              @for (frequencyType of frequencyTypeList; track frequencyType.id) {
+                <mat-option [value]="frequencyType.abbreviation">
+                  {{ frequencyType.description }}
+                </mat-option>
+              } @empty {
+                <mat-option disabled> Frequency type list not loaded </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="body-medium-bold">Payment Type</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select
+              placeholder="Select payment type"
+              formControlName="paymentType"
+              panelClass="panel-dropdown"
+              (selectionChange)="onValueChanged($event)">
+              @for (paymentType of paymentTypeList; track paymentType.id) {
+                <mat-option [value]="paymentType.abbreviation">
+                  {{ paymentType.description }}
+                </mat-option>
+              } @empty {
+                <mat-option disabled> Payment type list not loaded </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="body-medium-bold">Funding Date (dd/mm/yyyy) &nbsp; </span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="text"
+              placeholder="Enter funding date"
+              [matDatepicker]="pickerFundingDate"
+              formControlName="fundingDate"
+              (dateChange)="onValueChanged($event)" />
+            <mat-datepicker-toggle matSuffix [for]="pickerFundingDate"> </mat-datepicker-toggle>
+            <mat-datepicker #pickerFundingDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="body-medium-bold">First Payment Date (dd/mm/yyyy) &nbsp; </span>
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            matInput
+            type="text"
+            placeholder="Enter first payment date"
+            [matDatepicker]="pickerFirstPaymentDate"
+            formControlName="firstPaymentDate"
+            [min]="minFundingDate"
+            (dateChange)="onValueChanged($event)" />
+          <mat-datepicker-toggle matSuffix [for]="pickerFirstPaymentDate"> </mat-datepicker-toggle>
+          <mat-datepicker #pickerFirstPaymentDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      @if (isLoanTermVisible) {
+        <div class="form-field pad-top-align">
+          <span class="body-medium-bold">Loan Term (Months)</span>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              onlyInteger
+              formControlName="loanTerm"
+              placeholder="Enter loan term (months)"
+              (input)="onValueChanged($event)" />
+          </mat-form-field>
+        </div>
+      }
+
+      @if (isAmortizationVisible) {
+        <div class="form-field pad-top-align">
+          <span class="body-medium-bold">Amortization (Months)</span>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="text"
+              onlyInteger
+              formControlName="amortization"
+              placeholder="Enter amortization (Months)"
+              (input)="onValueChanged($event)" />
+          </mat-form-field>
+        </div>
+      }
+
+      <div class="form-field pad-top-align">
+        <span class="body-medium-bold">Interest Rate</span>
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            matInput
+            type="text"
+            onlyDecimal
+            [maxValue]="100"
+            formControlName="interestRate"
+            placeholder="Enter interest rate"
+            (input)="onValueChanged($event)" />
+          <span matSuffix class="ffix-space">%</span>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>

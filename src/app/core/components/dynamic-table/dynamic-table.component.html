@@ -1,0 +1,77 @@
+@if (data()) {
+  <!-- <ng-container
+  [ngTemplateOutlet]=" data!.length === 0 && !showNoDataSectionEW ? empty : data!.length === 0 && showNoDataSectionEW ? emptyEW:null "> -->
+
+  <table mat-table [dataSource]="dataSource" matSort #matSort (matSortChange)="sortChange($event)">
+    @for (column of columnTitles(); track i; let i = $index) {
+      <div [matColumnDef]="column">
+        <mat-header-cell
+          [ngClass]="column === 'multi' ? '' : 'common'"
+          *matHeaderCellDef
+          mat-sort-header
+          class="body-medium-bold">
+          {{ column === 'multi' ? '' : column }}
+        </mat-header-cell>
+
+        @if (column === 'multi') {
+          <mat-cell *matCellDef="let row" class="pointer">
+            <div>
+              <mat-icon class="icon-applicants">{{'person_outline' }}</mat-icon>
+            </div>
+          </mat-cell>
+        } @else {
+          <mat-cell *matCellDef="let row" class="pointer common">
+            <div class="mat-cell-set">
+              <span class="body-medium-regular" [innerHTML]="row[columns()[i]]"></span>
+            </div>
+            @if (column === ' ') {
+              <div class="admin-buttons">
+                <button class="admin-button" (click)="clickToEditEvent(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button class="admin-button" (click)="clickToDeleteEvent(row)">
+                  <mat-icon class="delete">delete</mat-icon>
+                </button>
+              </div>
+            }
+          </mat-cell>
+        }
+      </div>
+    }
+
+    <mat-header-row *matHeaderRowDef="columnTitles()"></mat-header-row>
+    <mat-row
+      class="dynamic-table-row"
+      *matRowDef="let row; columns: columnTitles(); let index = index"
+      (click)="clickEvent(row, index)">
+    </mat-row>
+  </table>
+  @if (seeMoreNavLink() === '' && buttonMsg() !== '') {
+    <div (click)="clickMorePagesEvent()" class="see-more-applications">{{ seeMoreMsg() }}</div>
+  }
+
+  @if (seeMoreNavLink() !== '' && buttonMsg() !== '') {
+    <div [routerLink]="seeMoreNavLink()" class="see-more-applications">{{ seeMoreMsg() }}</div>
+  }
+} @else if (data!.length === 0 && showNoDataSectionEW()) {
+  <div class="table-section">
+    <div class="card-image">
+      <img src="../../../../assets/img/icons/svg/computer.svg" alt="" />
+    </div>
+    <div class="pb-3 body-medium-regular">No Data Found</div>
+  </div>
+} @else {
+  <div class="table-section">
+    <div class="card-image">
+      <img src="../../../../assets/img/icons/svg/computer.svg" alt="" />
+    </div>
+    <div class="pb-3 body-medium-regular">
+      {{ emptyMsg() }}
+    </div>
+    @if (buttonMsg() !== '') {
+      <button [routerLink]="btnNavLink()" routerLinkActive="router-link-active" class="button-primary">
+        {{ buttonMsg() }}
+      </button>
+    }
+  </div>
+}

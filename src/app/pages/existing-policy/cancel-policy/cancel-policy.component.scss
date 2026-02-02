@@ -1,0 +1,131 @@
+@use '../../../../assets/css/components/form-field';
+
+:host {
+  display: block;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.page-title {
+  padding-bottom: 12px;
+
+  a {
+    display: flex;
+    text-decoration: none;
+    color: var(--black200);
+  }
+
+  .material-symbols-outlined {
+    margin-right: 1rem;
+  }
+}
+
+mat-divider {
+  margin-bottom: 2rem;
+}
+
+.form-wrapper {
+  display: grid;
+  grid-template-columns: 33% 66%;
+  padding: 0px 0px 40px 0px;
+}
+
+.section-wrapper {
+  margin-right: 12px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: left;
+  grid-column: 1;
+}
+
+
+.form {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.coverage-details-form-input-one {
+  grid-column: 1/3;
+  grid-row: 1;
+}
+
+.coverage-details-form-input-two {
+  grid-column: 1/3;
+  grid-row: 2;
+}
+
+#banking-detail-form.form {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.banking-detail-form-input-one {
+  grid-column: 1/3;
+  grid-row: 1;
+}
+
+.banking-detail-form-input-two {
+  grid-column: 1/2;
+  grid-row: 2;
+}
+
+.banking-detail-form-input-three {
+  grid-column: 2/3;
+  grid-row: 2;
+}
+
+.banking-detail-form-input-four {
+  grid-column: 1/3;
+  grid-row: 3;
+}
+
+
+.success-wrapper,
+.error-wrapper {
+  margin-top: 250px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  margin-top: 10px;
+
+  .form-section {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+
+    .section-wrapper {
+      flex: 1 1 40%;
+    }
+
+    .form-table {
+      flex: 1 1 80%;
+    }
+
+    .form-fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+
+
+      .form-field {
+        flex: 1 1 50%;
+      }
+
+    }
+  }
+
+  .form-buttons {
+    display: inline-flex;
+    column-gap: 24px;
+    align-self: end;
+  }
+}

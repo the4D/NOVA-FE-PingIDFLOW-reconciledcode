@@ -1,0 +1,71 @@
+@use '/src/assets/css/base/colors';
+
+.card-coverage-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: auto;
+  background-color: colors.$securian-brand-mist;
+  filter: drop-shadow(0px 4px 12px rgba(91, 91, 91, 0.08));
+  padding: 20px 15px 20px 20px;
+}
+
+.no-underlining-clss {
+  text-decoration: none !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+
+.card-content-percentage {
+  margin-top: -1px;
+  border: 1px solid colors.$securian-brand-stone;
+  padding: 0px !important;
+
+  .content-inside {
+    display: grid;
+    gap: 10px;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 5px 5px 0px;
+
+    &.success {
+      border-left: 4px solid colors.$securian-brand-grass;
+    }
+
+    &.info {
+      border-left: 4px solid colors.$securian-brand-leaf;
+    }
+
+    &.warning {
+      border-left: 4px solid colors.$error-red-500;
+    }
+
+    .error-color {
+      color: colors.$error-red-600;
+    }
+
+    .success-color {
+      color: colors.$success-green-600;
+    }
+
+    .warning-color {
+      color: colors.$warning-orange-600;
+    }
+
+    .black-color {
+      color: colors.$securian-brand-onyx;
+    }
+  }
+}
+
+.coverage-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  :first-child {
+    flex: 1;
+  }
+}

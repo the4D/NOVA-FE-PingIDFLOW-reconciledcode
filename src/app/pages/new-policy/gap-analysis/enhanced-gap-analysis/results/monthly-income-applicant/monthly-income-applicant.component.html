@@ -1,0 +1,70 @@
+@if (!isContainerCollapse()) {
+  @if (applicantType() === 'primary') {
+    <p class="body-medium-bold mt-2">
+      {{ 'meeting.borrowerOne' | translate }}
+    </p>
+  }
+
+  @if (applicantType() === 'secondary') {
+    <p class="body-medium-bold mt-2">
+      {{ 'meeting.borrowerTwo' | translate }}
+    </p>
+  }
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-row justify-content-between">
+      <div class="body-small-regular">{{ 'results.base' | translate }}</div>
+      <div class="body-small-regular">
+        @if (languageService.languageSelected$ | async; as language) {
+          {{ incomeBase() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+        }
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <div class="body-small-regular">{{ 'results.bonuses' | translate }}</div>
+      <div class="body-small-regular">
+        @if (languageService.languageSelected$ | async; as language) {
+          {{ incomeBonuses() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+        }
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <div class="body-small-regular">{{ 'results.investment' | translate }}</div>
+      <div class="body-small-regular">
+        @if (languageService.languageSelected$ | async; as language) {
+          {{ incomeInvestment() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+        }
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <div class="body-small-regular">
+        {{ 'results.tax' | translate }}
+      </div>
+      <div class="body-small-regular">
+        @if (languageService.languageSelected$ | async; as language) {
+          -
+          {{ taxValueByCheckedApplicant() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+        }
+      </div>
+    </div>
+    @if (templateId() === 2) {
+      <div class="d-flex flex-row justify-content-between mt-2">
+        <div class="body-small-regular">
+          <span [innerHTML]="'results.insurance' | translate"></span>
+        </div>
+        <div class="body-small-regular">
+          @if (languageService.languageSelected$ | async; as language) {
+            @if (templateId() === 3) {
+              {{ insuranceBenefit() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}
+            } @else {
+              {{
+                isIncomeReduce()
+                  ? (insuranceBenefitReduced() | currencyOption: 'USD' : 'symbol' : '2.0' : language)
+                  : (insuranceBenefit() | currencyOption: 'USD' : 'symbol' : '2.0' : language)
+              }}
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

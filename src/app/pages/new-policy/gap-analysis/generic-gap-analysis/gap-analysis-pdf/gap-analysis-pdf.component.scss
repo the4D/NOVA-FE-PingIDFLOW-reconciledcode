@@ -1,0 +1,94 @@
+#page1,
+#page2 {
+  display: none;
+  position: absolute;
+  padding: 20px;
+  width: 1080px;
+  height: 1920px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+
+  .logo {
+    width: 25px;
+  }
+
+  .title {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .date {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.address-list {
+  border-collapse: separate;
+  border-spacing: 10px 0;
+  margin: 10px 10px;
+
+  tr {
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  td {
+    text-align: left;
+    line-height: 1.5;
+  }
+}
+
+.body {
+  .coverage-title {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 4px;
+  }
+
+  .items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    padding: 0px 4px 4px 4px;
+  }
+
+  section {
+    margin-bottom: 20px;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    padding-top: 0;
+  }
+
+  .results {
+  }
+
+  .items-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    padding: 4px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .items-value {
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    padding: 4px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+}

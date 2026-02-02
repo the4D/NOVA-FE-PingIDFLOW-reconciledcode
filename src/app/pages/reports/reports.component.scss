@@ -1,0 +1,65 @@
+@use "/src/assets/css/base/colors";
+@use '../../../assets/css/components/form-field';
+
+.reports {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+.grand-menu {
+    border-top: 8px solid colors.$securian-brand-leaf;
+    padding: 22px 30px 30px 30px;
+    -webkit-box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
+    min-height: 456px;
+    background-image: url('../../../assets/img/dots-pattern.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+
+    .grand-menu-date {
+        color: colors.$securian-brand-slate
+    }
+
+    .grand-menu-welcome-message {
+        color: colors.$securian-brand-leaf
+    }
+
+    .grand-menu-container-row {
+        display: flex;
+        justify-content: space-between;
+        column-gap: 30px;
+        box-sizing: border-box;
+
+        .menu-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0px;
+
+            .body-medium-bold {
+                color: colors.$securian-brand-leaf;
+            }
+
+            .body-small-regular {
+                color: colors.$valeyo-grey-600;
+            }
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                align-self: center;
+                margin: auto;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

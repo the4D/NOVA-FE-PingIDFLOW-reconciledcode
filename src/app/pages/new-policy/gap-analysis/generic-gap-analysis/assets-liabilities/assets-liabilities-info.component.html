@@ -1,0 +1,173 @@
+<div class="assetliability-info">
+  <div class="form">
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Assets</h4>
+        </div>
+        <div class="body-medium-regular">Confirm the value of assets currently owned by the member</div>
+      </div>
+      <div class="form-table">
+        <form class="form-fields" [formGroup]="assetLiabilityForm">
+          <div class="form-field">
+            <span class="body-medium-bold ">Real Estate</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="realEstate" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <div class="mb-1">
+              <span class="d-flex body-medium-bold">
+                Investments
+                <mat-icon class="ms-2" [matTooltip]="toolTip.investments" matTooltipPosition="above"
+                  matTooltipClass="above">help</mat-icon>
+              </span>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="investments" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">
+              Cash Savings
+            </span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="savings" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <div class="mb-1">
+              <span class="d-flex body-medium-bold">
+                Others
+                <mat-icon class="ms-2 mt-1" [matTooltip]="toolTip.others" matTooltipPosition="right">help</mat-icon>
+              </span>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="others" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="total">
+          <div class="total-row">
+            <div class="body-medium-bold">
+              Total Assets:
+            </div>
+            <div class="body-medium-bold">
+              {{ totalAssets | currency : 'USD' : 'symbol' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-wrapper">
+        <div class="section-title">
+          <h4>Liabilities</h4>
+        </div>
+        <div class="body-medium-regular">
+          Confirm the value of liabilities currently owed by the member
+        </div>
+      </div>
+      <div class="form-table">
+        <form class="form-fields" [formGroup]="assetLiabilityForm">
+          <div class="form-field">
+            <span class="body-medium-bold">Existing Mortgage</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="mortgage" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Existing Line of Credit</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="lineOfCredit" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Existing Loans</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="loans" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <span class="body-medium-bold">Existing Credit Cards</span>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="creditCards" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field">
+            <div class="label-with-icon">
+              <span class="body-medium-bold">New Debt</span>
+              <mat-icon [matTooltip]="toolTip.newLoan" matTooltipPosition="right">help</mat-icon>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput currencyMask [options]="{ prefix: '' }" type="text" placeholder="Enter Amount"
+                  formControlName="newDebt" />
+                <span matPrefix class="ffix-space">$ </span>
+                <span matSuffix>&nbsp; </span>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="total">
+          <div class="total-row">
+            <div class="body-medium-bold">
+              Total Liabilities:
+            </div>
+            <div class="body-medium-bold">
+              {{ totalLiabilities | currency : 'USD' : 'symbol' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-buttons">
+      <button class="button-secondary" (click)="back()">
+        Back: Income
+      </button>
+      <button class="button-primary" (click)="moveNextToExpense()">
+        Next: {{ nextButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

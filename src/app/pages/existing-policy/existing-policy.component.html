@@ -1,0 +1,78 @@
+<div class="existing-policy">
+  <div class="grand-menu">
+    <div>
+      <h1 class="grand-menu-welcome-message"></h1>
+    </div>
+    <div class="pt-3 pb-5">
+      <h5 class="grand-menu-date"></h5>
+    </div>
+    <div class="grand-menu-container-row">
+      <card
+        class="menu-item"
+        title="Submit Claim"
+        cardImage="/src/assets/img/icons/svg/computer.svg"
+        cardBody="File claim against existing policy"
+        link="existing-policy/submit-claim"
+        color="light"></card>
+      <card
+        class="menu-item"
+        title="Cancel Coverage"
+        cardImage="/src/assets/img/icons/svg/rocket.svg"
+        cardBody="Stop existing insurance policy"
+        link="existing-policy/cancel-policy"
+        color="semi"></card>
+      <card
+        class="menu-item"
+        title="Update Account"
+        cardImage="/src/assets/img/icons/svg/clipboard.svg"
+        cardBody="Change member information"
+        link="existing-policy/update-info"
+        color="hard"></card>
+    </div>
+  </div>
+
+  <div class="existing-policy-dashboard">
+    <h2 class="heading-3">Carrier Requests</h2>
+    <div class="select-and-search">
+      <div class="select-field">
+        <mat-form-field appearance="outline">
+          <mat-select
+            placeholder="Search By"
+            (selectionChange)="onFilterByChanged()"
+            [formControl]="filterBy"
+            panelClass="panel-dropdown">
+            <mat-option class="hidden" disabled>Search By</mat-option>
+            @for (filter of filterByOptionList; track filter.id) {
+              <mat-option [value]="filter.id">
+                {{ filter.description }}
+              </mat-option>
+            } @empty {
+              <mat-option disabled> Filter option list not loaded </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="search-field">
+        <div>
+          <mat-form-field appearance="outline">
+            <input matInput type="text" [formControl]="searchBy" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <app-dynamic-table
+      dataSourceType="carrierRequests"
+      buttonMsg=""
+      emptyMsg="You will see a list of recent carrier requests here when you add them."
+      [seeMoreMsg]="seeMoreMsg"
+      (clickMorePages)="seeMoreCarrierRequests()"
+      (clickAction)="onActionClicked($event)"
+      title=""
+      [data]="dataSource"
+      [columnTitles]="columnTitles"
+      [columns]="columns">
+    </app-dynamic-table>
+  </div>
+</div>

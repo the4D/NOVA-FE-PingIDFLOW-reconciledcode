@@ -1,0 +1,103 @@
+<div class="page">
+  
+  <app-header></app-header>
+  <div class="login-div-container">
+    <div class="login-page">
+
+
+      <div class="login-card">
+        <div class="login-container">
+
+          <div class="header-section">
+            <h1 class="main-title">Securian Canada<br /> Creditor Insurance Login</h1>
+          </div>
+
+          <h2 class="login-title">Secure Login</h2>
+
+          <form [formGroup]="loginForm" class="login-form" autocomplete="on" (ngSubmit)="handleLogin()" novalidate>
+
+
+            <div class="form-group">
+              <label for="email" class="form-label">
+                Email <span class="required-indicator">(required)</span>
+              </label>
+              <input type="email" id="email" name="email" formControlName="email" class="form-input"
+                [class.input-error]="errors.email" placeholder="Email address" autocomplete="email"
+                (focus)="clearError('email')" aria-required="true" [attr.aria-invalid]="errors.email ? 'true' : 'false'"
+                [attr.aria-describedby]="errors.email ? 'email-error' : null" />
+              <span *ngIf="errors.email" id="email-error" class="error-text" role="alert">
+                {{ errors.email }}
+              </span>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+              <label for="password" class="form-label">
+                Password <span class="required-indicator">(required)</span>
+              </label>
+              <div class="password-input-wrapper">
+                <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
+                  formControlName="password" class="form-input password-input" [class.input-error]="errors.password"
+                  placeholder="Password" autocomplete="current-password" (focus)="clearError('password')"
+                  aria-required="true" [attr.aria-invalid]="errors.password ? 'true' : 'false'"
+                  [attr.aria-describedby]="errors.password ? 'password-error' : null" />
+                <button type="button" class="password-toggle-btn" (click)="togglePasswordVisibility()"
+                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'" tabindex="-1">
+                  <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                    </path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <span *ngIf="errors.password" id="password-error" class="error-text" role="alert">
+                {{ errors.password }}
+              </span>
+              <a routerLink="/forgot-password" class="forgot-link">Forgot Password?</a>
+            </div>
+
+         
+            <div *ngIf="errors.general" class="general-error" role="alert" aria-live="polite">
+              {{ errors.general }}
+            </div>
+
+        
+            <button type="submit" class="sign-in-btn" [disabled]="isLoggingIn">
+              <span *ngIf="!isLoggingIn">Sign in</span>
+              <span *ngIf="isLoggingIn" class="loading-content">
+                <span class="spinner"></span>
+                Signing in...
+              </span>
+            </button>
+          </form>
+
+          <!--
+             Footer Links 
+            <div class="card-footer">
+              <p class="footer-text">
+                Not registered yet? 
+                <a href="/register" class="footer-link">Register your account</a>
+              </p>
+              <p class="footer-text">
+                Having trouble logging in? 
+                <a href="/faq" class="footer-link">Visit our FAQ page</a>
+              </p>
+            </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <app-footer></app-footer>
+</div>

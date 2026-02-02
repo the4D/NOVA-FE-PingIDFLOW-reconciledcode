@@ -1,0 +1,56 @@
+<div class="nav-bar" [ngClass]="!navExpanded() ? 'expanded' : ''">
+  <div class="nav-content">
+    @if (navElements.length > 0) {
+      <div class="menu-items">
+        @for (navElement of listNavElements(''); track index; let index = $index) {
+          <div>
+            <a
+              class="icons"
+              [ngClass]="{
+                'shadow-bottom': navElement.parentRouteLink == '',
+                'menu-item-selected': navElement.selected,
+              }"
+              [routerLink]="navElement.parentRouteLink + navElement.routeLink || ''">
+              <span class="material-symbols-outlined">
+                {{ navElement.icon }}
+              </span>
+              <div class="body-medium-bold nav-label">
+                <span>{{ navElement.label }}</span>
+              </div>
+
+              <!-- collapse/expand arrow on parent menu item-->
+              @if (navElement.hasChildren) {
+                <div class="nav-label-arrow">
+                  <div
+                    class="dropdown-arrow"
+                    [ngClass]="navElement.hasParentExpanded ? '' : 'arrow-down'"
+                    (click)="
+                      $event.stopPropagation();
+                      $event.preventDefault();
+                      toggleSubNavBar(navElement.parentRouteLink + navElement.routeLink)
+                    ">
+                    <mat-icon> expand_less</mat-icon>
+                  </div>
+                </div>
+              }
+            </a>
+
+            <!-- populating submenu list for the parent -->
+            @if (navElement.hasParentExpanded && !navExpanded()) {
+              <div class="body-medium-regular sub-nav" [ngClass]="navElement.hasParentExpanded ? 'sub-expanded' : ''">
+                @for (subNavElement of listNavElements(navElement.routeLink); track index; let index = $index) {
+                  <a
+                    class="sub-nav-item"
+                    [ngClass]="{ 'sub-expanded': true, 'menu-item-selected': subNavElement.selected }"
+                    [routerLink]="subNavElement.parentRouteLink + subNavElement.routeLink || ''">
+                    <span>{{ subNavElement.label }}</span>
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

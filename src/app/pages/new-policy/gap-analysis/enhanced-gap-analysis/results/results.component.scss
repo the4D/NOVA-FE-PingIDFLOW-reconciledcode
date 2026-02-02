@@ -1,0 +1,81 @@
+@use '/src/assets/css/base/colors';
+
+.gap-select {
+  border: none;
+  background-color: #F5F5F5;
+  padding: 9px 5px 5px 5px;
+  font-size: medium;
+  font-weight: bold;
+  outline: none;
+}
+
+.gap-select .selected {
+  background-color: red;
+  border: 3px solid blue;
+}
+
+.default-cursor {
+  cursor: none;
+}
+
+.number-circle {
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: colors.$securian-brand-snow;
+  border: 2px solid colors.$securian-brand-sky;
+  color: colors.$securian-brand-sky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultTooltip {
+  display: flex;
+}
+
+.toolTipContianer {
+  display: flex;
+}
+
+.button-link {
+  color: colors.$valeyo-green-700;
+  /* Blue color */
+
+  /* Remove underline */
+  cursor: pointer;
+  /* Show hand cursor on hover */
+  padding: 0;
+  /* Remove padding */
+  background: none;
+  /* Remove background */
+  border: none;
+  /* Remove border */
+  white-space: nowrap;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.row-1 {
+  display: flex;
+  column-gap: 24px;
+
+  .row-1-column-1 {
+    flex-grow: 2;
+    flex-basis: 70%;
+  }
+
+  .row-1-column-2 {
+    flex-grow: 1;
+    flex-basis: 30%;
+  }
+}
+
+.footer-style {
+  border: 3px solid colors.$securian-brand-sky;
+}

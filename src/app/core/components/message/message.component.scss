@@ -1,0 +1,117 @@
+@use '../../../../assets/css/base/colors';
+@use '../../../../assets/css/base/fonts';
+
+.button-primary {
+	font-family: fonts.$font-family;
+	color: colors.$valeyo-white-0;
+	width: auto;
+	height: 35px;
+	padding: .59375rem 1rem;
+	text-align: center;
+	background-color: colors.$securian-brand-sky;
+	border-color: colors.$securian-brand-sky;
+	border-radius: .1875rem;
+	border: 0;
+	border-style: solid;
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1;
+}
+
+.button-secondary {
+	font-family: fonts.$font-family;
+	color: colors.$securian-brand-sky;
+	width: auto;
+	min-width: 120px;
+	height: 35px;
+	padding: .4rem 1rem;
+	text-align: center;
+	background-color: colors.$valeyo-white-0;
+	border-color: colors.$securian-brand-sky;
+	border-radius: .1875rem;
+	border-style: solid;
+	display: inline-block;
+	line-height: 1;
+}
+
+.invite-form {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	padding: 40px 80px 40px 80px;
+	height: max-content;
+	z-index: 1000;
+	background: #ffffff;
+	box-shadow: 0px 4px 12px rgba(91, 91, 91, 0.06);
+	width: 50%;
+}
+
+.invite-success-msg-wrapper {
+	position: absolute;
+	background: #fbfbfb;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+	width: 380px;
+	height: 300px;
+	padding: 62px 79px 62px 79px;
+	z-index: 101;
+	top: 33%;
+	left: 30%;
+}
+
+.invite-success-msg {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: baseline;
+}
+
+.warning-icon {
+	font-size: 100px;
+
+	mat-icon {
+		font-size: 100px;
+		background-color: colors.$valeyo-white-0;
+	}
+
+	width: 100px;
+	height: 100px;
+	margin-bottom: 20px;
+	color: colors.$error-red-600;
+	// background-color: colors.$error-red-600;
+}
+
+.warning-icon-variation {
+	font-size: 24px;
+
+	mat-icon {
+		font-size: 24px;
+		background-color: colors.$valeyo-white-0;
+	}
+
+	width: 24px;
+	height: 24px;
+	// margin-bottom: 20px;
+	color: colors.$error-red-600;
+	// background-color: colors.$error-red-600;
+}
+
+.mat-mdc-dialog-content {
+	overflow: hidden;
+	// margin: 0px;
+}
+
+.delete-dialog {
+	min-height: 250px;
+}
+
+.button-warning {
+	background-color: colors.$error-red-600;
+	border-color: colors.$error-red-600;
+	color: colors.$valeyo-white-0;
+	width: 100px;
+	font-weight: 600;
+	line-height: normal;
+	height: 40px;
+}

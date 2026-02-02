@@ -1,0 +1,56 @@
+<div class="additional-info">
+  @if (noQuestions()) {
+    <app-noInfoRequired
+      [title]="'Health questions are not available based on coverage selection.'"
+      [message]="''"></app-noInfoRequired>
+  } @else {
+    <div class="form">
+      <div class="form-section">
+        <div class="section-wrapper pt-2">
+          <div class="section-title">
+            <h5>Applicant Questions</h5>
+          </div>
+          <div class="body-medium-regular">
+            The applicant must answer the following health questions in order to assess their health status
+          </div>
+        </div>
+        <div class="form-table">
+          <mat-tab-group
+            #tabs
+            [dynamicHeight]="true"
+            mat-align-tabs="start"
+            (selectedIndexChange)="onSelectedChange($event)">
+            @let response = quoteInsuranceTypeResponseData$ | async;
+
+            @for (application of response?.applications; track application.id) {
+              @for (applicant of application.applicants; track applicant.applicantIdentifier; let index = $index) {
+                @let applicantSequence = applicant.applicantSequence !== undefined ? applicant.applicantSequence : 0;
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <!-- !This should be revisited [ngClass]="{ error: !tabList[index].valid && showError }" -->
+                    <span class="mat-tab-label"> {{ applicant.firstName }} {{ applicant.lastName }} </span>
+                  </ng-template>
+                  <app-questions
+                    [applicantSequence]="applicantSequence"
+                    [questionsAnswersInputList]="questionsAnswersList"
+                    (setReadOnly)="onSetReadOnly($event)"
+                    (isFormValidEvent)="setFormValidation($event)"
+                    [index]="index"></app-questions>
+                </mat-tab>
+              }
+            }
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="form">
+    <div class="form-buttons">
+      <button class="button-secondary" (click)="back()">Back{{ previousButtonLabel }}</button>
+      <button class="button-primary" [disabled]="disabledButton()" (click)="clickNext()">
+        Next: {{ nextButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

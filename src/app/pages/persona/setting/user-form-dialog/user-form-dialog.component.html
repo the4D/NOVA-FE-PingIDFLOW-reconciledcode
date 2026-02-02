@@ -1,0 +1,106 @@
+<div class="valeyo">
+  <mat-icon mat-dialog-close>close</mat-icon>
+
+  @if (!userData) {
+    <h5 class="separator ps-4 pb-1 pt-4">Add User</h5>
+  } @else {
+    <h5 class="separator ps-4 pb-1 pt-4">Edit User</h5>
+  }
+
+  <mat-dialog-content>
+    <form [formGroup]="editFormGroup" class="form-fields">
+      <div class="form-field">
+        <span class="body-medium-bold">First Name</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput type="text" maxlength="30" placeholder="Enter first name" formControlName="firstName" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <span class="body-medium-bold">Last Name</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput type="text" maxlength="30" placeholder="Enter last name" formControlName="lastName" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <span class="body-medium-bold">Email</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput type="text" maxlength="50" placeholder="Enter email address" formControlName="email" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <span class="body-medium-bold">Employee ID Number</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput type="text" maxlength="30" placeholder="Enter ID number" formControlName="employeeId" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="input-wide">
+        <span class="body-medium-bold">Branch</span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select placeholder="Select Branch" formControlName="branchId">
+              @for (option of branchOptions; track option.value) {
+                <mat-option [value]="option.value">
+                  {{ option.name }}
+                </mat-option>
+              } @empty {
+                <mat-option disabled> Branch list not loaded </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="input-wide">
+        <span class="body-medium-bold"> Role </span>
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select placeholder="Select Role" formControlName="role">
+              @for (option of roleOptions; track option.value) {
+                <mat-option [value]="option.value">
+                  {{ option.name }}
+                </mat-option>
+              } @empty {
+                <mat-option disabled> Role list not loaded </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+
+    <div class="fwidth pb-2">
+      @if (editFormGroup.controls['role'].value === '1') {
+        <p class="body-small-regular">This role has access to all functionality within the platform.</p>
+      }
+      @if (editFormGroup.controls['role'].value === '2') {
+        <p class="body-small-regular">
+          This role has access to all functionality within the platform except the administration of other users.
+        </p>
+      }
+      @if (editFormGroup.controls['role'].value === '3') {
+        <p class="body-small-regular">
+          This role has access to all functionality within the platform except the administration of other users and
+          selected performance reports.
+        </p>
+      }
+    </div>
+
+    <div class="d-flex justify-content-start input-wide pt-3">
+      <button (click)="onSubmitUser()" class="valeyo button-primary" type="button" [disabled]="!editFormGroup.valid">
+        {{ userData ? 'Edit User' : 'Add User' }}
+      </button>
+    </div>
+  </mat-dialog-content>
+</div>

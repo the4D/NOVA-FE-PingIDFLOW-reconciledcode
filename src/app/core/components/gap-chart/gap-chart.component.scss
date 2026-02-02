@@ -1,0 +1,146 @@
+@use '../../../../assets/css/base/colors';
+
+.wrapper {
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.total {
+  border-radius: 4px;
+
+  height: 60px;
+  color: #ffffff;
+
+  &-blue {
+    background-color: colors.$securian-brand-water;
+  }
+
+  &-green {
+    background-color: colors.$securian-brand-grass;
+  }
+}
+
+.gap {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  box-sizing: border-box;
+  height: 32px;
+  background-color: colors.$error-red-400;
+  justify-content: center;
+
+  .gap-value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.gap-coverage {
+  border: solid 1px colors.$error-red-400;
+  ;
+  border-left-style: none;
+  border-radius: 0 4px 4px 0;
+}
+
+.gap-unprotected {
+  border: solid 1px colors.$error-red-400;
+  border-radius: 4px;
+}
+
+.justify-content-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.red {
+  color: var(--red100);
+}
+
+.existing {
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  height: 32px;
+  border-radius: 4px;
+  width: 100%;
+
+  .coverage {
+    height: 100%;
+    background: colors.$securian-brand-grass;
+
+    &.blue {
+      background-color: #7bafc0;
+    }
+  }
+
+  .assets {
+    height: 100%;
+    color: var(--black200);
+    border: solid 1px #018374;
+
+    background-color: #4d968c;
+
+    &.blue {
+      background-color: #80a3ad;
+    }
+  }
+}
+
+.align-center {
+  justify-content: center;
+  display: flex;
+}
+
+.coverage-unprotected-class {
+  text-align: center;
+  line-height: 30px;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+
+  /* Valeyo Grey 100 */
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.legend {
+  text-align: center;
+  color: colors.$securian-brand-snow !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.legend-inherit {
+
+  /* Valeyo Grey 100 */
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.custom-tooltip {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.border-radius {
+  border-radius: 5px;
+}

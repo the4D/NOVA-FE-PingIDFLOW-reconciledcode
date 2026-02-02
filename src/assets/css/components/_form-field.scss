@@ -1,0 +1,281 @@
+@use '/src/assets/css/base/colors';
+@use '../base/fonts';
+
+
+// FORM FIELDS COLORS AND THICKNESS
+::ng-deep .mat-form-field-appearance-outline {
+
+	.mat-mdc-select {
+		font-size: 16px;
+		font-family: fonts.$font-family !important;
+	}
+
+	.mdc-text-field--outlined {
+		height: 36px;
+		overflow: visible;
+	}
+
+	.mat-mdc-form-field-infix {
+		min-height: 36px;
+	}
+
+	.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+		padding-top: 5px;
+		padding-bottom: 6px;
+	}
+
+	.mat-mdc-form-field-icon-prefix>.mat-icon,
+	.mat-mdc-form-field-icon-suffix>.mat-icon {
+		padding: 7px 10px 5px 10px;
+	}
+
+	.mat-mdc-form-field-icon-suffix {
+		.ffix-space {
+			top: 0px !important;
+			padding: 5px 10px 5px 10px;
+		}
+	}
+
+	.mat-mdc-form-field-icon-prefix,
+	[dir=rtl] .mat-mdc-form-field-icon-suffix {
+		padding: 0 5px 1px 10px;
+	}
+
+	font-size: 16px;
+	font-family: fonts.$font-family !important;
+
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+	.mat-form-field-wrapper {
+		padding-bottom: 1.34375em;
+	}
+
+	// .mat-form-field-suffix 
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+	.mat-form-field-appearance-outline,
+	.mat-form-field-prefix {
+		top: 0.5em !important;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+	.mat-form-field-appearance-outline,
+	.mat-form-field-suffix,
+	.mat-icon[role="presentation"] {
+		// display: flex;
+		// flex-wrap: inherit;
+		// align-content: center;
+		top: 0.5em !important;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
+	.mat-select-arrow-wrapper {
+		transform: translateY(0%) !important;
+	}
+
+
+	/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
+	.mat-select-trigger {
+		font-family: fonts.$font-family;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
+	.mat-select-value-text {
+		font-family: fonts.$font-family;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+	.mat-form-field-infix {
+		padding: 0.6em 0 0.6em 0;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
+	.mat-select-arrow {
+		color: colors.$securian-brand-sky;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+	.mat-form-field-suffix {
+		color: colors.$securian-brand-sky;
+	}
+
+	.mat-mdc-icon-button {
+		color: colors.$securian-brand-sky;
+	}
+
+	.mat-mdc-icon-button.mat-mdc-button-base {
+		width: 36px;
+		height: 36px;
+		padding: 16px 0 16px 0;
+		bottom: 10px;
+	}
+
+
+	.mat-mdc-button-touch-target {
+		transform: translate(-50%, -28%) !important;
+	}
+
+	.mat-mdc-icon-button .mat-mdc-button-ripple,
+	.mat-mdc-icon-button .mat-mdc-button-persistent-ripple,
+	.mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before {
+		transform: translateY(14%);
+	}
+
+	.mdc-icon-button,
+	.mat-mdc-icon-button,
+	.mat-unthemed,
+	.mat-mdc-button-base,
+	.cdk-focused,
+	.cdk-program-focused {
+
+		.mat-mdc-focus-indicator {
+			transform: translateY(20%);
+		}
+
+		.mat-ripple,
+		.mat-mdc-button-ripple {
+			transform: translateY(20%);
+		}
+	}
+
+	.mat-form-field-outline {
+		color: colors.$securian-brand-stone;
+
+		.mat-form-field-outline-start,
+		.mat-form-field-outline-end,
+		.mat-form-field-outline-gap {
+			border-width: 2px; // Set your desired default thickness here
+			min-height: 35px;
+			max-height: 45px;
+		}
+	}
+
+	.mat-form-field-outline-thick {
+		color: colors.$securian-brand-stone;
+
+		.mat-form-field-outline-start,
+		.mat-form-field-outline-end,
+		.mat-form-field-outline-gap {
+			border-width: 3px; // Set your desired hover thickness here
+		}
+	}
+
+	// FOCUS
+	&.mat-focused {
+
+		.mat-form-field-outline-thick {
+			color: colors.$securian-brand-stone;
+
+			.mat-form-field-outline-start,
+			.mat-form-field-outline-end,
+			.mat-form-field-outline-gap {
+				border-width: 3px; // Set your desired focus thickness here
+			}
+		}
+
+		&.mat-accent .mat-form-field-outline-thick {
+			color: colors.$securian-brand-stone;
+		}
+
+		&.mat-warn .mat-form-field-outline-thick {
+			color: colors.$securian-brand-stone;
+		}
+	}
+}
+
+::ng-deep .personalized .mat-form-field-appearance-outline .mat-mdc-form-field-flex {
+	padding: 0 2px 0 0;
+}
+
+::ng-deep .personalized .mat-form-field-appearance-outline .mat-mdc-form-field-infix {
+	padding: 0 0 0.5em 0.5em;
+}
+
+::ng-deep .personalized .mat-form-field-appearance-outline .mat-mdc-select-arrow-wrapper {
+	transform: none;
+}
+
+::ng-deep .personalized .mat-mdc-form-field-wrapper {
+	padding-bottom: 0.1em;
+}
+
+::ng-deep .personalized .mat-mdc-form-field-subscript-wrapper {
+	padding-bottom: 0.1em;
+	height: 0.2em;
+}
+
+::ng-deep .personalized .mat-mdc-form-field-outline {
+	bottom: 0.1em;
+	min-width: 190px;
+	width: auto;
+}
+
+// ::ng-deep .mat-calendar-body-selected {
+// 	background-color: colors.$securian-brand-sky !important;
+// 	color: colors.$securian-brand-snow !important;
+// }
+
+::ng-deep .mat-calendar-body-cell-content {
+
+	&.mat-focus-indicator {
+		&:hover {
+			background-color: colors.$securian-brand-sky !important;
+			color: colors.$securian-brand-snow !important;
+		}
+	}
+
+	&.mat-calendar-body-selected {
+		background-color: colors.$securian-brand-sky !important;
+		color: colors.$securian-brand-snow !important;
+
+		&:hover {
+			background-color: colors.$securian-brand-sky !important;
+			color: colors.$securian-brand-snow !important;
+		}
+	}
+}
+
+.disclaimer-only {
+	.mdc-form-field .mat-internal-form-field {
+		display: flex;
+		align-items: flex-start;
+		vertical-align: text-top;
+	}
+
+	.mdc-checkbox {
+		position: static;
+
+		.mdc-checkbox__ripple {
+			left: 3px !important;
+			top: 3px !important;
+			width: 34px !important;
+			height: 34px !important;
+		}
+	}
+
+	.mdc-label {
+		padding-top: 8px;
+	}
+}
+
+.summary-disclaimer-only {
+
+	.mdc-form-field .mat-internal-form-field {
+		display: flex;
+		align-items: flex-start;
+		vertical-align: text-top;
+	}
+
+	.mdc-checkbox {
+		position: static;
+
+		.mdc-checkbox__ripple {
+			left: 3px !important;
+			top: 3px !important;
+			width: 34px !important;
+			height: 34px !important;
+		}
+	}
+
+	.mdc-label {
+		padding-top: 4px;
+	}
+}

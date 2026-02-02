@@ -1,0 +1,114 @@
+<span class="body-medium-regular top-text"
+  >Get all the details about the latest feature releases, product improvements, and bug fixes of Nova.</span
+>
+<div class="custom-accordian">
+  <mat-accordion [togglePosition]="'before'">
+    @for (releaseNote of releaseNoteList.year; track releaseNote.value; let yearIndex = $index) {
+      <mat-expansion-panel class="mat-elevation-z0" [expanded]="yearIndex === 0">
+        <mat-expansion-panel-header class="year-accordian-class">
+          <mat-panel-title class="ms-4 body-medium-bold year-value">
+            {{ releaseNote.value }}
+            <div class="circleBase green-dot"></div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        @for (month of releaseNote.month; track month.value; let monthIndex = $index) {
+          @for (monthDetail of month.monthDetail; track monthDetail.header) {
+            <ul class="bar">
+              <div class="body-medium-bold month-value-extra-class">{{ month.value }}</div>
+
+              <li>
+                <div class="header-overview">
+                  <span class="body-medium-bold extra-cls-header">
+                    <b> {{ monthDetail.header }}</b>
+                  </span>
+                  <span class="body-medium-regular extra-cls-overview">
+                    {{ monthDetail.overview }}
+                  </span>
+                </div>
+                <mat-accordion [togglePosition]="'before'">
+                  <mat-expansion-panel
+                    class="extra-margin mat-elevation-z0"
+                    (opened)="callShowState(yearIndex!.toString(), monthIndex!.toString())"
+                    (closed)="callHideState(yearIndex!.toString(), monthIndex!.toString())">
+                    <mat-expansion-panel-header>
+                      <mat-panel-description>
+                        <span
+                          class="body-medium-regular month-details-extra-class"
+                          [id]="yearIndex!.toString() + monthIndex!.toString()">
+                          Show Details
+                        </span>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <!--FEATURE LIST-->
+                    <span class="body-medium-bold feature"> Features </span>
+                    <ul class="nested-ui">
+                      @for (feature of monthDetail!.features; track feature.index) {
+                        <li class="body-medium-regular">
+                          {{ feature.description }}
+                          @if (feature.nested && feature.nested.length > 0) {
+                            <ul class="nested-ui">
+                              @for (nestedObject of feature.nested; track nestedObject.index) {
+                                <li class="body-medium-regular">
+                                  {{ nestedObject.description }}
+                                </li>
+                              }
+                            </ul>
+                          }
+                        </li>
+                      }
+                    </ul>
+                    <br />
+
+                    <!--Application Form Update LIST-->
+                    <span class="body-medium-bold feature"> Application form updates </span>
+                    <ul class="nested-ui">
+                      @for (
+                        applicationFormUpdate of monthDetail!.applicationFormUpdate;
+                        track applicationFormUpdate.index
+                      ) {
+                        <li class="body-medium-regular">
+                          {{ applicationFormUpdate.description }}
+                          @if (applicationFormUpdate.nested && applicationFormUpdate.nested.length > 0) {
+                            <ul class="nested-ui">
+                              @for (nestedObject of applicationFormUpdate.nested; track nestedObject.index) {
+                                <li class="body-medium-regular">
+                                  {{ nestedObject.description }}
+                                </li>
+                              }
+                            </ul>
+                          }
+                        </li>
+                      }
+                    </ul>
+                    <br />
+
+                    <!--General Usability LIST-->
+                    <span class="body-medium-bold feature"> General usability </span>
+                    <ul class="nested-ui">
+                      @for (generalUsability of monthDetail!.generalUsability; track generalUsability.index) {
+                        <li class="body-medium-regular">
+                          {{ generalUsability.description }}
+                          @if (generalUsability.nested && generalUsability.nested.length > 0) {
+                            <ul class="nested-ui">
+                              @for (nestedObject of generalUsability.nested; track nestedObject.index) {
+                                <li class="body-medium-regular">
+                                  {{ nestedObject.description }}
+                                </li>
+                              }
+                            </ul>
+                          }
+                        </li>
+                      }
+                    </ul>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </li>
+            </ul>
+          }
+        }
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>

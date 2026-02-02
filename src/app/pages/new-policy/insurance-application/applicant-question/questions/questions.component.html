@@ -1,0 +1,70 @@
+@let quote = quoteInsuranceTypeResponseData$ | async;
+
+@if (quote && quote.loanId !== undefined) {
+  @if (hasApplicantQuestions()) {
+    @let insuranceType = quote.insuranceType;
+    <form [formGroup]="questionsForm">
+      <div class="form mt-3 gap-3">
+        <div class="pb-2">
+          @if (insuranceType === 'SP') {
+            @for (question of healthSPQuestions; track question.index + i; let i = $index) {
+              <p class="body-medium-bold pb-3">{{ question.title }}</p>
+              @for (
+                questionDto of question.healthQuestionsDto;
+                track questionDto.questionIdentifier;
+                let dtoIndex = $index
+              ) {
+                <app-question
+                  [selectedInsuranceType]="selectedInsuranceType"
+                  [questionIdentifier]="dtoIndex"
+                  [question]="questionDto"
+                  (questionAnswered)="changeQuestion($event)" />
+              }
+            }
+          } @else {
+            @if (insuranceType !== 'SP') {
+              @for (question of healthQuestions; track question.questionIdentifier; let index = $index) {
+                @if (question) {
+                  <app-question
+                    [selectedInsuranceType]="insuranceType"
+                    [questionIdentifier]="index"
+                    [question]="question"
+                    (questionAnswered)="changeQuestion($event)" />
+                }
+              }
+            }
+          }
+        </div>
+
+        <div class="row">
+          <section class="col-12">
+            <h6 class="overline-medium">Disclaimer</h6>
+            <div class="d-flex mt-2">
+              <mat-checkbox
+                class="body-small-regular align-items-center disclaimer-only"
+                formControlName="disclaimer-{{ applicantSequence() }}"
+                labelPosition="after">
+                I acknowledge the following: If you answer Yes to any of the above questions, your eligibility for
+                insurance coverage and premiums may change. See the summary at the end of this application to review any
+                changes. Pre-populated answers are affected by Applicant Information answered on Step 2.
+              </mat-checkbox>
+            </div>
+          </section>
+        </div>
+        @if (
+          url.includes('localhost:4200') || url.includes('dev-securianinsuux-alpha.digitalcreditor.securiancanada.ca/')
+        ) {
+          <div>
+            <button (click)="answerNotForAll()" class="button-secondary">All as NO</button>
+          </div>
+        }
+      </div>
+    </form>
+  }
+}
+
+@if (healthQuestions.length === 0 && healthSPQuestions.length === 0) {
+  <app-noInfoRequired
+    [title]="'Health questions are not available based on coverage selection.'"
+    [message]="''"></app-noInfoRequired>
+}

@@ -1,0 +1,326 @@
+<div class="form">
+  <div class="w-75">
+    <div class="section-title pb-3">
+      <h4>{{ 'results.title' | translate }}</h4>
+    </div>
+    <p class="body-medium-regular pt-2">
+      {{ 'results.subTitle' | translate }}
+    </p>
+
+    <div class="form-buttons pt-3">
+      <div>
+        <button class="button-secondary" matStepperPrevious>
+          {{ 'results.back' | translate }}
+        </button>
+      </div>
+      <div>
+        <button class="button-primary" (click)="onDownloadClicked('DETAILED')">
+          {{ 'results.downloadFull' | translate }}
+        </button>
+      </div>
+      <div>
+        <button class="button-primary" (click)="onDownloadClicked('SUMMARY')">
+          {{ 'results.downloadSummary' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-1">
+    <div class="row-1-coloumn-2">
+      <div class="securian-card ms-1 px-4 py-4">
+        <ng-container
+          [ngTemplateOutlet]="cardTemplate"
+          [ngTemplateOutletContext]="{
+            topTitle: 'results.topTitleOne' | translate,
+            description: 'results.descriptionOne' | translate,
+            footerTitle: 'results.footerTitleOne' | translate,
+            footerDescription: 'results.footerDescriptionOne' | translate,
+            titleInsurance: 'results.existingInsurance' | translate,
+            titleLiabilities: 'results.liabilities' | translate,
+            titleCoverage: 'results.coverageTitle' | translate,
+            incomeCard: true,
+            toolTip: '',
+            cardNumber: 1,
+            templateId: 1,
+          }">
+        </ng-container>
+      </div>
+
+      <br /><br />
+
+      <div class="securian-card ms-1 px-4 py-4">
+        <ng-container
+          [ngTemplateOutlet]="cardTemplate"
+          [ngTemplateOutletContext]="{
+            topTitle: 'results.topTitleTwo' | translate,
+            description: 'results.descriptionTwo' | translate,
+            footerTitle: 'results.footerTitleTwo' | translate,
+            footerDescription: 'results.footerDescriptionTwo' | translate,
+            titleInsurance: 'results.income' | translate,
+            titleLiabilities: 'results.expenses' | translate,
+            titleCoverage: 'results.coverageTitle' | translate,
+            toolTip: 'results.disabilityTooltip' | translate,
+            cardNumber: 2,
+            templateId: 2,
+          }">
+        </ng-container>
+      </div>
+
+      <br /><br />
+
+      <div class="securian-card ms-1 px-4 py-4">
+        <ng-container
+          [ngTemplateOutlet]="cardTemplate"
+          [ngTemplateOutletContext]="{
+            topTitle: 'results.topTitleThree' | translate,
+            description: 'results.descriptionThree' | translate,
+            footerTitle: 'results.footerTitleThree' | translate,
+            footerDescription: 'results.footerDescriptionThree' | translate,
+            titleInsurance: 'results.income' | translate,
+            titleLiabilities: 'results.expenses' | translate,
+            titleCoverage: 'results.coverageTitle' | translate,
+            toolTip: 'results.jobLossTooltip' | translate,
+            cardNumber: 2,
+            templateId: 3,
+          }">
+        </ng-container>
+      </div>
+
+      <br /><br />
+
+      <div class="securian-card ms-1 px-4 py-4">
+        <ng-container
+          [ngTemplateOutlet]="cardTemplate"
+          [ngTemplateOutletContext]="{
+            topTitle: 'results.topTitleFour' | translate,
+            description: 'results.descriptionFour' | translate,
+            footerTitle: 'results.footerTitleFour' | translate,
+            footerDescription: 'results.footerDescriptionFour' | translate,
+            titleInsurance: 'results.existingIllness' | translate,
+            titleLiabilities: 'results.liabilities' | translate,
+            titleCoverage: 'results.coverageTitle' | translate,
+            incomeCard: true,
+            toolTip: '',
+            cardNumber: 1,
+            templateId: 4,
+          }">
+        </ng-container>
+      </div>
+
+      <br />
+
+      <div class="body-medium-bold">
+        <span>  {{ 'results.termsConditiontext' | translate }}</span>
+      </div>
+      
+      <div class="body-xsmall-regular flex-shrink-4">
+        <span [innerText]="'results.languageMessage' | translate"></span>
+      </div>
+
+      <div class="text-end pt-5">
+        <div class="form-buttons">
+          <div>
+            <button class="button-secondary" matStepperPrevious>
+              {{ 'results.back' | translate }}
+            </button>
+          </div>
+          <div>
+            <button class="button-primary" (click)="onDownloadClicked('DETAILED')">
+              {{ 'results.downloadFull' | translate }}
+            </button>
+          </div>
+          <div>
+            <button class="button-primary" (click)="onDownloadClicked('SUMMARY')">
+              {{ 'results.downloadSummary' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-1-column-2"></div>
+  </div>
+</div>
+
+<ng-template
+  #cardTemplate
+  let-topTitle="topTitle"
+  let-description="description"
+  let-footerTitle="footerTitle"
+  let-footerDescription="footerDescription"
+  let-titleInsurance="titleInsurance"
+  let-titleLiabilities="titleLiabilities"
+  let-titleCoverage="titleCoverage"
+  let-incomeCard="incomeCard"
+  let-cardNumber="cardNumber"
+  let-toolTip="toolTip"
+  let-templateId="templateId">
+  <app-wrapper-card-result>
+    <h3 style="text-align: center" title>{{ topTitle }}</h3>
+    <div user>
+      <div class="body-medium-regular">
+        @if (templateId === 1 || templateId === 4) {
+          @if (templateId === 1) {
+            {{ 'results.if_OLC' | translate }}
+          }
+
+          @if (templateId === 4) {
+            {{ 'results.if_OCI' | translate }}
+          }
+        } @else {
+          {{ 'results.secondSentence' | translate }}
+          @if (languageService.languageSelected$ | async; as language) {
+            {{ getNetMonthlyIncome() | currencyOption: 'USD' : 'symbol' : '2.0' : language }}.
+          }
+          {{ 'results.eventSentence' | translate }}
+        }
+
+        @if (this.gapData.meetingDetailForm?.IsSecondaryApplicant) {
+          <div [formGroup]="incomeForm">
+            <select
+              class="gap-select mx-2"
+              aria-label="Default select example"
+              (change)="applicantChange($event, templateId)"
+              formControlName="borrower_{{ templateId }}">
+              @for (applicant of applicantList$ | async; track applicant.id) {
+                <option [value]="applicant.id">
+                  {{ applicant.description + '' | translate }}
+                </option>
+              } @empty {
+                <option disabled>Applicant list not loaded</option>
+              }
+            </select>
+          </div>
+        } @else {
+          {{ 'meeting.borrowerOne' | translate }}
+        }
+
+        @if (templateId === 2 || templateId === 3) {
+          <div [formGroup]="incomeForm">
+            @if (templateId === 2) {
+              {{ 'results.becomes' | translate }}
+              <input
+                type="text"
+                currencyMask
+                appCurrencyOptions
+                [options]="{ isPercentage: true, precision: 0, thousands: '', prefix: '', suffix: '' }"
+                type="text"
+                placeholder="0"
+                class="gap-select ms-2"
+                style="width: 100px"
+                formControlName="incomeReduce"
+                (keyup)="onPercentageChange()" />.
+              <mat-icon
+                [ngClass]="{
+                  'mt-10': templateId === 2,
+                  'mt-d10': templateId === 3 && gapData.meetingDetailForm?.IsSecondaryApplicant,
+                }"
+                class="ms-2"
+                appTooltip
+                [tooltip]="{ tooltip: toolTip | translate, position: 'top', style: 'info' }"
+                aria-label="details"
+                >error_outline</mat-icon
+              >
+            }
+
+            @if (templateId === 3) {
+              {{ 'results.becomesThree' | translate }}.
+              <mat-icon
+                [ngClass]="{
+                  'mt-10': templateId === 2,
+                  'mt-d10': templateId === 3 && gapData.meetingDetailForm?.IsSecondaryApplicant,
+                }"
+                class="ms-2"
+                appTooltip
+                [tooltip]="{ tooltip: toolTip | translate, position: 'top', style: 'info' }"
+                aria-label="details"
+                >error_outline</mat-icon
+              >
+            }
+          </div>
+        }
+
+        @if (templateId === 1 || templateId === 4) {
+          {{ description }}.
+        }
+      </div>
+    </div>
+
+    <div new-space>
+      <app-card-result
+        [title]="'results.without' | translate"
+        [templateNumber]="templateId"
+        [titleInsurance]="titleInsurance"
+        [subTitleInsurance]="'results.withoutSubTitle' | translate"
+        [incomeCard]="incomeCard"
+        [isContainerCollapse]="isContainerCollapse(templateId)"
+        [insuranceValueMonthly]="getInsuranceValueMonthly(templateId, 3)"
+        [insuranceValue]="getInsuranceValue(templateId)"
+        [isSecondaryApplicant]="this.gapData.meetingDetailForm?.IsSecondaryApplicant"
+        [isIncomeReduce]="isIncomeReduce"
+        [titleLiabilities]="titleLiabilities"
+        [titleCoverage]="titleCoverage"
+        [cardNumber]="cardNumber"
+        [contentNumber]="3"
+        (collapseCard)="collapseContainer($event)" />
+    </div>
+
+    <div new-space>
+      <app-card-result
+        [title]="'results.withFifty' | translate"
+        [templateNumber]="templateId"
+        [titleInsurance]="
+          templateId === 1
+            ? ('results.existingInsurance' | translate) + ''
+            : templateId === 4
+              ? ('results.existingIllness' | translate) + ''
+              : titleInsurance
+        "
+        [subTitleInsurance]="'results.withoutSubTitle' | translate"
+        [incomeCard]="incomeCard"
+        [isContainerCollapse]="isContainerCollapse(templateId)"
+        [insuranceValueMonthly]="getInsuranceValueMonthly(templateId, 2)"
+        [insuranceValue]="getInsuranceValue(templateId)"
+        [isSecondaryApplicant]="this.gapData.meetingDetailForm?.IsSecondaryApplicant"
+        [isIncomeReduce]="isIncomeReduce"
+        [titleLiabilities]="titleLiabilities"
+        [titleCoverage]="titleCoverage"
+        [cardNumber]="cardNumber"
+        [contentNumber]="2"
+        (collapseCard)="collapseContainer($event)" />
+    </div>
+
+    <div new-space>
+      <app-card-result
+        [title]="'results.withFifty' | translate"
+        [templateNumber]="templateId"
+        [titleInsurance]="titleInsurance"
+        [subTitleInsurance]="'results.withFull' | translate"
+        [incomeCard]="incomeCard"
+        [isContainerCollapse]="isContainerCollapse(templateId)"
+        [insuranceValueMonthly]="getInsuranceValueMonthly(templateId, 1)"
+        [insuranceValue]="getInsuranceValue(templateId)"
+        [isSecondaryApplicant]="this.gapData.meetingDetailForm?.IsSecondaryApplicant"
+        [isIncomeReduce]="isIncomeReduce"
+        [titleLiabilities]="titleLiabilities"
+        [titleCoverage]="titleCoverage"
+        [cardNumber]="cardNumber"
+        [contentNumber]="1"
+        (collapseCard)="collapseContainer($event)" />
+    </div>
+
+    <div class="d-flex py-4 px-3 footer-style">
+      <div class="body-small-bold me-3">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+      <div>
+        <h6>
+          {{ footerTitle }}
+        </h6>
+        <div class="body-medium-regular mt-2">
+          <span [innerHTML]="footerDescription"></span>
+        </div>
+      </div>
+    </div>
+  </app-wrapper-card-result>
+</ng-template>

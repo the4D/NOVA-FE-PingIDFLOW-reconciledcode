@@ -1,0 +1,147 @@
+<div>
+  @if (!submitted) {
+    <div class="form">
+      <div class="form-section">
+        <div class="section-wrapper">
+          <div class="section-title">
+            <h5>Claims Form</h5>
+          </div>
+          <div class="body-medium-regular">
+            Download a copy of the insurance form based on the loan type and provide<br />
+            to claimant for completion.
+          </div>
+        </div>
+
+        <div class="form-table">
+          @if (formList.length > 0) {
+            @for (form of formList; track index; let index = $index) {
+              <div class="file-collection">
+                <div class="d-flex item-center">
+                  <div class="form-icon"></div>
+                  {{ form.name }}
+                </div>
+                <div>
+                  <a href="{{ form.url }}" download>Download</a>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="section-wrapper">
+          <div class="section-title">
+            <h5>Submit Form</h5>
+          </div>
+          <div class="body-medium-regular">
+            Completed forms can be submitted directly to carrier or returned to you.
+          </div>
+        </div>
+
+        <div class="form-table">
+          <form [formGroup]="claimForm">
+            <div class="d-flex">
+              <div class="col-100 me-2">
+                <div class="body-medium-bold">Loan Type</div>
+
+                <mat-form-field appearance="outline">
+                  <mat-select placeholder="Select Loan Type" formControlName="loanType" panelClass="panel-dropdown">
+                    @for (type of loanTypeList; track type.value) {
+                      <mat-option [value]="type.value">
+                        {{ type.name }}
+                      </mat-option>
+                    } @empty {
+                      <mat-option disabled> Loan type list not loaded </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-100">
+                <div class="body-medium-bold">Name of Insured</div>
+                <mat-form-field appearance="outline">
+                  <input matInput type="text" placeholder="Enter Name of Insured" formControlName="nameInsured" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; margin-bottom: 11px">
+                <div class="body-medium-bold">Certificate ID</div>
+                &nbsp;
+                <mat-icon [matTooltip]="toolTip.CertificateID" matTooltipPosition="above">help </mat-icon>
+              </div>
+              <div>
+                <mat-form-field appearance="outline">
+                  <input matInput type="text" placeholder="Enter Certificate ID" formControlName="certificateId" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            @if (fileList.length === 0 && !message) {
+              <div class="upload-form" role="button">
+                <span class="button-upload">
+                  <mat-icon class="material-symbols-outlined me-1">add_box</mat-icon>
+                  Upload Form - {{ fileName }}
+                </span>
+                <input id="upload" type="file" formControlName="file" (change)="uploadFile($event)" />
+              </div>
+            }
+          </form>
+
+          @if (!message) {
+            <p class="text-center mb-2">Completed forms must be in PDF with less than 2MB size.</p>
+          }
+
+          @if (fileList.length > 0 && !message) {
+            @for (file of fileList; track file.documentName) {
+              <div class="file-collection">
+                <div class="col-40 d-flex item-center">
+                  <div class="pdf-icon"></div>
+                  {{ file.documentName }}
+                </div>
+                <div class="col-2">
+                  <mat-icon class="material-symbols-outlined" class="pointer" role="button" (click)="deleteClaim(file)"
+                    >close</mat-icon
+                  >
+                </div>
+              </div>
+            }
+          }
+
+          @if (message) {
+            <p class="body-medium-regular text-center mb-2">{{ message }}.</p>
+          }
+        </div>
+      </div>
+      @if (!message) {
+        <div class="form-buttons">
+          <button class="button-primary" (click)="submitClaim()" [disabled]="fileList.length === 0 || !claimForm.valid">
+            Log Claim
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  @if (submitted && success) {
+    <div>
+      <div>
+        <success-page></success-page>
+      </div>
+    </div>
+    @if (error) {
+      <div class="error-wrapper">
+        <div class="d-flex">
+          <div class="col-100 me-2">
+            <h3>Error</h3>
+            <br />
+            <p>There was an error submitting your request.</p>
+            <br />
+            <button (click)="retry()" mat-stroked-button color="button-1" class="button" type="button">Retry</button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

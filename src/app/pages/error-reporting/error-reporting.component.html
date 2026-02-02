@@ -1,0 +1,54 @@
+<div class="error-reporting">
+  <div class="applications-dashboard">
+    <h3 class="securian-leaf-text-color">Error Reporting</h3>
+    <span class="body-medium-regular top-text">Select a date range to search for applications with UW errors</span>
+    <div class="form-table">
+      <form class="form-fields" [formGroup]="searchForm">
+
+        <div class="select-and-search">
+          <div class="select-field">
+            <span class="body-medium-bold">From :
+            </span>           
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput type="text" placeholder="Enter From date" [matDatepicker]="pickerFromDate"
+                formControlName="fromDate" />
+              <mat-datepicker-toggle matSuffix [for]="pickerFromDate">
+              </mat-datepicker-toggle>
+              <mat-datepicker #pickerFromDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="select-field">
+            <div class="select-field">
+              <span class="body-medium-bold">To :
+              </span>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="text" placeholder="Enter To date" [matDatepicker]="pickerToDate"
+                  formControlName="toDate" [min]="minFromDate" />
+                <mat-datepicker-toggle matSuffix [for]="pickerToDate">
+                </mat-datepicker-toggle>
+                <mat-datepicker #pickerToDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="extra-top-margin">
+            <button class="button-primary custom-button" (click)="seeMoreApplications()">Search</button>
+          </div>
+          <div class="extra-top-margin">
+            <span class="body-medium-bold">Result found : {{totalRecord}}</span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="body-large-bold">Results</div>
+    <app-dynamic-table (clickAction)="onSelectApplication($event)" dataSourceType="applications"
+      buttonMsg="Start New Application" emptyMsg="You will see a list of recent applications here when you add them."
+      [seeMoreMsg]="seeMoreMsg" (clickMorePages)="seeMoreApplications()" title="" [data]="dataSource"
+      [columnTitles]="columnTitles" [columns]="columns" [showNoDataSectionEW]='true'>
+    </app-dynamic-table>
+
+    <div class="extra-top-margin">
+      <button class="button-primary custom-download-button" (click)="downloadExcelReport()">Download Error
+        Report</button>
+    </div>
+  </div>
+</div>

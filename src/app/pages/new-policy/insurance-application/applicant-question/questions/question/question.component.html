@@ -1,0 +1,24 @@
+<p class="body-medium-bold pt-2">Question #{{ questionIdentifier() + 1 }}</p>
+<p class="body-medium-regular py-3">{{ question().question }}</p>
+<form [formGroup]="questionForm">
+  @if (question()) {
+    <mat-radio-group formControlName="question-{{ question().questionIdentifier }}-{{ question().applicantType }}">
+      <mat-radio-button
+        [checked]="question().answer !== null && question().answer"
+        [disabled]="question().disabled"
+        value="true"
+        (change)="changeQuestion($event, question())"
+        class="me-3"
+        >Yes</mat-radio-button
+      >
+      <mat-radio-button
+        [checked]="question().answer !== null && !question().answer"
+        [disabled]="question().disabled"
+        value="false"
+        (change)="changeQuestion($event, question())"
+        >No</mat-radio-button
+      >
+    </mat-radio-group>
+  }
+</form>
+<mat-divider class="mt-3"></mat-divider>

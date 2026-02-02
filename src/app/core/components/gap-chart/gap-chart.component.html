@@ -1,0 +1,44 @@
+<div class="wrapper">
+  @let totalReqInput = totalReq();
+  @let existingCovInput = existingCov();
+  <span class="body-medium-regular"> ${{ totalReqInput | number: '1.2-2' }} </span>
+  @if (totalReqInput > 0) {
+    <div
+      matTooltipClass="custom-tooltip border-radius"
+      class="w-100 total-blue border-radius"
+      matTooltip="{{ totalLabel }}: ${{ totalReqInput | number: '1.2-2' }}">
+      <div class="body-medium-bold legend py-2">
+        {{ totalLabel | uppercase }}
+      </div>
+    </div>
+  }
+  <div class="justify-content-between">
+    <div class="body-medium-regular coverage-unprotected-class">
+      <span> ${{ existingCovInput | number: '1.2-2' }} </span>
+    </div>
+    <div class="body-medium-regular coverage-unprotected-class">
+      <span class="red"> ${{ unprotectedValue() | number: '1.2-2' }} </span>
+    </div>
+  </div>
+  <div class="existing">
+    @if (existingCovInput > 0) {
+      <div
+        matTooltipClass="custom-tooltip"
+        matTooltip="{{ coverageLabel }}: ${{ existingCovInput | number: '1.2-2' }}"
+        class="coverage"
+        [ngStyle]="{ width: (existingCovInput / totalWidth) * 100 + '%' }">
+        <div class="body-medium-bold align-center pt-1">{{ coverageLabel | uppercase }}</div>
+      </div>
+    }
+
+    @if (unprotectedValue() > 0) {
+      <div
+        matTooltipClass="custom-tooltip"
+        [ngClass]="existingCovInput > 0 ? ['gap', 'gap-coverage'] : ['gap', 'gap-unprotected']"
+        matTooltip="{{ unprotectedLabel }}: ${{ unprotectedValue() | number: '1.2-2' }} "
+        [ngStyle]="{ width: (unprotectedValue() / totalWidth) * 100 + '%' }">
+        <div class="body-medium-bold align-center pt-1">{{ unprotectedLabel | uppercase }}</div>
+      </div>
+    }
+  </div>
+</div>

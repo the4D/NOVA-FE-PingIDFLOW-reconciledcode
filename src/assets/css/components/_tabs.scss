@@ -1,0 +1,78 @@
+@use '/src/assets/css/base/colors';
+@use '../base/fonts';
+
+/* Tab Navigation Bar and Header */
+::ng-deep .mat-mdc-tab-nav-bar,
+.mat-mdc-tab-header {
+	border-bottom: 2px solid colors.$securian-brand-leaf !important;
+	opacity: 1.0 !important;
+}
+
+.mat-mdc-tab-group {
+	font-family: fonts.$font-family-semi !important;
+	font-size: 16px !important;
+	opacity: 1.0 !important;
+
+	/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+	.mat-mdc-tab-label-container,
+	.mat-mdc-tab-labels {
+		.mat-ink-bar {
+			height: 4px !important;
+			opacity: 1.0 !important;
+		}
+	}
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+.mat-mdc-tab-list .mat-mdc-tab-labels .mat-mdc-tab-label-active {
+	opacity: 1.0 !important;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+.mat-mdc-tab-list .mat-mdc-tab-labels .mat-mdc-tab-label {
+	font-family: fonts.$font-family-semi !important;
+	font-size: 16px !important;
+	color: colors.$securian-brand-pine !important;
+	opacity: 1.0 !important;
+}
+
+.mat-mdc-tab-header {
+	display: flex !important;
+	opacity: 1.0 !important;
+
+	/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+	.mat-mdc-tab-labels .mdc-tab__content .mdc-tab__text-label {
+		color: colors.$securian-brand-pine !important;
+	}
+
+	.mat-mdc-tab-labels .mdc-tab__content .mdc-tab__text-label .mat-tab-label {
+		min-width: 10%;
+		font-family: fonts.$font-family-semi !important;
+		font-size: 16px !important;
+		color: colors.$securian-brand-pine !important;
+		opacity: 1.0 !important;
+		white-space: normal;
+		padding: 0px;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+	span.mat-mdc-tab-label.ng-star-inserted.error {
+		color: colors.$error-red-500 !important;
+	}
+}
+
+.mat-mdc-tab-body-wrapper,
+.mat-mdc-tab-body-content {
+	overflow: hidden !important;
+}
+
+.mat-mdc-tab-nav-bar,
+.mat-mdc-tab-header {
+	max-width: fit-content;
+	border-bottom: 1px solid colors.$securian-brand-pine !important;
+}
+
+.mat-mdc-tab-group.mat-primary .mat-ink-bar,
+.mat-mdc-tab-nav-bar.mat-primary .mat-ink-bar {
+	background-color: colors.$securian-brand-pine !important;
+}

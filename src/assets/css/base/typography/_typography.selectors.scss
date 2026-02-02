@@ -1,0 +1,115 @@
+@use '../../abstracts/index' as *;
+
+$selector: '.valeyo';
+
+.heading-1,
+#{$selector} .heading-1,
+#{$selector} h1 {
+  @include emit-typography-level($valeyo-typography, heading-1);
+  margin: 0px;
+}
+
+.heading-2,
+#{$selector} .heading-2,
+#{$selector} h2 {
+  @include emit-typography-level($valeyo-typography, heading-2);
+  margin: 0px;
+}
+
+.heading-3,
+#{$selector} .heading-3,
+#{$selector} h3 {
+  @include emit-typography-level($valeyo-typography, heading-3);
+  margin: 0px;
+}
+
+.heading-4,
+#{$selector} .heading-4,
+#{$selector} h4 {
+  @include emit-typography-level($valeyo-typography, heading-4);
+  margin: 0px;
+}
+
+.heading-5,
+#{$selector} .heading-5,
+#{$selector} h5 {
+  @include emit-typography-level($valeyo-typography, heading-5);
+  margin: 0px;
+}
+
+.heading-6,
+#{$selector} .heading-6,
+#{$selector} h6 {
+  @include emit-typography-level($valeyo-typography, heading-6);
+  margin: 0px;
+}
+
+.body-large-regular,
+#{$selector} .body-large-regular,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-large-regular);
+  margin: 0px;
+}
+
+.body-large-bold,
+#{$selector} .body-large-bold,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-large-bold);
+  margin: 0px;
+}
+
+.body-extra-large-bold,
+#{selector} .body-extra-large-bold,
+#{selector} p {
+  @include emit-typography-level($valeyo-typography, body-extra-large-bold);
+  margin: 0px
+}
+
+.body-medium-regular,
+#{$selector} .body-medium-regular,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-medium-regular);
+  margin: 0px;
+}
+
+.body-medium-bold,
+#{$selector} .body-medium-bold,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-medium-bold);
+  margin: 0px;
+}
+
+.body-small-regular,
+#{$selector} .body-small-regular,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-small-regular);
+  margin: 0px;
+}
+
+.body-small-bold,
+#{$selector} .body-small-bold,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-small-bold);
+  margin: 0px;
+}
+
+.body-small-italic,
+#{$selector} .body-small-italic,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-small-italic);
+  margin: 0px;
+}
+
+.body-xsmall-regular,
+#{$selector} .body-xsmall-regular,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-xsmall-regular);
+  margin: 0px;
+}
+
+.body-xsmall-bold,
+#{$selector} .body-xsmall-bold,
+#{$selector} p {
+  @include emit-typography-level($valeyo-typography, body-xsmall-bold);
+  margin: 0px;
+}
