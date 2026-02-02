@@ -1,0 +1,42 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "es2020",
+    "lib": ["es2020", "dom"],
+    "paths": {
+      "@*": ["src/app/*"],
+      "@core/services/*": ["src/app/core/services/*"],
+      "@core/models/*": ["src/app/core/models/*"],
+      "@core/utils/*": ["src/app/core/utils/*"],
+      "@core/components/*": ["src/app/core/components/*"],
+      "@store": ["src/app/store"],
+      "@store/core/*": ["src/app/store/core/*"],
+      "@store/pages/*": ["src/app/store/pages/*"]
+    },
+    "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+    // "enableIvy": false
+  }
+}

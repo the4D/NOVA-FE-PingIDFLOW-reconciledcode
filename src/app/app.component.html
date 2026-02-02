@@ -1,0 +1,40 @@
+@if (showLoading || apiWorking) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (sourceApplicationType !== '2' && loginDisplay) {
+  <div class="app-header">
+    <app-header (navExpandEvent)="navBarToggle($event)"></app-header>
+  </div>
+}
+
+@if (loginDisplay) {
+  <div class="home valeyo">
+    <div class="content">
+      @if (sourceApplicationType !== '2') {
+        <div class="aside">
+          <app-side-nav [navExpanded]="navBarExpand"></app-side-nav>
+        </div>
+      }
+
+      <div [ngClass]="{ page: sourceApplicationType !== '2', 'page-container': sourceApplicationType === '2' }">
+        @if (sourceApplicationType !== '2' && !dontShowBreadCrumb) {
+          <bread-crumb />
+        }
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+} @else {
+  <router-outlet></router-outlet>
+}
+
+@defer (on viewport) {
+  @if (sourceApplicationType !== '2' && loginDisplay) {
+    <div>
+      <app-footer></app-footer>
+    </div>
+  }
+} @placeholder {
+  <p>show this one in case</p>
+}

@@ -1,0 +1,201 @@
+[1mdiff --git a/src/app/core/services/insurance/application.service.ts b/src/app/core/services/insurance/application.service.ts[m
+[1mindex 671a205..51081c3 100644[m
+[1m--- a/src/app/core/services/insurance/application.service.ts[m
+[1m+++ b/src/app/core/services/insurance/application.service.ts[m
+[36m@@ -98,6 +98,10 @@[m [mexport class ApplicationService {[m
+     return this.httpClient.post<string>(`${APPLICATION_URL}${FULL}`, { applicationDto });[m
+   }[m
+ [m
+[32m+[m[32m  public getFullApplication(applicationIdentifier: string): Observable<any> {[m
+[32m+[m[32m    return this.httpClient.get<string>(`${APPLICATION_URL}${FULL}/${applicationIdentifier}`).pipe(shareReplay());[m
+[32m+[m[32m  }[m
+[32m+[m
+   public updateApplication(application: IApplication): Observable<string> {[m
+     return this.httpClient.put<string>(APPLICATION_URL, {[m
+       applicationDto: application,[m
+[1mdiff --git a/src/app/core/services/insurance/communication.service.ts b/src/app/core/services/insurance/communication.service.ts[m
+[1mnew file mode 100644[m
+[1mindex 0000000..535b11d[m
+[1m--- /dev/null[m
+[1m+++ b/src/app/core/services/insurance/communication.service.ts[m
+[36m@@ -0,0 +1,34 @@[m
+[32m+[m[32mimport { Injectable } from '@angular/core';[m
+[32m+[m[32mimport { BehaviorSubject } from 'rxjs';[m
+[32m+[m
+[32m+[m[32minterface IEvent {[m
+[32m+[m[32m  event: any,[m
+[32m+[m[32m  targetOrigin: string[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst initialState = (): IEvent => ({[m
+[32m+[m[32m  event: [],[m
+[32m+[m[32m  targetOrigin: ''[m
+[32m+[m[32m});[m
+[32m+[m
+[32m+[m[32m@Injectable({[m
+[32m+[m[32m  providedIn: 'root'[m
+[32m+[m[32m})[m
+[32m+[m[32mexport class CommunicationService {[m
+[32m+[m
+[32m+[m[32m  constructor() { }[m
+[32m+[m
+[32m+[m[32m  private _event: BehaviorSubject<IEvent> = new BehaviorSubject(initialState());[m
+[32m+[m
+[32m+[m[32m  get eventContent$() {[m
+[32m+[m[32m    return this._event.asObservable();[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  set eventContent(eventContent: IEvent) {[m
+[32m+[m[32m    this._event.next(eventContent);[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  get eventContent() {[m
+[32m+[m[32m    return this._event.value;[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/app/pages/container/container/container.component.ts b/src/app/pages/container/container/container.component.ts[m
+[1mindex 9942485..ee32615 100644[m
+[1m--- a/src/app/pages/container/container/container.component.ts[m
+[1m+++ b/src/app/pages/container/container/container.component.ts[m
+[36m@@ -10,6 +10,13 @@[m [mimport { setLoadingSpinner } from 'src/app/store/loading-spinner/loading-spinner[m
+ import { LOAN_TYPE } from 'src/app/core/utils/constants/insurance';[m
+ import { ILoanType } from 'src/app/core/models/insurance/loanType.model';[m
+ import { ProductService } from 'src/app/core/services/tenant/product.service';[m
+[32m+[m[32mimport { CommunicationService } from 'src/app/core/services/insurance/communication.service';[m
+[32m+[m[32mimport { UserService } from 'src/app/core/services/tenant/user.service';[m
+[32m+[m
+[32m+[m[32minterface IRequestResponseApplication {[m
+[32m+[m[32m  command: string[m
+[32m+[m[32m  applicationIdentifier: string[m
+[32m+[m[32m}[m
+ [m
+ @Component({[m
+   selector: 'app-container',[m
+[36m@@ -18,12 +25,24 @@[m [mimport { ProductService } from 'src/app/core/services/tenant/product.service';[m
+ })[m
+ export class ContainerComponent implements OnInit {[m
+ [m
+[32m+[m[32m  public event!: any;[m
+[32m+[m
+   @HostListener('window:message', ['$event'])[m
+   onMessage(event: any) {[m
+[31m-    this.formatData(event.data);[m
+[32m+[m[32m    if (event.origin === 'http://127.0.0.1:5500') {[m
+[32m+[m[32m      console.log('EVENT MATCH::: ', event.origin)[m
+[32m+[m[32m      this.event = event;[m
+[32m+[m
+[32m+[m[32m      this.communication.eventContent = {[m
+[32m+[m[32m        event: event,[m
+[32m+[m[32m        targetOrigin: event.origin[m
+[32m+[m[32m      };[m
+[32m+[m[32m      this.formatData(event.data);[m
+[32m+[m[32m    }[m
+   }[m
+ [m
+   public containerDto!: IContainer;[m
+[32m+[m[32m  public containerReqRespDto!: IRequestResponseApplication;[m
+   public message: string = 'Waiting for an application';[m
+   public canAccess: boolean = true;[m
+   public errorMessage: string = '';[m
+[36m@@ -34,7 +53,9 @@[m [mexport class ContainerComponent implements OnInit {[m
+     private applicationService: ApplicationService,[m
+     private router: Router,[m
+     private store: Store,[m
+[31m-    private productService: ProductService[m
+[32m+[m[32m    private productService: ProductService,[m
+[32m+[m[32m    private communication: CommunicationService,[m
+[32m+[m[32m    private useService: UserService[m
+   ) {[m
+     this.systemService.sourceApplicationType = '2';[m
+   }[m
+[36m@@ -57,9 +78,11 @@[m [mexport class ContainerComponent implements OnInit {[m
+ [m
+   private formatData(data: any) {[m
+     try {[m
+[31m-      this.containerDto = JSON.parse(data);[m
+[32m+[m[32m      let contentDto = JSON.parse(data);[m
+ [m
+[31m-      if (this.containerDto && this.containerDto.command === 'CreateApplication') {[m
+[32m+[m[32m      if (contentDto && contentDto.command === 'CreateApplication') {[m
+[32m+[m[32m        this.containerDto = contentDto;[m
+[32m+[m[32m        this.setApplicationOwnerId();[m
+         this.setInsuranceType();[m
+         this.message = 'Processing application';[m
+         this.containerDto.applicationDto.application.insuranceCarrierType = 'CPL';[m
+[36m@@ -72,11 +95,55 @@[m [mexport class ContainerComponent implements OnInit {[m
+ [m
+         this.saveApplication(this.containerDto.applicationDto);[m
+       }[m
+[32m+[m
+[32m+[m[32m      if (contentDto && contentDto.command === 'ResponseApplication') {[m
+[32m+[m[32m        this.containerReqRespDto = contentDto;[m
+[32m+[m[32m        this.store.dispatch(setLoadingSpinner({ status: true }));[m
+[32m+[m[32m        this.getResponseApplication();[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      if (this.containerDto && this.containerDto.command === 'SubmitApplication') {[m
+[32m+[m[32m        throw 'Not implemented yet';[m
+[32m+[m[32m      }[m
+[32m+[m
+     } catch (err) {[m
+       console.log('Json not valid yet')[m
+     }[m
+   }[m
+ [m
+[32m+[m[32m  private setApplicationOwnerId() {[m
+[32m+[m[32m    this.useService.user$.subscribe((user) => {[m
+[32m+[m[32m      this.containerDto.applicationDto.application.applicationOwnerId = user.id;[m
+[32m+[m[32m      console.log('It finished')[m
+[32m+[m[32m    });[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  private getResponseApplication() {[m
+[32m+[m[32m    this.applicationService.getFullApplication(this.containerReqRespDto.applicationIdentifier)[m
+[32m+[m[32m      .pipe(take(1))[m
+[32m+[m[32m      .subscribe({[m
+[32m+[m[32m        next: (response) => {[m
+[32m+[m[32m          let responseApplication = JSON.stringify(response);[m
+[32m+[m[32m          this.event.source.postMessage(responseApplication, this.event.origin);[m
+[32m+[m[32m          this.message = 'Application Response Sent Back';[m
+[32m+[m[32m          this.store.dispatch(setLoadingSpinner({ status: false }));[m
+[32m+[m[32m        },[m
+[32m+[m[32m        error: (error) => {[m
+[32m+[m[32m          this.message = 'An error Ocurred Trying to Get Application Response';[m
+[32m+[m[32m          let errorResponse = {[m
+[32m+[m[32m            message: 'An error ocurred trying to get application response',[m
+[32m+[m[32m            status: 500[m
+[32m+[m[32m          }[m
+[32m+[m[32m          this.event.source.postMessage(JSON.stringify(errorResponse), this.event.origin);[m
+[32m+[m[32m          this.store.dispatch(setLoadingSpinner({ status: false }));[m
+[32m+[m[32m          window.self.close();[m
+[32m+[m[32m        },[m
+[32m+[m[32m        complete: () => {[m
+[32m+[m[32m          window.self.close();[m
+[32m+[m[32m        }[m
+[32m+[m[32m      })[m
+[32m+[m[32m  }[m
+[32m+[m
+   private setInsuranceType() {[m
+     const loanType = this.containerDto.applicationDto.loan.loanType;[m
+     const insuranceType = this.loanTypeList?.filter((type) => (type.value === loanType))[0]?.insuranceTypes[0]?.type;[m
+[36m@@ -126,7 +193,6 @@[m [mexport class ContainerComponent implements OnInit {[m
+         },[m
+         complete: () => {[m
+           this.store.dispatch(setLoadingSpinner({ status: false }));[m
+[31m-          window.postMessage({ response: 'containerModelLOS' }, '*')[m
+         }[m
+       });[m
+ [m
+[1mdiff --git a/src/app/pages/new-policy/insurance-application/submission/submission.component.html b/src/app/pages/new-policy/insurance-application/submission/submission.component.html[m
+[1mindex dc9328f..ead2e22 100644[m
+[1m--- a/src/app/pages/new-policy/insurance-application/submission/submission.component.html[m
+[1m+++ b/src/app/pages/new-policy/insurance-application/submission/submission.component.html[m
+[36m@@ -138,7 +138,7 @@[m
+           <div class="d-flex justify-content-between">[m
+             <div class="body-small-bold">Premium Payment</div>[m
+             <div class="body-small-bold text-end">[m
+[31m-              ${{ premiumWithTaxIncluded | number : '1.2' }} Monthly[m
+[32m+[m[32m              ${{ premiumWithTaxIncluded | number : '1.2' }} {{ carrierInsuranceType?.type === 'SP' ? '' : 'Monthly'}}[m
+             </div>[m
+           </div>[m
+           <div *ngIf="carrierInsuranceType?.type === 'SP'" class="d-flex justify-content-between">[m

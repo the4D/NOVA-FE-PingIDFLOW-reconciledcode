@@ -1,0 +1,9 @@
+@if (crumbObservable$ | async; as crumbTitle) {
+  @if (crumbTitle !== '') {
+    <div class="title pb-4 mh-69Pixels">
+      <h2>{{ crumbTitle | titlecase }}</h2>
+    </div>
+  } @else {
+    <div class="mh-69Pixels"></div>
+  }
+}

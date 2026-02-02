@@ -1,0 +1,49 @@
+@use '../../../../assets/css/components/form-field';
+
+.link {
+  cursor: pointer;
+}
+
+.active {
+  width: 20px;
+  height: 20px;
+  background: #a1e1a8;
+  border-radius: 16px;
+  margin-left: 80px;
+}
+
+.inactive {
+  width: 20px;
+  height: 20px;
+  background: var(--grey300);
+  border-radius: 16px;
+  margin-left: 16px;
+}
+
+.custom-dialog-container .mat-mdc-dialog-container {
+  overflow-y: hidden;
+}
+
+.select-and-search {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+
+  .select-field {
+    grid-area: 1/1/2/5;
+    width: auto;
+
+    mat-form-field {
+      display: block;
+    }
+  }
+
+  .search-field {
+    grid-area: 1/5/2/10;
+    width: auto;
+
+    mat-form-field {
+      display: block;
+    }
+  }
+}

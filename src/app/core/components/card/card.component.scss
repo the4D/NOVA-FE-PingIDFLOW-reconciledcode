@@ -1,0 +1,52 @@
+@use '/src/assets/css/base/colors';
+@use '../../../../assets/css/abstracts/index' as *;
+
+
+.card {
+  position: relative;
+  width: 100%;
+  min-width:300px;
+  padding: 30px;
+  -webkit-box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.15);
+  min-height: 300px;
+  height: auto;
+  gap: 30px;
+  background-color: colors.$securian-brand-snow;
+
+  .card-image {
+    transform: translateY(-50%)
+  }
+
+  .card-title {
+    position: absolute;
+    top: 110px;
+    min-width:200px;
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-body {
+    padding-top: 12px;
+    min-height: 60px;
+  }
+
+  .card-button {
+    position: absolute;
+    bottom: 30px;
+  }
+}
+
+
+.bottom-border-light {
+  border-bottom: 6px solid colors.$securian-brand-grass;
+}
+
+.bottom-border-semi {
+  border-bottom: 6px solid colors.$securian-brand-leaf;
+}
+
+.bottom-border-hard {
+  border-bottom: 6px solid colors.$securian-brand-pine;
+}

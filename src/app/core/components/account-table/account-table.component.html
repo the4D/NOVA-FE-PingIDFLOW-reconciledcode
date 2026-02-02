@@ -1,0 +1,40 @@
+<div class="select-and-search">
+  <div class="select-field">
+    <mat-form-field appearance="outline">
+      <mat-select
+        placeholder="Search By"
+        (selectionChange)="onFilterByChanged()"
+        [formControl]="filterBy"
+        panelClass="panel-dropdown">
+        <mat-option class="hidden"> Search By</mat-option>
+        @for (filter of filterByOptionList; track filter.id) {
+          <mat-option [value]="filter.id">
+            {{ filter.description }}
+          </mat-option>
+        } @empty {
+          <mat-option disabled> Filter option not loaded </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="search-field">
+    <mat-form-field appearance="outline">
+      <input matInput type="text" [formControl]="searchBy" />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+<app-dynamic-table
+  dataSourceType="accounts"
+  buttonMsg=""
+  emptyMsg="You will see a list of user accounts here when you add them."
+  (clickToEdit)="editUser($event)"
+  (clickToDelete)="deleteUser($event)"
+  [seeMoreMsg]="seeMoreMsg"
+  (clickMorePages)="getAllUsers()"
+  title=""
+  [data]="dataSource"
+  [columnTitles]="columnTitles"
+  [columns]="columns">
+</app-dynamic-table>

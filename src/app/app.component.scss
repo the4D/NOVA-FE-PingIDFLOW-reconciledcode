@@ -1,0 +1,63 @@
+// The home is divided into two columns so we are using flex as the layout
+@use "/src/assets/css/base/colors";
+
+.app-header {
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+  top: 0px;
+  padding: 0px 32px;
+  margin: 0px;
+  background-color: colors.$valeyo-white-0;
+  box-shadow: 0px 4px 12px rgba(91, 91, 91, 0.06);
+}
+
+.home {
+  width: auto;
+  display: flex;
+  column-gap: 0px;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+
+    .aside {
+      padding-top: 88px;
+      align-self: flex-start;
+      align-content: flex-start;
+      z-index: 4;
+      height: 100vh;
+      position: sticky;
+      top: 0px;
+    }
+
+    .page {
+      height: 100%;
+      width: 100%;
+      column-gap: 24px;
+      padding: 116px 0px 0px 0px;
+
+      &-container {
+        height: 100%;
+        width: 100%;
+        column-gap: 24px;
+        padding: 30px 30px 30px 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .home {
+    .content {
+      .app-header {
+        padding: 0px 44px;
+      }
+
+      .page {
+        padding: 40px 44px 44px 44px;
+      }
+    }
+  }
+}

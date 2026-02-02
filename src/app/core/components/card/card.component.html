@@ -1,0 +1,23 @@
+@let colorInput = color();
+<div
+  class="card"
+  [ngClass]="{
+    'bottom-border-light': colorInput === 'light',
+    'bottom-border-semi': colorInput === 'semi',
+    'bottom-border-hard': colorInput === 'hard',
+  }">
+  <div class="card-image">
+    <img src="{{ cardImage() }}" alt="" />
+  </div>
+  <div class="body-large-bold card-title">
+    <span>{{ title() }}</span>
+  </div>
+
+  <div class="body-large-regular">
+    {{ cardBody() }}
+  </div>
+
+  <div class="mt-3 card-button">
+    <button class="button-primary" (click)="routerTo()">Start now</button>
+  </div>
+</div>

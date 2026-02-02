@@ -1,0 +1,90 @@
+<form class="form-fields pt-4" [formGroup]="applicantForm">
+  <div>
+    <span class="body-medium-bold">Date of Birth (dd/mm/yyyy) </span>
+    <div>
+      <mat-form-field appearance="outline" class="w-100">
+        <input
+          matInput
+          type="text"
+          placeholder="Enter date of birth"
+          [matDatepicker]="dateOfBirth"
+          formControlName="birthDate"
+          (dateChange)="onValueChanged($event)" />
+        <mat-datepicker-toggle matSuffix [for]="dateOfBirth"> </mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirth></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <span class="body-medium-bold">Residential Province</span>
+    <div>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select
+          placeholder="Select residential province"
+          formControlName="province"
+          panelClass="panel-dropdown"
+          (selectionChange)="onValueChanged($event)">
+          @for (province of provinceList; track province.id) {
+            <mat-option [value]="province.abbreviation">
+              {{ province.description }}
+            </mat-option>
+          } @empty {
+            <mat-option disabled> Province list not loaded </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <span class="body-medium-bold">Are you a smoker?</span>
+    <div>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select
+          placeholder="Are you a smoker?"
+          formControlName="smoking"
+          panelClass="panel-dropdown"
+          (selectionChange)="onValueChanged($event)">
+          @for (smokerType of smokerTypeList; track smokerType.id) {
+            <mat-option [value]="smokerType.id">
+              {{ smokerType.description }}
+            </mat-option>
+          } @empty {
+            <mat-option disabled> Smoker list not loaded </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <span class="body-medium-bold">Are you self-employed?</span>
+    <div>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select
+          placeholder="Are you self-employed?"
+          formControlName="selfEmployed"
+          panelClass="panel-dropdown"
+          (selectionChange)="onValueChanged($event)">
+          @for (selfEmployed of selfEmployedTypeList; track selfEmployed.id) {
+            <mat-option [value]="selfEmployed.id">
+              {{ selfEmployed.description }}
+            </mat-option>
+          } @empty {
+            <mat-option disabled> Self employed list not loaded </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="form-field">
+    <span class="body-medium-bold"> Working less than 20 hours a week? </span>
+    <div class="pt-2 body-small-bold">
+      <mat-radio-group formControlName="workingHours" (change)="onValueChanged($event)">
+        <mat-radio-button [value]="true" class="me-3 body-medium-bold">Yes</mat-radio-button>
+        <mat-radio-button [value]="false" checked="checked" class="body-medium-bold">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</form>

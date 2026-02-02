@@ -1,0 +1,4 @@
+**/node_modules
+**/src/app/pages/new-policy/gap-analysis/BaseComponent.ts
+**/dist
+**/.eslintignore

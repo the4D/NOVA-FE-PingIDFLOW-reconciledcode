@@ -1,0 +1,9 @@
+@use "/src/assets/css/base/colors";
+
+.title {
+  order: 2;
+  align-items: flex-start;
+  margin: auto;
+  margin-left: 25px;
+  background-color: colors.$securian-brand-snow;
+}
