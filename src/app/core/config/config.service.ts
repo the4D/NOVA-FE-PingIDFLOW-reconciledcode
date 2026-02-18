@@ -27,7 +27,8 @@ export class ConfigService {
             if (!environment.production) {
               // Local
               this.config.apis.insuranceApi = {
-                url: 'https://thermosetting-golden-illustratively.ngrok-free.dev/api/v1/',
+                // url: 'https://thermosetting-golden-illustratively.ngrok-free.dev/api/v1/',
+                url: "https://greatly-semiround-guillermo.ngrok-free.dev/api/v1/",
                 scope: 'http://valeyoNp.onmicrosoft.com/5e707b01-d6bd-4818-8c84-132ddc6d8871/insurance_api_access',
               };
               this.config.apis.tenantApi = {

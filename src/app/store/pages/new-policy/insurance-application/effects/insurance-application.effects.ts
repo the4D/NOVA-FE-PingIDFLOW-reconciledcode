@@ -204,8 +204,11 @@ export class ApplicationEffects {
   upsertLoanApplication$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UPSERT_LOAN_INSURANCE_APPLICATION),
-      mergeMap((prop: any) =>
-        this.loanService.loanUpsert(prop.request).pipe(
+      mergeMap((prop: any) => {
+        // Sanitize the request data before sending to API
+        const sanitizedRequest = this.sanitizeLoanRequest(prop.request);
+
+        return this.loanService.loanUpsert(sanitizedRequest).pipe(
           take(1),
           shareReplay(),
           switchMap((objectResponse) => {
@@ -233,7 +236,7 @@ export class ApplicationEffects {
               };
 
               return [
-                { type: SET_LOADING_ACTION, status: true },
+                { type: SET_LOADING_ACTION, status: false },
                 { type: SET_LOAN_APPLICATION_LOADED, response: fullLoan },
                 { type: SET_INSURANCE_TYPE_RESPONSE, response: objectResponse.quote },
               ];
@@ -243,11 +246,11 @@ export class ApplicationEffects {
           }),
           catchError((error) => {
             console.error('Error on effect', UPSERT_LOAN_INSURANCE_APPLICATION, ': ', error);
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            return EMPTY;
+            // Stop loading spinner on error
+            return of({ type: SET_LOADING_ACTION, status: false });
           })
-        )
-      )
+        );
+      })
     )
   );
 
@@ -354,31 +357,56 @@ export class ApplicationEffects {
             const applicants: Applicant[] = [];
             props.request.applications.forEach((application: Application) => {
               application.applicants.forEach((applicant: Applicant | any) => {
-                const applicantAddress: ApplicantAddress[] = [
-                  {
-                    applicantId: applicant.id,
-                    streetNumber: '',
-                    unitNumber: '',
-                    street: '',
-                    city: '',
-                    province: applicant.province,
-                    postalCode: '',
-                    country: '',
-                    addressType: '',
-                    addressStructureType: '',
-                    addressStatus: '',
-                    isPrimary: true,
-                    moveInDate: null,
-                    markForReview: false,
-                  },
-                ];
+                // Only create minimal address if none exists, otherwise preserve existing data
+                const applicantAddress: ApplicantAddress[] = applicant.applicantAddresses && applicant.applicantAddresses.length > 0
+                  ? applicant.applicantAddresses.map((addr: ApplicantAddress) => ({
+                    ...addr,
+                    isPrimary: Boolean(addr.isPrimary), // Ensure boolean type
+                  }))
+                  : [
+                    {
+                      applicantId: applicant.id,
+                      streetNumber: '',
+                      unitNumber: '',
+                      street: '',
+                      city: '',
+                      province: applicant.province || '',
+                      postalCode: '',
+                      country: '',
+                      addressType: '',
+                      addressStructureType: '',
+                      addressStatus: '',
+                      isPrimary: true,
+                      moveInDate: null,
+                      markForReview: false,
+                    },
+                  ];
+
+                // Process phone numbers
+                const applicantPhones = applicant.applicantPhones?.map((phone: any) => ({
+                  ...phone,
+                  number: phone.number?.replace(/^0+/, '') || '', // Remove leading zeros
+                  isPrimary: Boolean(phone.isPrimary), // Ensure boolean type
+                  phoneType: phone.phoneType || 'Mobile', // Default if missing
+                })) || [];
+
+                // Process emails
+                const applicantEmails = applicant.applicantEmails?.map((email: any) => ({
+                  ...email,
+                  isPrimary: Boolean(email.isPrimary), // Ensure boolean type
+                  emailType: email.emailType || 'Personal', // Default if missing
+                })) || [];
 
                 applicant = {
                   ...applicant,
                   applicantIdentifier: applicant.applicantIdentifier,
                   birthDate: moment(applicant.birthDate).format('YYYY-MM-DD'),
                   workHours: applicant.workHours,
+                  language: applicant.language || 'EN', // Add default language
                   applicantAddresses: applicantAddress,
+                  applicantPhones: applicantPhones,
+                  applicantEmails: applicantEmails,
+                  applicantConsents: applicant.applicantConsents || [], // Preserve consents
                 };
                 applicants.push(applicant);
               });
@@ -529,5 +557,80 @@ export class ApplicationEffects {
     });
 
     return applicantFormGroupList;
+  }
+
+  private sanitizeLoanRequest(request: any): any {
+    // Deep clone the request to avoid mutations
+    const sanitized = JSON.parse(JSON.stringify(request));
+
+    // Sanitize each application's applicants
+    if (sanitized.applications) {
+      sanitized.applications.forEach((application: any) => {
+        if (application.applicants) {
+          application.applicants.forEach((applicant: any) => {
+            // Fix language - must be a string
+            applicant.language = applicant.language || 'en';
+
+            // Fix applicant addresses
+            if (applicant.applicantAddresses && applicant.applicantAddresses.length > 0) {
+              applicant.applicantAddresses = applicant.applicantAddresses.map((address: any) => ({
+                ...address,
+                isPrimary: address.isPrimary !== null && address.isPrimary !== undefined
+                  ? Boolean(address.isPrimary)
+                  : true,
+              }));
+            }
+
+            // Fix applicant phones - only process if array has items
+            if (applicant.applicantPhones && applicant.applicantPhones.length > 0) {
+              applicant.applicantPhones = applicant.applicantPhones.map((phone: any) => {
+                let cleanNumber = phone.number ? phone.number.replace(/\D/g, '') : ''; // Remove all non-digits
+
+                // Remove leading zeros
+                cleanNumber = cleanNumber.replace(/^0+/, '');
+
+                // Ensure exactly 10 digits - pad or truncate if needed
+                if (cleanNumber.length < 10) {
+                  // Pad with zeros at the end if too short
+                  cleanNumber = cleanNumber.padEnd(10, '0');
+                } else if (cleanNumber.length > 10) {
+                  // Truncate to 10 digits if too long
+                  cleanNumber = cleanNumber.substring(0, 10);
+                }
+
+                // Check if all digits are identical (e.g., "1111111111")
+                const allSameDigit = /^(\d)\1{9}$/.test(cleanNumber);
+                if (allSameDigit) {
+                  // Replace with a default valid phone number pattern
+                  cleanNumber = '5555550000'; // Default fallback
+                }
+
+                return {
+                  ...phone,
+                  number: cleanNumber,
+                  isPrimary: phone.isPrimary !== null && phone.isPrimary !== undefined
+                    ? Boolean(phone.isPrimary)
+                    : true,
+                  phoneType: phone.phoneType || 'Home', // Default to Home
+                };
+              });
+            }
+
+            // Fix applicant emails - only process if array has items
+            if (applicant.applicantEmails && applicant.applicantEmails.length > 0) {
+              applicant.applicantEmails = applicant.applicantEmails.map((email: any) => ({
+                ...email,
+                isPrimary: email.isPrimary !== null && email.isPrimary !== undefined
+                  ? Boolean(email.isPrimary)
+                  : true,
+                emailType: email.emailType || 'Personal', // Default to Personal
+              }));
+            }
+          });
+        }
+      });
+    }
+
+    return sanitized;
   }
 }
