@@ -20,6 +20,7 @@ import { ErrorReportingComponent } from '@pages/error-reporting/error-reporting.
 import { LoginComponent } from '@pages/login/login.component';
 import { OtpComponent } from '@pages/login/otp/otp.component';
 import { ForgotPasswordComponent } from '@pages/login/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from '@pages/login/reset-password/reset-password.component';
 
 export const securianRoutes: Routes = [
   {
@@ -198,5 +199,12 @@ export const securianRoutes: Routes = [
     canActivate: [],
     component: ForgotPasswordComponent,
     data: { title: 'Forgot Password' },
+  },
+  {
+    path: 'reset-password',
+    pathMatch: 'full',
+    canActivate: [],
+    component: ResetPasswordComponent,
+    data: { title: 'Reset Password' },
   },
 ];
